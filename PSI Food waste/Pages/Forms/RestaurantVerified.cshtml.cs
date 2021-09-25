@@ -28,12 +28,6 @@ namespace PSI_Food_waste.Pages.Forms
         {
             products = ProductService.GetAll();
 
-            //string path = @"c:\print.json";
-            //if (!File.Exists(path))
-            //{
-            //}
-            //string json = JsonConvert.SerializeObject(products);
-            //File.WriteAllText(@"c:\print.json", json);
         }
         public IActionResult OnPost()
         {

@@ -24,11 +24,6 @@ namespace PSI_Food_waste.Services
         //    };
         //}
 
-        //string path = @"c:\print.json";
-        //if (!File.Exists(path)){
-        //    }
-        //string json = JsonConvert.SerializeObject(Products);
-        //File.WriteAllText(@"c:\print.json", json);
         public static List<Product> GetAll() => Products;
 
         public static void SetAll(List<Product> products)
