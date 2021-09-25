@@ -15,14 +15,14 @@ namespace PSI_Food_waste.Services
     {
         static List<Product> Products { get; set; }
         static int nextId = 3;
-        static ProductService()
-        {
-            Products = new List<Product>
-            {
-                new Product { Id = 1, Name = "Classic Italian pizza", Price=20.00M, Size=ProductSize.Large, IsGlutenFree = false },
-                new Product { Id = 2, Name = "Veggie pizza", Price=15.00M, Size=ProductSize.Small, IsGlutenFree = true }
-            };
-        }
+        //static ProductService()
+        //{
+        //    Products = new List<Product>
+        //    {
+        //        new Product { Id = 1, Name = "Classic Italian pizza", Price=20.00M, Size=ProductSize.Large, IsGlutenFree = false },
+        //        new Product { Id = 2, Name = "Veggie pizza", Price=15.00M, Size=ProductSize.Small, IsGlutenFree = true }
+        //    };
+        //}
 
         //string path = @"c:\print.json";
         //if (!File.Exists(path)){
@@ -31,7 +31,7 @@ namespace PSI_Food_waste.Services
         //File.WriteAllText(@"c:\print.json", json);
         public static List<Product> GetAll() => Products;
 
-        public void SetAll(List<Product> products)
+        public static void SetAll(List<Product> products)
         {
             Products = products;
         }

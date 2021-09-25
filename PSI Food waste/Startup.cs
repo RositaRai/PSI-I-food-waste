@@ -60,8 +60,9 @@ namespace PSI_Food_waste
             //string json = JsonConvert.SerializeObject(ProductService.GetAll(), Formatting.Indented);
             //File.WriteAllText(path, json);
 
-            string json = File.ReadAllText(@"c:\myObj.json");
+            string json = File.ReadAllText(@"C:\Users\jauta\source\repos\PSI Food waste\text.json");
             List<Product> myObj = JsonConvert.DeserializeObject<List<Product>>(json);
+            ProductService.SetAll(myObj);
 
         }
     }
