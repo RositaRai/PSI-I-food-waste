@@ -3,15 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using PSI_Food_waste.Models;
+using Newtonsoft.Json;
 
 namespace PSI_Food_waste.Services
 {
     public class ProductService
     {
-        static List<Product> Products { get; }
+        static List<Product> Products { get; set; }
         static int nextId = 3;
         static ProductService()
         {
@@ -22,7 +24,17 @@ namespace PSI_Food_waste.Services
             };
         }
 
+        //string path = @"c:\print.json";
+        //if (!File.Exists(path)){
+        //    }
+        //string json = JsonConvert.SerializeObject(Products);
+        //File.WriteAllText(@"c:\print.json", json);
         public static List<Product> GetAll() => Products;
+
+        public void SetAll(List<Product> products)
+        {
+            Products = products;
+        }
 
         public static Product Get(int id) => Products.FirstOrDefault(p => p.Id == id);
 

@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 1,
+    "Name": "Classic Italian pizza",
+    "Size": 2,
+    "IsGlutenFree": false,
+    "Price": 20.00
+  },
+  {
+    "Id": 2,
+    "Name": "Veggie pizza",
+    "Size": 0,
+    "IsGlutenFree": true,
+    "Price": 15.00
+  }
+]

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using PSI_Food_waste.Models;
 using PSI_Food_waste.Services;
+using System.IO;
 
 namespace PSI_Food_waste.Pages.Forms
 {
@@ -25,6 +27,13 @@ namespace PSI_Food_waste.Pages.Forms
         public void OnGet()
         {
             products = ProductService.GetAll();
+
+            //string path = @"c:\print.json";
+            //if (!File.Exists(path))
+            //{
+            //}
+            //string json = JsonConvert.SerializeObject(products);
+            //File.WriteAllText(@"c:\print.json", json);
         }
         public IActionResult OnPost()
         {
