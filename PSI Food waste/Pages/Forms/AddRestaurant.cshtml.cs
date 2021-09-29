@@ -23,7 +23,7 @@ namespace PSI_Food_waste.Pages.Forms
                 return Page();
             }
             RestaurantServices.Add(NewRestaurant);
-            return RedirectToPage("/Forms/AddRestaurant");
+            return RedirectToPage("/Forms/RestaurantVerified");
         }
     }
 }
