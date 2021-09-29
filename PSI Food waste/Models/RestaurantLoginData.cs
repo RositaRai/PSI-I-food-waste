@@ -9,8 +9,9 @@ namespace PSI_Food_waste.Models
 {
     public class RestaurantLoginData
     {
-        public string Username {  get; set;}
-        public string Password {  get; set;}
+        public string Name {  get; set;}
+        public string Adress {  get; set;}
+        public string WorkerID {  get; set;}
 
     }
 }
