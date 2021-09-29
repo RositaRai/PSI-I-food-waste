@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PSI_Food_waste.Models;
 namespace PSI_Food_waste.Pages.Forms
 {
-    public class AddWorkerModel : PageModel
+    public class RestaurantLogin : PageModel
     {
         [BindProperty]
         public RestaurantLoginData Restaurant {  get; set; }
