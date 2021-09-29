@@ -10,7 +10,7 @@ namespace PSI_Food_waste.Pages.Forms
     public class AddWorkerModel : PageModel
     {
         [BindProperty]
-        public RestaurantModel Restaurant {  get; set; }
+        public RestaurantLoginData Restaurant {  get; set; }
         public void OnGet()
         {
 

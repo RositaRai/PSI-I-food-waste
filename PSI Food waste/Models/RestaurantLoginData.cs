@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PSI_Food_waste.Models
 {
-    public class RestaurantModel
+    public class RestaurantLoginData
     {
         public string Name {  get; set;}
         public string Adress {  get; set;}
