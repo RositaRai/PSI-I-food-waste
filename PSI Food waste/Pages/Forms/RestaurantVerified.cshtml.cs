@@ -27,6 +27,7 @@ namespace PSI_Food_waste.Pages.Forms
         public void OnGet()
         {
             products = ProductService.GetAll();
+            //dependencie injection
 
         }
         public IActionResult OnPost()

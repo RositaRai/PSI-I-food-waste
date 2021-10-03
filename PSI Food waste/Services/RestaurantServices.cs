@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PSI_Food_waste.Services
 {
-    public class RestaurantServices
+    public static class RestaurantServices
     {
         static List<Restaurant> Restaurants { get; }
 
