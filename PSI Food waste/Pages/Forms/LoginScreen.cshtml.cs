@@ -12,6 +12,10 @@ namespace PSI_Food_waste.Pages.Forms
     {
         [BindProperty]
         public User NewUser { get; set; }
+
+        [BindProperty]
+        public string Msg { get; set; }
+
         public List<User> users = new List<User>
         {
             new User {Username = "admin", Password = "admin"}
@@ -19,11 +23,16 @@ namespace PSI_Food_waste.Pages.Forms
 
         public void OnGet()
         {
+                Msg = "";
         }
 
         public bool flag;
         public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             flag = false;
             foreach(User user in users)
             {
@@ -35,7 +44,11 @@ namespace PSI_Food_waste.Pages.Forms
             }
             if (flag)
                 return RedirectToPage("/Index");
-            else return Page();
+            else
+            {
+                Msg = "Incorrect credentials";
+                return Page();
+            }
         }
     }
 }
