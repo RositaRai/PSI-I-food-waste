@@ -4,15 +4,20 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using PSI_Food_waste.Services;
+using PSI_Food_waste.Models;
 
 namespace PSI_Food_waste
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -51,6 +56,16 @@ namespace PSI_Food_waste
             {
                 endpoints.MapRazorPages();
             });
+
+            //string path = @"C:\Users\jauta\source\repos\PSI Food waste\text.json";
+            //string json = JsonConvert.SerializeObject(ProductService.GetAll(), Formatting.Indented);
+            //File.WriteAllText(path, json);
+
+            string initialData = (Directory.GetCurrentDirectory() + "\\text.json");
+            string json = File.ReadAllText(@initialData);
+            List<Product> myObj = JsonConvert.DeserializeObject<List<Product>>(json);
+            ProductService.SetAll(myObj);
+
         }
     }
 }
