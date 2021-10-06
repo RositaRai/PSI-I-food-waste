@@ -23,10 +23,10 @@ namespace PSI_Food_waste.Pages
         public string Username { get; set; }
         public void OnGet()
         {
+            Username = HttpContext.Session.GetString("username");
             if (string.IsNullOrWhiteSpace(City))
             {
                 City = "the web";
-                Username = HttpContext.Session.GetString("username");
             }
         }
 
