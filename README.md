@@ -10,7 +10,11 @@ Essentially, restaurants post their discounts and other users see them on the ma
 # Checklist
 - [x] Decide on project form and platform
 - [x] Create data collectors for two user types
-- [ ] Create redirection pages for both user types
-- [ ] Implement user validation for restaurants
+- [x] Create redirection pages for both user types
+- [x] Implement user validation for restaurants
     - [x] Implement reading from file
-    - [ ] Check if user input is valid on login
+    - [x] Check if user input is valid on login
+- [x] Create individual product lists for restaurants
+- [] Implement restaurant list filtering by address
+- [] Create a registration form
+- [] ...
