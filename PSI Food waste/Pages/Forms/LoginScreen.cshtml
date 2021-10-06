@@ -2,6 +2,7 @@
 @using PSI_Food_waste.Models
 @model PSI_Food_waste.Pages.Forms.LoginScreenModel
 @{
+//ViewData["uss"] = NewUser;
 }
 
 <h1>login screen</h1>
@@ -12,7 +13,7 @@
     <div class="form-group">
         <label asp-for="NewUser.Username" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-3">
-            <input type="text" asp-for="NewUser.Username"class="form-control">
+            <input type="text" asp-for="NewUser.Username" class="form-control">
         </div>
     </div>
     <div class="form-group">

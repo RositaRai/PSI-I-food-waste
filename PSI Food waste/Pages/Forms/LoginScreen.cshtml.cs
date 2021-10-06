@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PSI_Food_waste.Models;
@@ -23,7 +24,8 @@ namespace PSI_Food_waste.Pages.Forms
 
         public void OnGet()
         {
-                Msg = "";
+            Msg = "";
+            ViewData["uss"] = NewUser;
         }
 
         public bool flag;
@@ -43,7 +45,10 @@ namespace PSI_Food_waste.Pages.Forms
                 }
             }
             if (flag)
+            {
+                HttpContext.Session.SetString("username", NewUser.Username);
                 return RedirectToPage("/Index");
+            }
             else
             {
                 Msg = "Incorrect credentials";

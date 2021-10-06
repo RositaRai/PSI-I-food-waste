@@ -4,8 +4,18 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @Model.City!</h1>
+<div class="text-center ">
+    @{
+        if (@Model.Username != null)
+        {
+            <form method="post" class="col-sm-3">
+                <button class="btn btn-danger">Logout</button>
+            </form>
+            @*<a asp-page="Index" asp-page-handler="Logout">Logout</a>*@
+        }
+    }
+    @*<h1 class="display-4">Welcome to @Model.City!</h1>*@
+    <h1 class="display-4">Welcome @Model.Username!</h1>
     <h1 class="display-4">Choose who you are</h1>
     <form>
         <button style="
@@ -15,7 +25,8 @@
         background-color: cadetblue;
         border: 3px solid black;
         font: bold 50px calibri;"
-        class="btn btn-primary align-items-md-center" asp-page="/Forms/AddLocation">PERSON
+                class="btn btn-primary align-items-md-center" asp-page="/Forms/AddLocation">
+            PERSON
         </button>
     </form>
     <p></p>
@@ -27,7 +38,9 @@
         background-color: cadetblue;
         border: 3px solid black;
         font: bold 50px calibri"
-        class="btn btn-primary align-items-md-center" asp-page="/Forms/AddRestaurant">RESTAURANT
+                class="btn btn-primary align-items-md-center" asp-page="/Forms/AddRestaurant">
+            RESTAURANT
         </button>
     </form>
 </div>
+

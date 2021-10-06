@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using PSI_Food_waste.Models;
 using PSI_Food_waste.Services;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace PSI_Food_waste.Pages.Forms
 {
@@ -32,6 +33,10 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPost()
         {
+            if(HttpContext.Session.GetString("username") == null)
+            {
+                return RedirectToPage("/Forms/LoginScreen");
+            }
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -41,6 +46,10 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPostDelete(int id)
         {
+            if (HttpContext.Session.GetString("username") == null)
+            {
+                return RedirectToPage("/Forms/LoginScreen");
+            }
             ProductService.Delete(id);
             return RedirectToAction("Get");
         }

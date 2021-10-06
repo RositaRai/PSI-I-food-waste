@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PSI_Food_waste.Models;
@@ -12,9 +13,13 @@ namespace PSI_Food_waste.Pages.Forms
     {
         [BindProperty]
         public Restaurant NewRestaurant {  get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
+            if (HttpContext.Session.GetString("username") == null)
+            {
+                return RedirectToPage("/Forms/LoginScreen");
+            }
+            return Page();
         }
         public IActionResult OnPost()
         {

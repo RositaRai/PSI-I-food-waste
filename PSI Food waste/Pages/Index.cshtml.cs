@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,12 +20,27 @@ namespace PSI_Food_waste.Pages
 
         [BindProperty(SupportsGet = true)]
         public string City { get; set; }
+        public string Username { get; set; }
         public void OnGet()
         {
             if (string.IsNullOrWhiteSpace(City))
             {
                 City = "the web";
+                Username = HttpContext.Session.GetString("username");
             }
+        }
+
+        //public IActionResult OnGetLogout()
+        //{
+        //    HttpContext.Session.Remove("username");
+        //    return RedirectToPage("/Index");
+        //}
+
+        public RedirectToPageResult OnPost()
+        {
+            HttpContext.Session.Remove("username");
+            return RedirectToPage("/Index");
+
         }
     }
 }
