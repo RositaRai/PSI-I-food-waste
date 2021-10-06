@@ -19,13 +19,13 @@ namespace PSI_Food_waste.Pages.Forms
 
         public List<User> users = new List<User>
         {
-            new User {Username = "admin", Password = "admin"}
+            new User {Username = "admin", Password = "admin"},
+            new User {Username = "abc", Password = "123"}
         };
 
         public void OnGet()
         {
             Msg = "";
-            ViewData["uss"] = NewUser;
         }
 
         public bool flag;
