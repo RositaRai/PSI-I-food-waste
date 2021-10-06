@@ -13,7 +13,8 @@ namespace PSI_Food_waste.Pages.Forms
     {
         [BindProperty]
         public Restaurant NewRestaurant {  get; set; }
-        public IActionResult OnGet()
+
+        public void OnGet()
         {
             if (HttpContext.Session.GetString("username") == null)
             {
@@ -27,6 +28,7 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
+
             RestaurantServices.Add(NewRestaurant);
             return RedirectToPage("/Forms/RestaurantVerified");
         }
