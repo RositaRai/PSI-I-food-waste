@@ -4,13 +4,43 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @Model.City!</h1>
+<div class="text-center ">
+    @{
+        if (@Model.Username != null)
+        {
+            <form method="post" class="col-sm-3">
+                <button class="btn btn-danger">Logout</button>
+            </form>
+            @*<a asp-page="Index" asp-page-handler="Logout">Logout</a>*@
+        }
+    }
+    @*<h1 class="display-4">Welcome to @Model.City!</h1>*@
+    <h1 class="display-4">Welcome @Model.Username!</h1>
     <h1 class="display-4">Choose who you are</h1>
-    @*<button type="button" class=" btn btn-primary" asp-area="" asp-page="/Privacy">button1</button>*@
-    <a class="nav-link text-dark" asp-area="" asp-page="/Forms/AddLocation">Person</a>
+    <form>
+        <button style="
+        width:250px;
+        height:50px;
+        font-size:250%;
+        background-color: cadetblue;
+        border: 3px solid black;
+        font: bold 30px calibri;"
+                class="btn btn-primary align-items-md-center" asp-page="/Forms/AddLocation">
+            PERSON
+        </button>
+    </form>
     <p></p>
-    @*<button type="button" class=" btn btn-primary">button2</button>*@
-    <a class="nav-link text-dark" asp-area="" asp-page="/Forms/AddRestaurant">Restaurant</a>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form>
+        <button style="
+        width:250px;
+        height:50px;
+        font-size:250%;
+        background-color: cadetblue;
+        border: 3px solid black;
+        font: bold 30px calibri"
+                class="btn btn-primary align-items-md-center" asp-page="/Forms/AddRestaurant">
+            RESTAURANT
+        </button>
+    </form>
 </div>
+
