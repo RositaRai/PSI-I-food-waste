@@ -27,7 +27,7 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public void OnGet()
         {
-            products = ProductService.GetAll();
+            products = ProductService.GetList(RestaurantServices.nextID);
             //dependencie injection
 
         }
@@ -41,6 +41,7 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
+        
             ProductService.Add(NewProduct);
             return RedirectToAction("Get");
         }
