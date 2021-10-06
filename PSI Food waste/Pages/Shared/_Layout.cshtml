@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@*@{
+    string uss = "User";
+}*@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,8 +31,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item text-right">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Forms/LoginScreen">Login</a>
+                        </li>
                     </ul>
                 </div>
+                @*@{
+                    var user = ViewData["uss"];
+                }
+                <h6 class="col-sm-1">Welcome @user.Username</h6>
+                <button class="btn btn-primary">Logout</button>*@
             </div>
         </nav>
     </header>
