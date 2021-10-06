@@ -15,6 +15,6 @@ Essentially, restaurants post their discounts and other users see them on the ma
     - [x] Implement reading from file
     - [x] Check if user input is valid on login
 - [x] Create individual product lists for restaurants
-- [] Implement restaurant list filtering by address
-- [] Create a registration form
-- [] ...
+- [ ] Implement restaurant list filtering by address
+- [ ] Create a registration form
+- [ ] ...
