@@ -14,7 +14,7 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public Restaurant NewRestaurant {  get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("username") == null)
             {
