@@ -11,12 +11,21 @@ namespace PSI_Food_waste.Pages.Forms
         public List<Product> products { get; set; }
         public Restaurant restaurant {  get; set; }
         public static int IdTest { get; set; }
+        [BindProperty]
+        public string searchCriteria { get; set; }
+
         public void OnGet()
         {
-            restaurant = RestaurantServices.Get(IdTest);
-            products = ProductService.GetList(IdTest);
+            restaurant = RestaurantServices.Get(id : IdTest);
+            products = ProductService.GetList(id : IdTest);
         }
-        public string GlutenFreeText(Product product)
+        public void OnPost()
+        {
+            //return RedirectToPage("/Forms/RestaurantProducts", new {searchCriteria = this.searchCriteria});
+            restaurant = RestaurantServices.Get(id: IdTest);
+            products = ProductService.GetList(id: IdTest);
+        }
+        public string GlutenFreeText(Product product) 
         {
             if (product.IsGlutenFree)
                 return "Gluten Free";

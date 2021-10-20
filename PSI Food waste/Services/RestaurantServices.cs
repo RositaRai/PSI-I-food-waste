@@ -13,16 +13,14 @@ namespace PSI_Food_waste.Services
     {
         static List<Restaurant> Restaurants { get; }
 
-        public static int nextID = 1;
+        public static int nextID = 2;
 
         static RestaurantServices()
         {
             Restaurants = new List<Restaurant>()
             {
-                new Restaurant
-                {
-                    Title = "Chilli pica", Adress = "Kauno g. 15", Id = 1, WorkerID = 1 
-                }
+                new Restaurant { Title = "Chilli pica", City = "Kaunas",Adress = "Kauno g. 15", Id = 1, WorkerID = 1 },
+                new Restaurant {Title = "Charlie pica", City = "Vilnius", Adress = "Vilniaus g. ", Id = 2, WorkerID = 2 }
             };
         }
         public static List<Restaurant> GetAll() => Restaurants;
@@ -42,6 +40,21 @@ namespace PSI_Food_waste.Services
                 return;
 
             Restaurants[index] = Restaurant;
+        }
+    }
+    public static class RestaurantServicesExtension
+    {
+        public static List<T> Where<T>(this List<T> items, Func<T, string, bool> condition, string conditionString)
+        {
+            var list = new List<T>();
+            foreach (var item in items)
+            {
+                if (condition(item, conditionString))
+                {
+                    list.Add(item);
+                }
+            }
+            return list;
         }
     }
 }

@@ -1,0 +1,81 @@
+﻿@page
+@model PSI_Food_waste.Pages.Forms.Sandbox
+@{
+}
+
+
+@{     @*var query =
+        Model.restaurants.GroupJoin(products,
+                                    restaurant => restaurant,
+                                    product => product.RestId)*@
+//var query =
+//    Model.restaurants.GroupJoin(Model.products,
+//                                restaurant => restaurant,
+//                                product => product.RestId,
+//                                (restaurant, productCollection) =>
+//                                     new
+//                                     {
+//                                         RestaurantName = restaurant.Title,
+//                                         Pets = productCollection.Select(product =>  product.RestId)
+//                                     });
+//foreach (var obj in query)
+//    {
+
+//    }
+    <h4>group join</h4>
+
+    var query = from restaurant in Model.restaurants
+                join product in Model.products on restaurant.Id equals product.RestId into productCollection
+                select new { RestaurantName = restaurant.Title, Products = productCollection };
+
+    foreach (var v in query)
+    {
+                <p>@v.RestaurantName</p>
+        foreach (Models.Product product in v.Products)
+        {
+                    <p>---@product.Name</p>
+        }
+    }
+
+    <h4>indexed demo</h4>
+       
+    var demoCollection = new Models.IndexDemo<string>();
+
+    demoCollection[0] = "hello";
+    demoCollection[1] = ", ";
+    demoCollection[2] = "world";
+
+    for (int i = 0; i < 4; ++i)
+    {
+        <label>@demoCollection[i]</label>
+    }
+
+    <h4>struct demo</h4>
+
+    List<Models.StructDemo> users = new List<Models.StructDemo>()
+    {
+        new Models.StructDemo("User"),
+        new Models.StructDemo("User", "2"),
+        new Models.StructDemo("User", "3", 10),
+        new Models.StructDemo("User4", age: 10),
+        new Models.StructDemo("User5", age: 10),
+        new Models.StructDemo(lname: "6", age: 10, name: "User")
+    };
+
+    foreach(var user in users)
+            {
+                <p>@user.ToString()</p>
+            }
+
+    <h4>type conversion demo</h4>
+    double _double  = 2.5;
+    int _int = (int)_double;
+    <p>@_double</p>
+
+    var first = 32769;
+    short second = (short)first;
+    <p>@second</p>
+
+    long _long = first;
+    <p>@_long</p>
+}
