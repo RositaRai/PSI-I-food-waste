@@ -31,21 +31,39 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item text-right">
+                        @*<li class="nav-item text-right">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Forms/LoginScreen">Login</a>
                         </li>
                         <li class="nav-item text-right">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Forms/RegisterScreen">Register</a>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
                 @* to make a logout in layout, you need to create additional page, to which the button redirects
-                    then you make all the necessary actions in that new page*@
+        then you make all the necessary actions in that new page*@
                 @*@{
-                    var user = ViewData["uss"];
+            var user = ViewData["uss"];
+        }
+        <h6 class="col-sm-1">Welcome @user.Username</h6>*@
+                @{
+                    if (ViewData["User"] != null)
+                    {
+                        <h6 class="col-sm-1">@ViewData["User"]</h6>
+                        <form>
+                            <button class="btn btn-danger" asp-page="/Forms/LogoutScreen">Logout</button>
+                        </form>
+                    }
+
+                    else
+                    {
+                        <form class="col-sm-1">
+                            <button class="btn btn-primary" asp-page="/Forms/LoginScreen">Login</button>
+                        </form>
+                        <form>
+                            <button class="btn btn-primary" asp-page="/Forms/RegisterScreen">Register</button>
+                        </form>
+                    }
                 }
-                <h6 class="col-sm-1">Welcome @user.Username</h6>
-                <button class="btn btn-primary">Logout</button>*@
             </div>
         </nav>
     </header>
