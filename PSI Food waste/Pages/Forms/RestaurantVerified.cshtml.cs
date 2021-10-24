@@ -27,6 +27,7 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public void OnGet()
         {
+            ViewData["User"] = HttpContext.Session.GetString(key: "username");
             ProductService.SortProducts();
             products = ProductService.GetList(RestaurantServices.nextID);
             //dependencie injection

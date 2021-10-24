@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PSI_Food_waste.Models;
@@ -16,11 +17,13 @@ namespace PSI_Food_waste.Pages.Forms
 
         public void OnGet()
         {
+            ViewData["User"] = HttpContext.Session.GetString(key: "username");
             restaurant = RestaurantServices.Get(id : IdTest);
             products = ProductService.GetList(id : IdTest);
         }
         public void OnPost()
         {
+            ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //return RedirectToPage("/Forms/RestaurantProducts", new {searchCriteria = this.searchCriteria});
             restaurant = RestaurantServices.Get(id: IdTest);
             products = ProductService.GetList(id: IdTest);
