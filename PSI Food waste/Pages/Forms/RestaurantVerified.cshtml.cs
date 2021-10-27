@@ -12,12 +12,15 @@ using Microsoft.AspNetCore.Http;
 
 namespace PSI_Food_waste.Pages.Forms
 {
+    
     public class RestaurantVerifiedModel : PageModel
     {
         [BindProperty]
         public Product NewProduct { get; set; }
 
         public List<Product> products;
+
+        public Action<Product> DiscountPrice = ProductService.NewPrice;
 
         public string GlutenFreeText(Product product)
         {
@@ -45,6 +48,7 @@ namespace PSI_Food_waste.Pages.Forms
             }
         
             ProductService.Add(NewProduct);
+            DiscountPrice.Invoke(NewProduct);
             return RedirectToAction("Get");
         }
         public IActionResult OnPostDelete(int id)
