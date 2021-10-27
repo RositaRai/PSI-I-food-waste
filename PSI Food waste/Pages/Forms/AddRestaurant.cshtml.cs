@@ -16,7 +16,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         public IActionResult OnGet()
         {
-
+            ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //authorization API
             if (HttpContext.Session.GetString("username") == null)
             {

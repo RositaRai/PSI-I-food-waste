@@ -38,7 +38,7 @@
     }
 
     <h4>indexed demo</h4>
-       
+
     var demoCollection = new Models.IndexDemo<string>();
 
     demoCollection[0] = "hello";
@@ -62,13 +62,13 @@
         new Models.StructDemo(lname: "6", age: 10, name: "User")
     };
 
-    foreach(var user in users)
-            {
+    foreach (var user in users)
+    {
                 <p>@user.ToString()</p>
-            }
+    }
 
     <h4>type conversion demo</h4>
-    double _double  = 2.5;
+    double _double = 2.5;
     int _int = (int)_double;
     <p>@_double</p>
 
@@ -78,4 +78,40 @@
 
     long _long = first;
     <p>@_long</p>
+
+    var list = new List<int> { 1, 2, 3, 4, 5 };
+    var doubleList = new List<double> { 1.2, 2.4, 3.5, 4.4, 5.4 };
+    @*foreach (var item in list)
+    {
+                <p>@item</p>
+    }*@
+
+int TotalSum(List<double> list)
+{
+    int sum = 0;
+    foreach (var item in list)
+    {
+        sum += (int)item;
+    }
+    return sum;
+}
+
+    <p>@TotalSum(doubleList)</p>
+
+
+
+
+
+    double price = 10;
+    int discount = 25;
+
+    double NewPrice(double price, int discount)
+    {
+        return price * (1 - (double)discount / 100);
+    }
+
+    <p>@NewPrice(price, discount)</p>
+
+
+    <p>@((int)(2.4 * 2))</p>
 }

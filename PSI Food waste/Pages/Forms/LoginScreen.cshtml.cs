@@ -28,6 +28,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         public void OnGet()
         {
+            ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //RegUsers = RegisterService.GetAll();
             Msg = "";
         }
