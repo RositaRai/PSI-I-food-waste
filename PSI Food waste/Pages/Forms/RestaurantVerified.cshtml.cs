@@ -20,23 +20,11 @@ namespace PSI_Food_waste.Pages.Forms
 
         public List<Product> products;
 
-        public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  //TODO: fix error
-
-        //public ProductService productService = new ProductService();
+        public Action<Product> DiscountPrice;
 
         public IRestaurantRepository _restaurantRepository;
 
-        //public RestaurantVerifiedModel(IRestaurantRepository restaurantRepository)
-        //{
-        //    _restaurantRepository = restaurantRepository;
-        //}
-
         public IProductRepository _productRepository;
-
-        //public RestaurantVerifiedModel(IProductRepository productRepository)
-        //{
-        //    _productRepository = productRepository;
-        //}
 
         public RestaurantVerifiedModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
         {
@@ -55,7 +43,7 @@ namespace PSI_Food_waste.Pages.Forms
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             _productRepository.SortProducts();
-            products = _productRepository.GetList(_restaurantRepository.GetNextID());
+            products = _productRepository.GetList(_restaurantRepository.GetID());
 
         }
         public IActionResult OnPost()

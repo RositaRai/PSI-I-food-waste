@@ -40,11 +40,5 @@ namespace PSI_Food_waste.Services
             return users;
         }
     }
-    //public static class AddingExtension
-    //{
-    //    public static void AddToList(this RegisterForm user)
-    //    {
-    //        //Users.Add(user);
-    //    }
-    //}
+
 }

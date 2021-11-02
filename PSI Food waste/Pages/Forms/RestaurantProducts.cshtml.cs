@@ -17,17 +17,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         public IRestaurantRepository _restaurantRepository;
 
-        //public RestaurantProductsModel(IRestaurantRepository restaurantRepository)
-        //{
-        //    _restaurantRepository = restaurantRepository;
-        //}
-
         public IProductRepository _productRepository;
-
-        //public RestaurantProductsModel(IProductRepository productRepository)
-        //{
-        //    _productRepository = productRepository;
-        //}
 
         public RestaurantProductsModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
         {
