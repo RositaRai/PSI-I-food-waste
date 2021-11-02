@@ -9,13 +9,13 @@ using PSI_Food_waste.Services;
 
 namespace PSI_Food_waste.Services
 {
-    public static class RestaurantServices
+    public class RestaurantServices : IRestaurantRepository
     {
-        static List<Restaurant> Restaurants { get; }
+        List<Restaurant> Restaurants { get; }
 
-        public static int nextID = 2;
+        public int nextID = 2;
 
-        static RestaurantServices()
+        public RestaurantServices()
         {
             Restaurants = new List<Restaurant>()
             {
@@ -23,23 +23,28 @@ namespace PSI_Food_waste.Services
                 new Restaurant {Title = "Charlie pica", City = "Vilnius", Adress = "Vilniaus g. ", Id = 2, WorkerID = 2 }
             };
         }
-        public static List<Restaurant> GetAll() => Restaurants;
-        public static Restaurant Get(int id) => Restaurants.FirstOrDefault(p => p.Id  == id);
+        public List<Restaurant> GetAll() => Restaurants;
+        public Restaurant Get(int id) => Restaurants.FirstOrDefault(p => p.Id  == id);
 
-        public static void Add(Restaurant Restaurant)
+        public void Add(Restaurant Restaurant)
         {
  
             Restaurant.Id = ++nextID;
             Restaurants.Add(Restaurant);
 
         }
-        public static void Update(Restaurant Restaurant)
+        public void Update(Restaurant Restaurant)
         {
             var index = Restaurants.FindIndex(p => p.Id == Restaurant.Id);
             if (index == -1)
                 return;
 
             Restaurants[index] = Restaurant;
+        }
+
+        public int GetID()
+        {
+            return nextID;
         }
     }
     public static class RestaurantServicesExtension
