@@ -36,7 +36,7 @@ namespace PSI_Food_waste.Models
 
             Product otherProduct = obj as Product;
             if (otherProduct != null)
-                return this.Price.CompareTo(otherProduct.Price);
+                return this.DiscountedPrice.CompareTo(otherProduct.DiscountedPrice);
             else
                 throw new ArgumentException("Object is not a Product");
         }
