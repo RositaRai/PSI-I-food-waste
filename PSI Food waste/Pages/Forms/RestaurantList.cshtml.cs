@@ -19,11 +19,20 @@ namespace PSI_Food_waste.Pages.Forms
 
         public static string UserLocation { get; set; }
 
+        public IRestaurantRepository _restaurantRepository;
+
+        public RestaurantListModel(IRestaurantRepository restaurantRepository)
+        {
+            _restaurantRepository = restaurantRepository;
+        }
+
+
         public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             SearchByCity = UserLocation;
-            restaurants = RestaurantServices.GetAll();
+            //restaurants = RestaurantServices.GetAll();
+            restaurants = _restaurantRepository.GetAll();
 
             if (SearchByCity == "None")
             {
@@ -36,7 +45,8 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public void OnPostFilter()
         {
-            restaurants = RestaurantServices.GetAll();
+            //restaurants = RestaurantServices.GetAll();
+            restaurants = _restaurantRepository.GetAll();
             if (SearchByCity == "None")
             {
 

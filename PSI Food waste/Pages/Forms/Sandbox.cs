@@ -16,11 +16,31 @@ namespace PSI_Food_waste.Pages.Forms
         public List<Restaurant> restaurants { get; set; }
 
 
+        public IRestaurantRepository _restaurantRepository;
+
+        //public Sandbox(IRestaurantRepository restaurantRepository)
+        //{
+        //    _restaurantRepository = restaurantRepository;
+        //}
+
+        public IProductRepository _productRepository;
+
+        //public Sandbox(IProductRepository productRepository)
+        //{
+        //    _productRepository = productRepository;
+        //}
+
+        public Sandbox(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
+        {
+            _productRepository = productRepository;
+            _restaurantRepository = restaurantRepository;
+        }
+
         public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            restaurants = RestaurantServices.GetAll();
-            products = ProductService.GetAll();
+            restaurants = _restaurantRepository.GetAll();
+            products = _productRepository.GetAll();
         }
     }
 }
