@@ -23,14 +23,6 @@ namespace PSI_Food_waste
             Configuration = configuration;
         }
 
-        //public IProductRepository _productRepository;
-
-        //public Startup(IConfiguration configuration, IProductRepository productRepository)
-        //{
-        //    Configuration = configuration;
-        //    _productRepository = productRepository;
-        //}
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -38,7 +30,6 @@ namespace PSI_Food_waste
         {
             services.AddRazorPages();
             services.AddSession();
-            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
             services.AddSingleton<IProductRepository, ProductService>();
             services.AddSingleton<IRestaurantRepository, RestaurantServices>();
         }
