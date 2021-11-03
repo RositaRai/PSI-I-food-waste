@@ -30,6 +30,8 @@ namespace PSI_Food_waste
         {
             services.AddRazorPages();
             services.AddSession();
+            services.AddSingleton<IProductRepository, ProductService>();
+            services.AddSingleton<IRestaurantRepository, RestaurantServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,10 +66,12 @@ namespace PSI_Food_waste
             //string json = JsonConvert.SerializeObject(ProductService.GetAll(), Formatting.Indented);
             //File.WriteAllText(path, json);
 
-            string initialData = (Directory.GetCurrentDirectory() + "\\text.json");
-            string json = File.ReadAllText(@initialData);
-            List<Product> myObj = JsonConvert.DeserializeObject<List<Product>>(json);
-            ProductService.SetAll(myObj);
+
+
+            //string initialData = (Directory.GetCurrentDirectory() + "\\text.json");
+            //string json = File.ReadAllText(@initialData);
+            //List<Product> myObj = JsonConvert.DeserializeObject<List<Product>>(json);
+            //_productRepository.SetAll(myObj);
 
         }
     }

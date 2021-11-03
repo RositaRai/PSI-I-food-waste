@@ -20,7 +20,18 @@ namespace PSI_Food_waste.Pages.Forms
 
         public List<Product> products;
 
-        public Action<Product> DiscountPrice = ProductService.NewPrice;
+        public Action<Product> DiscountPrice;
+
+        public IRestaurantRepository _restaurantRepository;
+
+        public IProductRepository _productRepository;
+
+        public RestaurantVerifiedModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
+        {
+            _productRepository = productRepository;
+            _restaurantRepository = restaurantRepository;
+            DiscountPrice = _productRepository.NewPrice;
+        }
 
         public string GlutenFreeText(Product product)
         {
@@ -31,9 +42,8 @@ namespace PSI_Food_waste.Pages.Forms
         public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            ProductService.SortProducts();
-            products = ProductService.GetList(RestaurantServices.nextID);
-            //dependencie injection
+            _productRepository.SortProducts();
+            products = _productRepository.GetList(_restaurantRepository.GetID());
 
         }
         public IActionResult OnPost()
@@ -46,8 +56,8 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
-        
-            ProductService.Add(NewProduct);
+
+            _productRepository.Add(NewProduct);
             DiscountPrice.Invoke(NewProduct);
             return RedirectToAction("Get");
         }
@@ -57,7 +67,7 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return RedirectToPage("/Forms/LoginScreen");
             }
-            ProductService.Delete(id);
+            _productRepository.Delete(id);
             return RedirectToAction("Get");
         }
     }

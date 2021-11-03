@@ -15,18 +15,30 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public string searchCriteria { get; set; }
 
+        public IRestaurantRepository _restaurantRepository;
+
+        public IProductRepository _productRepository;
+
+        public RestaurantProductsModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
+        {
+            _productRepository = productRepository;
+            _restaurantRepository = restaurantRepository;
+        }
+
         public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            restaurant = RestaurantServices.Get(id : IdTest);
-            products = ProductService.GetList(id : IdTest);
+            restaurant = _restaurantRepository.Get(id : IdTest);
+            products = _productRepository.GetList(id : IdTest);
         }
         public void OnPost()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //return RedirectToPage("/Forms/RestaurantProducts", new {searchCriteria = this.searchCriteria});
-            restaurant = RestaurantServices.Get(id: IdTest);
-            products = ProductService.GetList(id: IdTest);
+            //restaurant = RestaurantServices.Get(id: IdTest);
+            restaurant = _restaurantRepository.Get(id: IdTest);
+            //products = ProductService.GetList(id: IdTest);
+            products = _productRepository.GetList(id: IdTest);
         }
         public string GlutenFreeText(Product product) 
         {

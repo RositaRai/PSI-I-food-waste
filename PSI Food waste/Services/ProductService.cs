@@ -11,11 +11,11 @@ using Newtonsoft.Json;
 
 namespace PSI_Food_waste.Services
 {
-    public class ProductService
+    public class ProductService : IProductRepository
     {
-        static List<Product> Products { get; set; }
-        static List<Product> IdProducts = new List<Product>();
-        static int nextId = 3;
+        List<Product> Products { get; set; }
+        List<Product> IdProducts = new List<Product>();
+        int nextId = 3;
 
         //static ProductService()
         //{
@@ -26,37 +26,57 @@ namespace PSI_Food_waste.Services
         //    };
         //}
 
-        public static List<Product> GetAll() => Products;
+        
 
-        public static void SetAll(List<Product> products)
+
+        public IRestaurantRepository _restaurantRepository;
+
+        public ProductService(IRestaurantRepository restaurantRepository)
+        {
+            _restaurantRepository = restaurantRepository;
+            string initialData = (Directory.GetCurrentDirectory() + "\\text.json");
+            string json = File.ReadAllText(@initialData);
+            List<Product> myObj = JsonConvert.DeserializeObject<List<Product>>(json);
+            Products = myObj;
+        }
+
+        public List<Product> GetAll() => Products;
+
+        public void SetAll(List<Product> products)
         {
             Products = products;
         }
 
-        public static Product Get(int id) => Products.FirstOrDefault(p => p.PrId == id);
+        public Product Get(int id) => Products.FirstOrDefault(p => p.PrId == id);
 
-        public static List<Product> GetList(int id)
+        public List<Product> GetList(int id)
         {
+
             IdProducts.Clear();
-           foreach(Product prod in Products)
+           foreach(Product prod in Products ?? new List<Product>())
             {
                 if(prod.RestId == id)
                     IdProducts.Add(prod);
             }
             return IdProducts;
         }
-        public static void AddToList(Product product)
+        public void AddToList(Product product)
         {
             IdProducts.Add(product);
         }
-        public static void Add(Product product)
+        public void Add(Product product)
         {
-            product.RestId = RestaurantServices.nextID;
+            if (Products == null)
+            {
+                Products = new List<Product>();
+            }
+            product.RestId = _restaurantRepository.GetID();
             product.PrId = nextId++;
             Products.Add(product);
+            
         }
 
-        public static void Delete(int id)
+        public void Delete(int id)
         {
             var product = Get(id);
             if (product is null)
@@ -64,7 +84,7 @@ namespace PSI_Food_waste.Services
 
             Products.Remove(product);
         }
-        public static void Update(Product product)
+        public void Update(Product product)
         {
             var index = Products.FindIndex(p => p.PrId == product.PrId);
             if (index == -1)
@@ -73,13 +93,13 @@ namespace PSI_Food_waste.Services
             Products[index] = product;
 
         }
-        public static void NewPrice(Product product)
+        public void NewPrice(Product product)
         {
             product.DiscountedPrice = product.Price * (1 - (double)product.Discount/ 100);
         }
-        public static void SortProducts()
+        public void SortProducts()
         {
-            Products.Sort();
+            Products?.Sort();
         }
     }
 }
