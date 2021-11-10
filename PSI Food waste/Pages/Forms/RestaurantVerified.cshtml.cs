@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PSI_Food_waste.Pages.Forms
 {
-    
+
     public class RestaurantVerifiedModel : PageModel
     {
         [BindProperty]
@@ -20,7 +20,14 @@ namespace PSI_Food_waste.Pages.Forms
 
         public List<Product> products;
 
-        public Action<Product> DiscountPrice;
+        [BindProperty]
+        public static string Msg { get; set; } = "";
+
+        public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  //TODO: fix error
+
+        public event EventHandler<ProductArgs> OnAddedProduct;
+        public event EventHandler<ProductArgs> OnRemovedProduct;
+
 
         public IRestaurantRepository _restaurantRepository;
 
@@ -48,7 +55,8 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPost()
         {
-            if(HttpContext.Session.GetString("username") == null)
+            OnAddedProduct += RestaurantVerifiedModel_OnAddedProduct;
+            if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
             }
@@ -59,16 +67,40 @@ namespace PSI_Food_waste.Pages.Forms
 
             _productRepository.Add(NewProduct);
             DiscountPrice.Invoke(NewProduct);
+            OnAddedProduct?.Invoke(this, new ProductArgs(NewProduct.Name, "has been added to the product list"));
             return RedirectToAction("Get");
+        }
+        private void RestaurantVerifiedModel_OnAddedProduct(object sender, ProductArgs e)
+        {
+            Msg = e.Name + " " + e.Msg;
         }
         public IActionResult OnPostDelete(int id)
         {
+            OnRemovedProduct += RestaurantVerifiedModel_OnRemovedProduct;
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
             }
+            Product DelProduct = _productRepository.Get(id);
+            OnRemovedProduct?.Invoke(this, new ProductArgs(DelProduct.Name, "was removed from the product list"));
             _productRepository.Delete(id);
             return RedirectToAction("Get");
+        }
+
+        private void RestaurantVerifiedModel_OnRemovedProduct(object sender, ProductArgs e)
+        {
+            Msg = e.Name + " " + e.Msg;
+        }
+    }
+    public class ProductArgs : EventArgs
+    {
+        public string Msg;
+
+        public string Name;
+        public ProductArgs(string name, string msg)
+        {
+            Msg = msg;
+            Name = name;
         }
     }
 }
