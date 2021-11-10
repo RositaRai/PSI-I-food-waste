@@ -11,34 +11,34 @@ namespace PSI_Food_waste.Services
 {
     public static class RegisterService
     {
-        static RegisteredUser<RegisterForm> Users { get; set; }
+        static public Lazy<RegisteredUser<RegisterForm>> Users { get; set; }
 
         static RegisterService()
         {
-            Users = new RegisteredUser<RegisterForm>();
-            Users.Add(new RegisterForm("test", "test", 1));
+            Users = new Lazy<RegisteredUser<RegisterForm>>();
+            //Users.Add(new RegisterForm("test", "test", 1));
         }
 
-        public static RegisteredUser<RegisterForm> GetAll() => Users;
+        public static RegisteredUser<RegisterForm> GetAll() => Users.Value;
 
         public static void SetAll(RegisteredUser<RegisterForm> users)
         {
-            Users = users;
+            Users = new Lazy<RegisteredUser<RegisterForm>>(() => users);
         }
 
-        //public static void AddToList(this RegisterForm user)
-        //{
-        //    Users.Add(user);
-        //}
-    }
-
-    public static class AddingExtension
-    {
-        public static RegisteredUser<RegisterForm> AddToList(this RegisterForm user, RegisteredUser<RegisterForm> users)
+        public static void AddToList(this RegisterForm user)
         {
-            users.Add(user);
-            return users;
+            Users.Value.Add(user);
         }
     }
+
+    //public static class AddingExtension
+    //{
+    //    public static RegisteredUser<RegisterForm> AddToList(this RegisterForm user, RegisteredUser<RegisterForm> users)
+    //    {
+    //        users.Add(user);
+    //        return users;
+    //    }
+    //}
 
 }

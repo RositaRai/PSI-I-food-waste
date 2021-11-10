@@ -63,8 +63,8 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 RegisteredUser = new RegisterForm(Name, pass : Pass, favNum : Num);
                 //this.RegisteredUser.AddToList();
-                RegisterService.SetAll(this.RegisteredUser.AddToList(RegisteredUsers));
-                //RegisterService.AddToList(RegisteredUser);
+                //RegisterService.SetAll(this.RegisteredUser.AddToList(RegisteredUsers));
+                RegisterService.AddToList(RegisteredUser);
                 ErrorMsg = "";
                 Msg = "Successfully registered";
                 return Page();
