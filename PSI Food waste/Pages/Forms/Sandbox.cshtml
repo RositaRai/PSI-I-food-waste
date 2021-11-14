@@ -4,6 +4,19 @@
 }
 
 
+<p>@Model.Msg1</p>
+<p>@Model.Msg2</p>
+
+<form method="post" asp-page-handler="Select1">
+    <button class="btn btn-primary">Select 1</button>
+</form>
+<form method="post" asp-page-handler="Select2">
+    <button class="btn btn-primary">Select 2</button>
+</form>
+<form method="post" asp-page-handler="Select3">
+    <button class="btn btn-primary">Select 3</button>
+</form>
+
 @{     @*var query =
         Model.restaurants.GroupJoin(products,
                                     restaurant => restaurant,
@@ -22,7 +35,7 @@
 //    {
 
 //    }
-    <h4>group join</h4>
+    @*<h4>group join</h4>
 
     var query = from restaurant in Model.restaurants
                 join product in Model.products on restaurant.Id equals product.RestId into productCollection
@@ -35,7 +48,7 @@
         {
                     <p>---@product.Name</p>
         }
-    }
+    }*@
 
     <h4>indexed demo</h4>
 
