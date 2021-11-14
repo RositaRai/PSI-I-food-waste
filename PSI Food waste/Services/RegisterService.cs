@@ -9,7 +9,7 @@ using PSI_Food_waste.Models;
 
 namespace PSI_Food_waste.Services
 {
-    public static class RegisterService
+    public static class RegisterService         //TODO: change from static to DI
     {
         static RegisteredUser<RegisterForm> Users { get; set; }
 
