@@ -11,23 +11,24 @@ namespace PSI_Food_waste.Services
 {
     public static class RegisterService
     {
-        static RegisteredUser<RegisterForm> Users { get; set; }
+        static public Lazy<RegisteredUser<RegisterForm>> Users { get; set; }
 
         static RegisterService()
         {
-            Users = new RegisteredUser<RegisterForm>();
-            Users.Add(new RegisterForm(new List<Restaurant>(), "abc@gmail.com", "test", "test", 1));
+            Users = new Lazy<RegisteredUser<RegisterForm>>();
+            //Users = new RegisteredUser<RegisterForm>();
+            //Users.Add(new RegisterForm(new List<Restaurant>(), "abc@gmail.com", "test", "test", 1));
         }
 
-        public static RegisteredUser<RegisterForm> GetAll() => Users;
+        public static RegisteredUser<RegisterForm> GetAll() => Users.Value;
 
         public static RegisterForm GetUserData(string email)
         {
-            for (int i = 0; i < Users.Length(); i++)
+            for (int i = 0; i < Users.Value.Length(); i++)
             {
-                if (Users[i].Email == email)
+                if (Users.Value[i].Email == email)
                 {
-                    return Users[i];
+                    return Users.Value[i];
                 }
             }
             //should never happen :)
@@ -35,16 +36,21 @@ namespace PSI_Food_waste.Services
         }
         public static void SetAll(RegisteredUser<RegisterForm> users)
         {
-            Users = users;
+            Users = new Lazy<RegisteredUser<RegisterForm>>(() => users);
         }
-    }
-    public static class AddingExtension
-    {
-        public static RegisteredUser<RegisterForm> AddToList(this RegisterForm user, RegisteredUser<RegisterForm> users)
+
+        public static void AddToList(this RegisterForm user)
         {
-            users.Add(user);
-            return users;
+            Users.Value.Add(user);
         }
+    
+    //public static class AddingExtension
+    //{
+    //    public static RegisteredUser<RegisterForm> AddToList(this RegisterForm user, RegisteredUser<RegisterForm> users)
+    //    {
+    //        users.Add(user);
+    //        return users;
+    //    }
     }
 
 }

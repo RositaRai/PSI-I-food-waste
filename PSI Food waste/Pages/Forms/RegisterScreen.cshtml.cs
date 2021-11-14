@@ -87,7 +87,7 @@ namespace PSI_Food_waste.Pages.Forms
             else
             {
                 RegisteredUser = new RegisterForm(new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
-                RegisterService.SetAll(this.RegisteredUser.AddToList(RegisteredUsers));
+                //RegisterService.SetAll(this.RegisteredUser.AddToList(RegisteredUsers));
                 RegistrationEventNotifier var = new(Email);
                 return RedirectToPage("/Forms/LoginScreen");
             }
