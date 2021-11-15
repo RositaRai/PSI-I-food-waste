@@ -21,17 +21,20 @@ namespace PSI_Food_waste.Pages.Forms
 
         public IProductRepository _productRepository;
 
-        public Sandbox(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
+        public IRegisterRepository _registerRepository;
+
+        public Sandbox(IProductRepository productRepository, IRestaurantRepository restaurantRepository, IRegisterRepository registerRepository)
         {
             _productRepository = productRepository;
             _restaurantRepository = restaurantRepository;
+            _registerRepository = registerRepository;
         }
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             restaurants = _restaurantRepository.GetAll();
-            products = _productRepository.GetAll();
+            products =  _productRepository.GetAll();
         }
 
         [BindProperty]

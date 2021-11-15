@@ -20,11 +20,11 @@
 
 @{
     <p>is lazy initialized</p>
-    <p>@Services.RegisterService.Users.IsValueCreated</p>
+    <p>@Model._registerRepository.GetUsersObject().IsValueCreated</p>
 }
 
 
-
+@{ 
 //var query =
 //    Model.restaurants.GroupJoin(Model.products,
 //                                restaurant => restaurant,

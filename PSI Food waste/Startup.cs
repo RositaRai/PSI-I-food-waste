@@ -32,6 +32,7 @@ namespace PSI_Food_waste
             services.AddSession();
             services.AddSingleton<IProductRepository, ProductService>();
             services.AddSingleton<IRestaurantRepository, RestaurantServices>();
+            services.AddSingleton<IRegisterRepository, RegisterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

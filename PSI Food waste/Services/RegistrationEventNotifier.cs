@@ -14,9 +14,9 @@ namespace PSI_Food_waste.Services
 {
     public class RegistrationEventNotifier
     {
-        public RegistrationEventNotifier(string mail)
+        public RegistrationEventNotifier(string mail, IRegisterRepository registerRepository)
         {
-            RegisterScreenModel RegisterScreen = new RegisterScreenModel();
+            RegisterScreenModel RegisterScreen = new RegisterScreenModel(registerRepository);
             RegisterScreen.OnSucessfullRegistrationEvent += RegisterScreen_OnSucessfullRegistrationEvent1;
             RegisterScreen.RaiseEvent(mail);
         }
