@@ -49,17 +49,37 @@ namespace PSI_Food_waste.Services
 
         public Product Get(int id) => Products.FirstOrDefault(p => p.PrId == id);
 
-        public List<Product> GetList(int id)
+        public async Task<List<Product>> GetList(int id)                           
         {
+            IEnumerable<Product> query = await Task.Run(() => QueryRestaurantProducts(id));
 
             IdProducts.Clear();
-           foreach(Product prod in Products ?? new List<Product>())
+            if (query.Any())
             {
-                if(prod.RestId == id)
-                    IdProducts.Add(prod);
+                foreach (var rez in query)
+                {
+                    IdProducts.Add(rez);
+                }
             }
             return IdProducts;
+           // IdProducts.Clear();
+           //foreach(Product prod in Products ?? new List<Product>())
+           // {
+           //     if(prod.RestId == id)
+           //         IdProducts.Add(prod);
+           // }
+           // return IdProducts;
         }
+
+        private IEnumerable<Product> QueryRestaurantProducts(int id)
+        {
+            IEnumerable<Product> query = from Product product in Products          
+                                         where product.RestId == id
+                                         select product;
+            return query;
+        }
+
+
         public void AddToList(Product product)
         {
             IdProducts.Add(product);

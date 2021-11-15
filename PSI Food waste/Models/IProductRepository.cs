@@ -10,7 +10,7 @@ namespace PSI_Food_waste.Models
 {
     public interface IProductRepository
     {
-        public List<Product> GetList(int id);
+        public Task<List<Product>> GetList(int id);
         public void SortProducts();
 
         public void Add(Product product);
