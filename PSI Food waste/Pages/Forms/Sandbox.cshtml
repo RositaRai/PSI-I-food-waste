@@ -17,10 +17,14 @@
     <button class="btn btn-primary">Select 3</button>
 </form>
 
-@{     @*var query =
-        Model.restaurants.GroupJoin(products,
-                                    restaurant => restaurant,
-                                    product => product.RestId)*@
+
+@{
+    <p>is lazy initialized</p>
+    <p>@Services.RegisterService.Users.IsValueCreated</p>
+}
+
+
+
 //var query =
 //    Model.restaurants.GroupJoin(Model.products,
 //                                restaurant => restaurant,
