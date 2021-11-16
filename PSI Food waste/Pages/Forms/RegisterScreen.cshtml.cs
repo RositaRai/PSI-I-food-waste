@@ -16,10 +16,7 @@ namespace PSI_Food_waste.Pages.Forms
 {
     public class RegisterScreenModel : PageModel
     {
-        
-
-        public event EventHandler<string> OnSucessfullRegistrationEvent;
-
+        public  IRegistrationEventNotifier _eventNotifier;
         public RegisteredUser<RegisterForm> RegisteredUsers { get; set; }/* = new RegisteredUser<RegisterForm>();*/
 
         public RegisterForm RegisteredUser { get; set; }
@@ -40,7 +37,10 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public string Msg { get; set; }
         public string ErrorMsg { get; set; }
-
+        public RegisterScreenModel(IRegistrationEventNotifier eventNotifier)
+        {
+            _eventNotifier = eventNotifier;
+        }
         public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
@@ -88,13 +88,9 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 RegisteredUser = new RegisterForm(new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
                 //RegisterService.SetAll(this.RegisteredUser.AddToList(RegisteredUsers));
-                RegistrationEventNotifier var = new(Email);
+                _eventNotifier.RaiseEvent(this, Email);
                 return RedirectToPage("/Forms/LoginScreen");
             }
-        }
-        public void RaiseEvent(string mail)
-        {
-            OnSucessfullRegistrationEvent?.Invoke(this, mail);
         }
     }
 }

@@ -12,16 +12,16 @@ using System.Net;
 
 namespace PSI_Food_waste.Services
 {
-    public class RegistrationEventNotifier
+    public class RegistrationEventNotifier : IRegistrationEventNotifier
     {
-        public RegistrationEventNotifier(string mail)
+        public event EventHandler<string> SuccessfulRegistrationEvent;
+        public void RaiseEvent(object sender, string e)
         {
-            RegisterScreenModel RegisterScreen = new RegisterScreenModel();
-            RegisterScreen.OnSucessfullRegistrationEvent += RegisterScreen_OnSucessfullRegistrationEvent1;
-            RegisterScreen.RaiseEvent(mail);
+            var Notifier = new RegistrationEventNotifier();
+            SuccessfulRegistrationEvent += Notifier.OnSucessfullRegistrationEvent;
+            SuccessfulRegistrationEvent?.Invoke(sender, e);
         }
-
-        private void RegisterScreen_OnSucessfullRegistrationEvent1(object sender, string e)
+        public async void OnSucessfullRegistrationEvent(object sender, string e)
         {
             string To = e;
             string Subject = "Welcome to Food Waste app!";
@@ -37,7 +37,7 @@ namespace PSI_Food_waste.Services
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential("foodwasteinc1@gmail.com", "PSI2021ABC");
             smtp.EnableSsl = true;
-            smtp.SendMailAsync(message);
+            await smtp.SendMailAsync(message);
         }
     }
 }
