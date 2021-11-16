@@ -16,9 +16,8 @@ namespace PSI_Food_waste.Pages.Forms
 {
     public class RegisterScreenModel : PageModel
     {
-        public  IRegistrationEventNotifier _eventNotifier;
+        public IRegistrationEventNotifier _eventNotifier;
         public RegisteredUser<RegisterForm> RegisteredUsers { get; set; }/* = new RegisteredUser<RegisterForm>();*/
-
         public RegisterForm RegisteredUser { get; set; }
 
         [BindProperty]
