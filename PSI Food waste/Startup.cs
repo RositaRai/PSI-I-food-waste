@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PSI_Food_waste.Services;
 using PSI_Food_waste.Models;
+using AspNetCoreHero.ToastNotification;
 
 namespace PSI_Food_waste
 {
@@ -33,6 +34,9 @@ namespace PSI_Food_waste
             services.AddSingleton<IProductRepository, ProductService>();
             services.AddSingleton<IRestaurantRepository, RestaurantServices>();
             services.AddSingleton<IRegisterRepository, RegisterService>();
+            services.AddSingleton<IRegistrationEventNotifier, RegistrationEventNotifier>();
+            services.AddTransient<INotificationEvent, NotificationEvent>();
+            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
