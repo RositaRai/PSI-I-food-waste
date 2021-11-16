@@ -49,7 +49,7 @@ namespace PSI_Food_waste.Pages.Forms
         public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            RegisteredUsers = _registerRepository.GetAll();
+            //RegisteredUsers = _registerRepository.GetAll();
             //if(RegisteredUsers == null)
             //{
             //RegisteredUsers = new RegisteredUser<RegisterForm>();
