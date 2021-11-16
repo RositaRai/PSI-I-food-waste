@@ -9,6 +9,7 @@ using PSI_Food_waste.Models;
 using PSI_Food_waste.Services;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace PSI_Food_waste.Pages.Forms
 {
@@ -25,19 +26,21 @@ namespace PSI_Food_waste.Pages.Forms
 
         public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  //TODO: fix error
 
-        public event EventHandler<ProductArgs> OnAddedProduct;
-        public event EventHandler<ProductArgs> OnRemovedProduct;
-
+        public  readonly INotyfService _notyf;
 
         public IRestaurantRepository _restaurantRepository;
 
         public IProductRepository _productRepository;
 
-        public RestaurantVerifiedModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
+        public INotificationEvent _notificationEvent;
+
+        public RestaurantVerifiedModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository, INotificationEvent notificationEvent,INotyfService notyf)
         {
             _productRepository = productRepository;
             _restaurantRepository = restaurantRepository;
             DiscountPrice = _productRepository.NewPrice;
+            _notificationEvent = notificationEvent;
+            _notyf = notyf;
         }
 
         public string GlutenFreeText(Product product)
@@ -55,7 +58,6 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPost()
         {
-            OnAddedProduct += RestaurantVerifiedModel_OnAddedProduct;
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
@@ -64,32 +66,21 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
-
+            _notificationEvent.RaiseEvent(this,NewProduct.Name, _notyf,0);
             _productRepository.Add(NewProduct);
             DiscountPrice.Invoke(NewProduct);
-            OnAddedProduct?.Invoke(this, new ProductArgs(NewProduct.Name, "has been added to the product list"));
             return RedirectToAction("Get");
         }
-        private void RestaurantVerifiedModel_OnAddedProduct(object sender, ProductArgs e)
-        {
-            Msg = e.Name + " " + e.Msg;
-        }
         public IActionResult OnPostDelete(int id)
-        {
-            OnRemovedProduct += RestaurantVerifiedModel_OnRemovedProduct;
+        {     
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
             }
             Product DelProduct = _productRepository.Get(id);
-            OnRemovedProduct?.Invoke(this, new ProductArgs(DelProduct.Name, "was removed from the product list"));
+            _notificationEvent.RaiseEvent(this, DelProduct.Name, _notyf, 1);
             _productRepository.Delete(id);
             return RedirectToAction("Get");
-        }
-
-        private void RestaurantVerifiedModel_OnRemovedProduct(object sender, ProductArgs e)
-        {
-            Msg = e.Name + " " + e.Msg;
         }
     }
     public class ProductArgs : EventArgs
