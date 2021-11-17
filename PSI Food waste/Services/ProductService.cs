@@ -34,10 +34,17 @@ namespace PSI_Food_waste.Services
         public ProductService(IRestaurantRepository restaurantRepository)
         {
             _restaurantRepository = restaurantRepository;
+            Products = new List<Product>();
+
+            //Products = ReadFile();
+        }
+
+        private List<Product> ReadFile()
+        {
             string initialData = (Directory.GetCurrentDirectory() + "\\text.json");
             string json = File.ReadAllText(@initialData);
             List<Product> myObj = JsonConvert.DeserializeObject<List<Product>>(json);
-            Products = myObj;
+            return myObj;
         }
 
         public List<Product> GetAll() => Products;
@@ -119,7 +126,11 @@ namespace PSI_Food_waste.Services
         }
         public void SortProducts()
         {
-            Products?.Sort();
+            if(!Products.Any())
+            {
+               throw new ProductListNotFoundException("list is empty");
+            }
+            Products.Sort();
         }
     }
 }
