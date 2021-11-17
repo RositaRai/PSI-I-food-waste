@@ -10,12 +10,25 @@ namespace PSI_Food_waste.Models
 {
     public class IndexDemo<T>
     {
-        private T[] array = new T[100];
+        private T[] array = new T[10];
+        int nextIndex = 0;
 
         public T this[int i]
         {
             get => array[i];
             set => array[i] = value;
+        }
+
+        public void Add(T value)
+        {
+            if (nextIndex >= array.Length)
+                throw new IndexOutOfRangeException($"The collection can hold only {array.Length} elements.");
+            array[nextIndex++] = value;
+        }
+
+        public int Length()
+        {
+            return nextIndex;
         }
     }
     public struct StructDemo

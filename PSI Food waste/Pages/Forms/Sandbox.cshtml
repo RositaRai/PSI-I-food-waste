@@ -3,18 +3,40 @@
 @{
 }
 
+<h4>exception handling</h4>
+@*<p>@Model.StringList.Length()</p>*@
+<p>@Model.ListLen</p>
+
+<form method="post" asp-page-handler="Increase">
+    <button class="btn btn-primary">Increase</button>
+</form>
+
+<p>@Model.ErrMsg</p>
+
+
+<h4>async / await</h4>
+
+<p>@Model.Msg1</p>
+<p>@Model.Msg2</p>
+
+<form method="post" asp-page-handler="Select1">
+    <button class="btn btn-primary">Select 1</button>
+</form>
+<form method="post" asp-page-handler="Select2">
+    <button class="btn btn-primary">Select 2</button>
+</form>
+<form method="post" asp-page-handler="Select3">
+    <button class="btn btn-primary">Select 3</button>
+</form>
+
 
 @{
-    <p>is lazy initialized</p>
-    <p>@Services.RegisterService.Users.IsValueCreated</p>
+    <h4>is lazy initialized</h4>
+    <p>@Model._registerRepository.GetUsersObject().IsValueCreated</p>
 }
 
 
-
-@{     @*var query =
-        Model.restaurants.GroupJoin(products,
-                                    restaurant => restaurant,
-                                    product => product.RestId)*@
+@{ 
 //var query =
 //    Model.restaurants.GroupJoin(Model.products,
 //                                restaurant => restaurant,
@@ -29,7 +51,7 @@
 //    {
 
 //    }
-    <h4>group join</h4>
+    @*<h4>group join</h4>
 
     var query = from restaurant in Model.restaurants
                 join product in Model.products on restaurant.Id equals product.RestId into productCollection
@@ -42,7 +64,7 @@
         {
                     <p>---@product.Name</p>
         }
-    }
+    }*@
 
     <h4>indexed demo</h4>
 

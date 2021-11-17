@@ -27,6 +27,13 @@ namespace PSI_Food_waste.Pages.Forms
 
         public static RegisterForm CurrentUser { get; set; }
 
+        public IRegisterRepository _registerRepository;
+
+        public LoginScreenModel(IRegisterRepository registerRepository)
+        {
+            _registerRepository = registerRepository;
+        }
+
         public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
@@ -41,7 +48,7 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
-            RegUsers = RegisterService.GetAll();
+            RegUsers = _registerRepository.GetAll();
             flag = false;
 
             for (int i = 0; i < RegUsers.Length(); i++)
@@ -50,7 +57,7 @@ namespace PSI_Food_waste.Pages.Forms
                 { 
                     if (NewUser.Password.Equals(RegUsers[i].Password))
                     {
-                        CurrentUser = RegisterService.GetUserData(RegUsers[i].Email);
+                        CurrentUser = _registerRepository.GetUserData(RegUsers[i].Email);
                         HttpContext.Session.SetString("username", RegUsers[i].Username);
                         return RedirectToPage("/Index");
                     }

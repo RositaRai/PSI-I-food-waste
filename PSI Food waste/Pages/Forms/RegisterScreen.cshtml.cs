@@ -37,14 +37,19 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public string Msg { get; set; }
         public string ErrorMsg { get; set; }
-        public RegisterScreenModel(IRegistrationEventNotifier eventNotifier)
+
+        public IRegisterRepository _registerRepository;
+
+        public RegisterScreenModel(IRegistrationEventNotifier eventNotifier, IRegisterRepository registerRepository)
         {
             _eventNotifier = eventNotifier;
+			_registerRepository = registerRepository;
         }
+		
         public void OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            RegisteredUsers = RegisterService.GetAll();
+            //RegisteredUsers = _registerRepository.GetAll();
             //if(RegisteredUsers == null)
             //{
             //RegisteredUsers = new RegisteredUser<RegisterForm>();
@@ -60,7 +65,7 @@ namespace PSI_Food_waste.Pages.Forms
             // password validation
             Regex regex2 = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[\@$!%*#?&])[A-Za-z\d\@$!%*#?&]{8,}$");
 
-            RegisteredUsers = RegisterService.GetAll();
+            RegisteredUsers = _registerRepository.GetAll();
             if (Email == null || !regex3.IsMatch(Email))
             {
                 ErrorMsg = "Incorrect Email";
@@ -88,6 +93,17 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 RegisteredUser = new RegisterForm(new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
                 //RegisterService.SetAll(this.RegisteredUser.AddToList(RegisteredUsers));
+
+                try
+                {
+                    _registerRepository.AddToList(RegisteredUser);
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    ErrorMsg = ex.Message;
+                    return Page();
+                }
+                
                 _eventNotifier.RaiseEvent(this, Email);
                 return RedirectToPage("/Forms/LoginScreen");
             }

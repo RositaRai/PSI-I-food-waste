@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PSI_Food_waste.Models;
 using PSI_Food_waste.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PSI_Food_waste.Pages.Forms
 {
@@ -25,20 +26,20 @@ namespace PSI_Food_waste.Pages.Forms
             _restaurantRepository = restaurantRepository;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             restaurant = _restaurantRepository.Get(id : IdTest);
-            products = _productRepository.GetList(id : IdTest);
+            products = await _productRepository.GetList(id : IdTest);
         }
-        public void OnPost()
+        public async Task OnPostAsync()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //return RedirectToPage("/Forms/RestaurantProducts", new {searchCriteria = this.searchCriteria});
             //restaurant = RestaurantServices.Get(id: IdTest);
             restaurant = _restaurantRepository.Get(id: IdTest);
             //products = ProductService.GetList(id: IdTest);
-            products = _productRepository.GetList(id: IdTest);
+            products = await _productRepository.GetList(id: IdTest);
         }
         public string GlutenFreeText(Product product) 
         {

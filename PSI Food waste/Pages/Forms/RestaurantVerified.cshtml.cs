@@ -49,11 +49,20 @@ namespace PSI_Food_waste.Pages.Forms
                 return "Gluten Free";
             return "Not Gluten Free";
         }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            _productRepository.SortProducts();
-            products = _productRepository.GetList(_restaurantRepository.GetID());
+            products = await _productRepository.GetList(_restaurantRepository.GetID());
+
+            try
+            {
+                _productRepository.SortProducts();
+            }
+            catch(ProductListNotFoundException)
+            {
+
+            }
+            
 
         }
         public IActionResult OnPost()

@@ -9,20 +9,31 @@ using PSI_Food_waste.Models;
 
 namespace PSI_Food_waste.Services
 {
-    public static class RegisterService
+    public class RegisterService : IRegisterRepository      
     {
-        static public Lazy<RegisteredUser<RegisterForm>> Users { get; set; }
+        public Lazy<RegisteredUser<RegisterForm>> Users { get; set; }
 
-        static RegisterService()
+        public RegisterService()
         {
             Users = new Lazy<RegisteredUser<RegisterForm>>();
+            //FillList();
             //Users = new RegisteredUser<RegisterForm>();
             //Users.Add(new RegisterForm(new List<Restaurant>(), "abc@gmail.com", "test", "test", 1));
         }
 
-        public static RegisteredUser<RegisterForm> GetAll() => Users.Value;
+        //private void FillList()
+        //{
+        //    for(int i = 0; i < 99; ++i)
+        //    {
+        //        Users.Value.Add(new RegisterForm(new List<Restaurant>(), "abc@gmail.com", "test", "test", 1));
+        //    }
+        //}
 
-        public static RegisterForm GetUserData(string email)
+        public RegisteredUser<RegisterForm> GetAll() => Users.Value;
+
+        public Lazy<RegisteredUser<RegisterForm>> GetUsersObject() => Users;
+
+        public RegisterForm GetUserData(string email)
         {
             for (int i = 0; i < Users.Value.Length(); i++)
             {
@@ -34,23 +45,15 @@ namespace PSI_Food_waste.Services
             //should never happen :)
             return new RegisterForm();
         }
-        public static void SetAll(RegisteredUser<RegisterForm> users)
+        public void SetAll(RegisteredUser<RegisterForm> users)
         {
             Users = new Lazy<RegisteredUser<RegisterForm>>(() => users);
         }
 
-        public static void AddToList(this RegisterForm user)
+        public void AddToList(RegisterForm user)
         {
             Users.Value.Add(user);
         }
-    
-    //public static class AddingExtension
-    //{
-    //    public static RegisteredUser<RegisterForm> AddToList(this RegisterForm user, RegisteredUser<RegisterForm> users)
-    //    {
-    //        users.Add(user);
-    //        return users;
-    //    }
     }
 
 }
