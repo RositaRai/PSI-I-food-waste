@@ -16,9 +16,18 @@ namespace PSI_Food_waste.Services
         public RegisterService()
         {
             Users = new Lazy<RegisteredUser<RegisterForm>>();
+            //FillList();
             //Users = new RegisteredUser<RegisterForm>();
             //Users.Add(new RegisterForm(new List<Restaurant>(), "abc@gmail.com", "test", "test", 1));
         }
+
+        //private void FillList()
+        //{
+        //    for(int i = 0; i < 99; ++i)
+        //    {
+        //        Users.Value.Add(new RegisterForm(new List<Restaurant>(), "abc@gmail.com", "test", "test", 1));
+        //    }
+        //}
 
         public RegisteredUser<RegisterForm> GetAll() => Users.Value;
 

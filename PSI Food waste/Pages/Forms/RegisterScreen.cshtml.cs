@@ -93,7 +93,17 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 RegisteredUser = new RegisterForm(new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
                 //RegisterService.SetAll(this.RegisteredUser.AddToList(RegisteredUsers));
-                _registerRepository.AddToList(RegisteredUser);
+
+                try
+                {
+                    _registerRepository.AddToList(RegisteredUser);
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    ErrorMsg = ex.Message;
+                    return Page();
+                }
+                
                 _eventNotifier.RaiseEvent(this, Email);
                 return RedirectToPage("/Forms/LoginScreen");
             }
