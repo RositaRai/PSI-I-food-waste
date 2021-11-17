@@ -3,6 +3,18 @@
 @{
 }
 
+<h4>exception handling</h4>
+@*<p>@Model.StringList.Length()</p>*@
+<p>@Model.ListLen</p>
+
+<form method="post" asp-page-handler="Increase">
+    <button class="btn btn-primary">Increase</button>
+</form>
+
+<p>@Model.ErrMsg</p>
+
+
+<h4>async / await</h4>
 
 <p>@Model.Msg1</p>
 <p>@Model.Msg2</p>
@@ -19,7 +31,7 @@
 
 
 @{
-    <p>is lazy initialized</p>
+    <h4>is lazy initialized</h4>
     <p>@Model._registerRepository.GetUsersObject().IsValueCreated</p>
 }
 

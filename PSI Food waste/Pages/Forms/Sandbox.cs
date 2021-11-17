@@ -93,5 +93,23 @@ namespace PSI_Food_waste.Pages.Forms
         {
             return Task.Run(() => Calculate(msg));
         }
+
+
+        public static IndexDemo<string> StringList = new IndexDemo<string>();
+        public int Id = 0;
+        public int ListLen = StringList.Length();
+        public string ErrMsg;
+        public void OnPostIncrease()
+        {
+            try
+            {
+                StringList.Add(Id.ToString());
+                Id++;
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                ErrMsg = ex.Message;
+            }
+        }
     }
 }
