@@ -1,0 +1,32 @@
+﻿@page
+@model PSI_Food_waste.Pages.Forms.CreatedRestaurantsModel
+@{
+    ViewData["Title"] = "Create Restaurant";
+}
+<h3>Your Restaurants</h3>
+<form>
+ <button class="btn btn-primary" asp-page="/Forms/AddRestaurant">Add Restaurant</button>
+</form>
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th scope="col">Restaurant name</th>
+            <th scope="col">Restaurant City</th>
+            <th scope="col">Restaurant Adress</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead
+     @foreach (var restaurant in Model._registerRepository.CurrentUser.CreatedRestaurants)
+     {
+        <tr>
+            <td>@restaurant.Title</td>
+            <td>@restaurant.City</td>
+            <td>@restaurant.Adress</td>
+            <td>
+                <form method="post" asp-page-handler="Select" asp-route-id="@restaurant.Id">
+                    <button class="btn btn-primary">Select</button>
+                </form>
+            </td
+        </tr>
+     }
+</table>

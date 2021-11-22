@@ -58,6 +58,7 @@ namespace PSI_Food_waste.Pages.Forms
                     if (NewUser.Password.Equals(RegUsers[i].Password))
                     {
                         CurrentUser = _registerRepository.GetUserData(RegUsers[i].Email);
+                        _registerRepository.CurrentUser = _registerRepository.GetUserData(RegUsers[i].Email);
                         HttpContext.Session.SetString("username", RegUsers[i].Username);
                         return RedirectToPage("/Index");
                     }

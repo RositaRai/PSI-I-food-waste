@@ -23,16 +23,17 @@ namespace PSI_Food_waste.Pages.Forms
         public string msg { get; set; }
 
         [BindProperty]
-        public bool Login {  get; set; }
+        public bool Login { get; set; }
 
         public IRestaurantRepository _restaurantRepository;
 
-        public RestaurantListModel(IRestaurantRepository restaurantRepository)
+        public IRegisterRepository _registerRepository;
+
+        public RestaurantListModel(IRestaurantRepository restaurantRepository, IRegisterRepository registerRepository)
         {
             _restaurantRepository = restaurantRepository;
+            _registerRepository = registerRepository;
         }
-
-
         public void OnGet()
         {
                 ViewData["User"] = HttpContext.Session.GetString(key: "username");
@@ -68,17 +69,20 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPostSubscribe(int id)
         {
-            if (LoginScreenModel.CurrentUser.Username != null)
+            if (_registerRepository.CurrentUser.Username != null)
             {
                 Restaurant restaurant = new Restaurant();
                 restaurant = _restaurantRepository.Get(id);
-                LoginScreenModel.CurrentUser.SubscribedRestaurants.Add(restaurant);
-                msg = "You are subscribed to this restaurant";
-                return RedirectToAction("OnPostFilter");
+                if (!_registerRepository.CurrentUser.SubscribedRestaurants.Contains(restaurant))
+                {
+                    _registerRepository.CurrentUser.SubscribedRestaurants.Add(restaurant);
+                    return RedirectToAction("OnPostFilter");
+                }
+                else
+                    return RedirectToAction("OnPostFilter");
             }
             else
             {
-                msg = "Login to subscribe";
                 return RedirectToAction("OnPostFilter");
             }
         }

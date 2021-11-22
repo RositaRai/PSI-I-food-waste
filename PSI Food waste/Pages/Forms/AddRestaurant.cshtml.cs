@@ -16,11 +16,13 @@ namespace PSI_Food_waste.Pages.Forms
 
         public IRestaurantRepository _restaurantRepository;
 
-        public AddWorkerModel(IRestaurantRepository restaurantRepository)
+        public IRegisterRepository _registerRepository;
+
+        public AddWorkerModel(IRestaurantRepository restaurantRepository, IRegisterRepository registerRepository)
         {
             _restaurantRepository = restaurantRepository;
+            _registerRepository = registerRepository;
         }
-
         public IActionResult OnGet()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
@@ -37,8 +39,9 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
-
             _restaurantRepository.Add(NewRestaurant);
+            _registerRepository.CurrentUser.CreatedRestaurants.Add(NewRestaurant);
+            RestaurantVerifiedModel.Id = _restaurantRepository.GetID();
             return RedirectToPage("/Forms/RestaurantVerified");
         }
     }

@@ -91,9 +91,7 @@ namespace PSI_Food_waste.Pages.Forms
             }
             else
             {
-                RegisteredUser = new RegisterForm(new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
-                //RegisterService.SetAll(this.RegisteredUser.AddToList(RegisteredUsers));
-
+                RegisteredUser = new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
                 try
                 {
                     _registerRepository.AddToList(RegisteredUser);
@@ -104,7 +102,7 @@ namespace PSI_Food_waste.Pages.Forms
                     return Page();
                 }
                 
-                _eventNotifier.RaiseEvent(this, Email);
+                _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(Email, "You have successfuly registerd on Food Waste app!"));
                 return RedirectToPage("/Forms/LoginScreen");
             }
         }
