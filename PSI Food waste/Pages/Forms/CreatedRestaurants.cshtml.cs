@@ -12,7 +12,6 @@ namespace PSI_Food_waste.Pages.Forms
     {
         public IRegisterRepository _registerRepository;
 
-        //List<Restaurant> createdRestaurants;
         public CreatedRestaurantsModel(IRegisterRepository registerRepository)
             {
             _registerRepository = registerRepository;

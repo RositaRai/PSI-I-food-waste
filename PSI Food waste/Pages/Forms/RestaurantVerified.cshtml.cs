@@ -100,7 +100,7 @@ namespace PSI_Food_waste.Pages.Forms
                     //tasks[i] = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
                     Task t1; //= new(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
                     //t1.RunSynchronously();
-                    t1 = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)))
+                    t1 = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
                     t1.Wait();
                 }
             }
