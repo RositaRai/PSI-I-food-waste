@@ -54,7 +54,7 @@ namespace PSI_Food_waste.Services
             Products = products;
         }
 
-        public Product Get(int id) => Products.FirstOrDefault(p => p.PrId == id);
+        public Product Get(int id) => Products.FirstOrDefault(p => p.PrID == id);
 
         public async Task<List<Product>> GetList(int id)                           
         {
@@ -98,7 +98,7 @@ namespace PSI_Food_waste.Services
                 Products = new List<Product>();
             }
             product.RestId = _restaurantRepository.GetID();
-            product.PrId = nextId++;
+            product.PrID = nextId++;
             Products.Add(product);
             
         }
@@ -113,7 +113,7 @@ namespace PSI_Food_waste.Services
         }
         public void Update(Product product)
         {
-            var index = Products.FindIndex(p => p.PrId == product.PrId);
+            var index = Products.FindIndex(p => p.PrID == product.PrID);
             if (index == -1)
                 return;
 

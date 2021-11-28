@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using PSI_Food_waste.Services;
 using PSI_Food_waste.Models;
 using AspNetCoreHero.ToastNotification;
+using Microsoft.EntityFrameworkCore;
+using PSI_Food_waste.Data;
 
 namespace PSI_Food_waste
 {
@@ -37,6 +39,10 @@ namespace PSI_Food_waste
             services.AddSingleton<IRegistrationEventNotifier, RegistrationEventNotifier>();
             services.AddTransient<INotificationEvent, NotificationEvent>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+
+            services.AddDbContext<ProductContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ProductContext")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +72,15 @@ namespace PSI_Food_waste
             {
                 endpoints.MapRazorPages();
             });
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var context = services.GetRequiredService<ProductContext>();
+                context.Database.EnsureCreated();
+                DbInitializer.Initialize(context);
+            }
 
             //string path = @"C:\Users\jauta\source\repos\PSI Food waste\text.json";
             //string json = JsonConvert.SerializeObject(ProductService.GetAll(), Formatting.Indented);
