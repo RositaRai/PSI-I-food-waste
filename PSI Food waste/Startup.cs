@@ -33,8 +33,8 @@ namespace PSI_Food_waste
         {
             services.AddRazorPages();
             services.AddSession();
-            services.AddSingleton<IProductRepository, ProductService>();
-            services.AddSingleton<IRestaurantRepository, RestaurantServices>();
+            services.AddTransient<IProductRepository, ProductService>();
+            services.AddTransient<IRestaurantRepository, RestaurantServices>();
             services.AddSingleton<IRegisterRepository, RegisterService>();
             services.AddSingleton<IRegistrationEventNotifier, RegistrationEventNotifier>();
             services.AddTransient<INotificationEvent, NotificationEvent>();
