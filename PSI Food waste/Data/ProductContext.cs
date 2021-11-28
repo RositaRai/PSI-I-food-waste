@@ -14,11 +14,13 @@ namespace PSI_Food_waste.Data
         {
         }
 
-        public DbSet<PSI_Food_waste.Models.Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().ToTable("Product");
+            modelBuilder.Entity<Restaurant>().ToTable("Restaurant");
         }
     }
 }
