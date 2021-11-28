@@ -36,6 +36,7 @@ namespace PSI_Food_waste.Services
 
             await _context.Restaurants.AddAsync(restaurant);
             await _context.SaveChangesAsync();
+            ++nextID;
             //Restaurant.Id = ++nextID;
             //Restaurants.Add(Restaurant);
 
