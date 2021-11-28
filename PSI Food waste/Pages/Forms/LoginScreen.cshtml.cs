@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PSI_Food_waste.Services;
 using PSI_Food_waste.Models;
+using PSI_Food_waste.Data;
 
 namespace PSI_Food_waste.Pages.Forms
 {
@@ -28,14 +29,19 @@ namespace PSI_Food_waste.Pages.Forms
         public static RegisterForm CurrentUser { get; set; }
 
         public IRegisterRepository _registerRepository;
+        private readonly ProductContext _context;
 
-        public LoginScreenModel(IRegisterRepository registerRepository)
+        public LoginScreenModel(IRegisterRepository registerRepository, ProductContext context)
         {
             _registerRepository = registerRepository;
+            _context = context;
         }
 
         public void OnGet()
         {
+            //for testing
+            _registerRepository.AddToList(new RegisterForm(_context.Restaurants.ToList(), _context.Restaurants.ToList(), "admin", "admin", "admin", 0));
+
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //RegUsers = RegisterService.GetAll();
             Msg = "";
