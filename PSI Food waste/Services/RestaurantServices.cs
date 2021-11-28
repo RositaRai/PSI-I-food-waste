@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PSI_Food_waste.Services;
+using PSI_Food_waste.Data;
 
 namespace PSI_Food_waste.Services
 {
@@ -15,22 +16,28 @@ namespace PSI_Food_waste.Services
 
         public int nextID = 2;
 
-        public RestaurantServices()
+        private readonly ProductContext _context;
+
+        public RestaurantServices(ProductContext context)
         {
-            Restaurants = new List<Restaurant>()
-            {
-                new Restaurant { Title = "Chilli pica", City = "Kaunas",Adress = "Kauno g. 15", Id = 1, WorkerID = 1 },
-                new Restaurant {Title = "Charlie pica", City = "Vilnius", Adress = "Vilniaus g. ", Id = 2, WorkerID = 2 }
-            };
+            _context = context;
+            Restaurants = _context.Restaurants.ToList();
+            //Restaurants = new List<Restaurant>()
+            //{
+            //    new Restaurant { Title = "Chilli pica", City = "Kaunas",Adress = "Kauno g. 15", Id = 1},
+            //    new Restaurant {Title = "Charlie pica", City = "Vilnius", Adress = "Vilniaus g. ", Id = 2}
+            //};
         }
         public List<Restaurant> GetAll() => Restaurants;
         public Restaurant Get(int id) => Restaurants.FirstOrDefault(p => p.Id  == id);
 
-        public void Add(Restaurant Restaurant)
+        public async Task Add(Restaurant restaurant)
         {
- 
-            Restaurant.Id = ++nextID;
-            Restaurants.Add(Restaurant);
+
+            await _context.Restaurants.AddAsync(restaurant);
+            await _context.SaveChangesAsync();
+            //Restaurant.Id = ++nextID;
+            //Restaurants.Add(Restaurant);
 
         }
         public void Update(Restaurant Restaurant)
