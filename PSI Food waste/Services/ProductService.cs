@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PSI_Food_waste.Models;
 using Newtonsoft.Json;
+using PSI_Food_waste.Data;
 
 namespace PSI_Food_waste.Services
 {
@@ -30,11 +31,13 @@ namespace PSI_Food_waste.Services
 
 
         public IRestaurantRepository _restaurantRepository;
+        private readonly ProductContext _context;
 
-        public ProductService(IRestaurantRepository restaurantRepository)
+        public ProductService(IRestaurantRepository restaurantRepository, ProductContext context)
         {
             _restaurantRepository = restaurantRepository;
-            Products = new List<Product>();
+            _context = context;
+            Products = _context.Products.ToList();
 
             //Products = ReadFile();
         }
