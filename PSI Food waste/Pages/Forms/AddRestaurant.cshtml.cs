@@ -33,13 +33,13 @@ namespace PSI_Food_waste.Pages.Forms
             }
             return Page();
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid == false)
             {
                 return Page();
             }
-            _restaurantRepository.Add(NewRestaurant);
+            await _restaurantRepository.Add(NewRestaurant);
             _registerRepository.CurrentUser.CreatedRestaurants.Add(NewRestaurant);
             RestaurantVerifiedModel.Id = _restaurantRepository.GetID();
             return RedirectToPage("/Forms/RestaurantVerified");
