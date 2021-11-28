@@ -14,7 +14,7 @@ namespace PSI_Food_waste.Services
     {
         List<Restaurant> Restaurants { get; }
 
-        public int nextID = 2;
+        public static int nextID = 2;
 
         private readonly ProductContext _context;
 

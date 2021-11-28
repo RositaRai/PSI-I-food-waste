@@ -13,7 +13,7 @@ namespace PSI_Food_waste.Models
         public Task<List<Product>> GetList(int id);
         public void SortProducts();
 
-        public void Add(Product product);
+        public Task AddAsync(Product product);
 
         public void Delete(int id);
 

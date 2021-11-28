@@ -28,8 +28,8 @@ namespace PSI_Food_waste.Data
                 new Product{RestId = 2, Name = "Product_6", Size=ProductSize.Small, IsGlutenFree = false, Price = 10, DiscountedPrice = 10, Discount = 0}
             };
 
-            context.Products.AddRangeAsync(products);
-            context.SaveChangesAsync();
+            context.Products.AddRange(products);
+            context.SaveChanges();
 
             var restaurants = new Restaurant[]
             {
@@ -37,8 +37,8 @@ namespace PSI_Food_waste.Data
                 new Restaurant {Title = "Restaurant_2", City = "Vilnius", Adress = "Vilniaus g. "}
             };
 
-            context.Restaurants.AddRangeAsync(restaurants);
-            context.SaveChangesAsync();
+            context.Restaurants.AddRange(restaurants);
+            context.SaveChanges();
         }
     }
 }
