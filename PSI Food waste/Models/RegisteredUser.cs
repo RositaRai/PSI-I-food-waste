@@ -38,11 +38,14 @@ namespace PSI_Food_waste.Models
         public string Username { get; init; }
         public string Password { get; init; }
         public int FavNum { get; init; }
-        public List<Restaurant> SubscribedRestaurants {  get; set; } 
+        public List<Restaurant> SubscribedRestaurants {  get; set; }
+        public List<Restaurant> CreatedRestaurants { get; set; }
 
-        public RegisterForm(List<Restaurant> restaurants, string email, string name, string pass, int favNum = 0)
+        public RegisterForm(List<Restaurant> subrestaurants, List<Restaurant> crrestaurants ,string email, string name, string pass, int favNum = 0)
         {
-            SubscribedRestaurants = restaurants;
+            SubscribedRestaurants = subrestaurants;
+            CreatedRestaurants = crrestaurants;
+            //SubscribedRestaurants.Add(new Restaurant {  Adress = "Test" , City = "Vilnius" , Id = 1 , Title = "Picerija", WorkerID = 2});
             Email = email;
             Username = name;
             Password = pass;

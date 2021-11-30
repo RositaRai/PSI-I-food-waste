@@ -23,6 +23,9 @@ namespace PSI_Food_waste.Pages.Forms
 
         public IRegisterRepository _registerRepository;
 
+        [BindProperty]
+        public RegisteredUser<RegisterForm> RegisteredUsers { get; set; }
+
         public Sandbox(IProductRepository productRepository, IRestaurantRepository restaurantRepository, IRegisterRepository registerRepository)
         {
             _productRepository = productRepository;
@@ -35,6 +38,7 @@ namespace PSI_Food_waste.Pages.Forms
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             restaurants = _restaurantRepository.GetAll();
             products =  _productRepository.GetAll();
+            RegisteredUsers = _registerRepository.GetAll();
         }
 
         [BindProperty]

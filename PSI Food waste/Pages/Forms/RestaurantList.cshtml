@@ -42,13 +42,18 @@
             </td>
             @if (ViewData["User"] != null)
             {
-
-                <td>
-                    <form method="post" asp-page-handler="Subscribe" asp-route-id="@restaurant.Id">
-                        <button class="btn btn-primary">Subscribe</button>
-                    </form>
-                </td>
-
+                if (@Model._registerRepository.CurrentUser.SubscribedRestaurants.Contains(restaurant))
+                {
+                    <td>You are subscribed to this restaurant</td>
+                }
+                else
+                {
+                    <td>
+                        <form method="post" asp-page-handler="Subscribe" asp-route-id="@restaurant.Id">
+                            <button class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </td>
+                }
             }
             else
             {
@@ -61,12 +66,12 @@
     <tr>
         @if (ViewData["User"] != null)
         {
-            //<td>@LoginScreenModel.CurrentUser.Email</td>
-            //<td>@LoginScreenModel.CurrentUser.Username</td>
-            //@foreach(var data in LoginScreenModel.CurrentUser.SubscribedRestaurants)
-            //{
-              //  <td>@data.Title </td>
-            //}
+            <td>@Model._registerRepository.CurrentUser.Email</td>
+            <td>@Model._registerRepository.CurrentUser.Username</td>
+            @foreach (var data in @Model._registerRepository.CurrentUser.SubscribedRestaurants)
+            {
+                <td>@data.Title </td>
+            }
         }
     </tr>
 </table>

@@ -41,7 +41,6 @@ namespace PSI_Food_waste.Services
 
             Restaurants[index] = Restaurant;
         }
-
         public int GetID()
         {
             return nextID;

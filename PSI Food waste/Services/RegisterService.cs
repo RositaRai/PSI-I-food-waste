@@ -13,6 +13,8 @@ namespace PSI_Food_waste.Services
     {
         public Lazy<RegisteredUser<RegisterForm>> Users { get; set; }
 
+        public RegisterForm CurrentUser { get; set; }
+
         public RegisterService()
         {
             Users = new Lazy<RegisteredUser<RegisterForm>>();

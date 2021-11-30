@@ -10,6 +10,7 @@ namespace PSI_Food_waste.Models
 {
     public interface IRegisterRepository
     {
+        public RegisterForm CurrentUser { get; set; }
         public RegisteredUser<RegisterForm> GetAll();
 
         public RegisterForm GetUserData(string email);

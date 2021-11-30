@@ -21,10 +21,18 @@ namespace PSI_Food_waste.Pages.Forms
 
         public List<Product> products;
 
+        public RegisteredUser<RegisterForm> RegisteredUsers {  get; set; }
+
+        public Restaurant currentRestaurant {  get; set; }
+
         [BindProperty]
         public static string Msg { get; set; } = "";
 
+        public static int Id {  get; set; }
+
         public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  //TODO: fix error
+
+        public IRegistrationEventNotifier _eventNotifier;
 
         public  readonly INotyfService _notyf;
 
@@ -34,12 +42,17 @@ namespace PSI_Food_waste.Pages.Forms
 
         public INotificationEvent _notificationEvent;
 
-        public RestaurantVerifiedModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository, INotificationEvent notificationEvent,INotyfService notyf)
+        public IRegisterRepository _registerRepository;
+
+
+        public RestaurantVerifiedModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository, INotificationEvent notificationEvent, IRegisterRepository registerRepository, IRegistrationEventNotifier eventNotifier, INotyfService notyf)
         {
             _productRepository = productRepository;
             _restaurantRepository = restaurantRepository;
             DiscountPrice = _productRepository.NewPrice;
             _notificationEvent = notificationEvent;
+            _registerRepository = registerRepository;
+            _eventNotifier = eventNotifier;
             _notyf = notyf;
         }
 
@@ -52,8 +65,8 @@ namespace PSI_Food_waste.Pages.Forms
         public async Task OnGetAsync()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            products = await _productRepository.GetList(_restaurantRepository.GetID());
-
+            products = await _productRepository.GetList(Id);
+            currentRestaurant = _restaurantRepository.Get(Id);
             try
             {
                 _productRepository.SortProducts();
@@ -62,11 +75,10 @@ namespace PSI_Food_waste.Pages.Forms
             {
 
             }
-            
-
         }
         public IActionResult OnPost()
         {
+            currentRestaurant = _restaurantRepository.Get(Id);
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
@@ -78,6 +90,21 @@ namespace PSI_Food_waste.Pages.Forms
             _notificationEvent.RaiseEvent(this,NewProduct.Name, _notyf,0);
             _productRepository.Add(NewProduct);
             DiscountPrice.Invoke(NewProduct);
+            RegisteredUsers = _registerRepository.GetAll();
+            //Task[] tasks = new Task[RegisteredUsers.Length()];
+            for (int i = 0; i < RegisteredUsers.Length(); i++)
+            {
+                if (RegisteredUsers[i].SubscribedRestaurants.Contains(currentRestaurant))
+                { 
+                    string s = string.Format("A new product has been added to {0}!", currentRestaurant.Title);
+                    //tasks[i] = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
+                    Task t1; //= new(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
+                    //t1.RunSynchronously();
+                    t1 = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
+                    t1.Wait();
+                }
+            }
+            //Task.WaitAll();
             return RedirectToAction("Get");
         }
         public IActionResult OnPostDelete(int id)

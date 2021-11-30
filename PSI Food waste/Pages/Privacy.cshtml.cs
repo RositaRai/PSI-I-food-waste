@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,6 +20,7 @@ namespace PSI_Food_waste.Pages
 
         public void OnGet()
         {
+            ViewData["User"] = HttpContext.Session.GetString(key: "username");
         }
     }
 }
