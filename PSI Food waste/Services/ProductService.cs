@@ -96,13 +96,13 @@ namespace PSI_Food_waste.Services
         }
 
         //TODO: fix product adding to DB
-        public async Task AddAsync(Product product)
+        public async Task AddAsync(Product product, int restId)
         {
             if (Products == null)
             {
                 Products = new List<Product>();
             }
-            product.RestId = _restaurantRepository.GetID();
+            product.RestId = restId;
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
             ++nextId;

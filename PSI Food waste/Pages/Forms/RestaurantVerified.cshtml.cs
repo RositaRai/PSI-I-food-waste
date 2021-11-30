@@ -88,7 +88,7 @@ namespace PSI_Food_waste.Pages.Forms
                 return Page();
             }
             _notificationEvent.RaiseEvent(this,NewProduct.Name, _notyf,0);
-            await _productRepository.AddAsync(NewProduct);
+            await _productRepository.AddAsync(NewProduct, Id);
             DiscountPrice.Invoke(NewProduct);
             RegisteredUsers = _registerRepository.GetAll();
             //Task[] tasks = new Task[RegisteredUsers.Length()];
