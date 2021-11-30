@@ -17,18 +17,6 @@ namespace PSI_Food_waste.Services
         List<Product> IdProducts = new List<Product>();
         int nextId = 7;
 
-        //static ProductService()
-        //{
-        //    Products = new List<Product>
-        //    {
-        //        new Product { Id = 1, Name = "Classic Italian pizza", Price=20.00M, Size=ProductSize.Large, IsGlutenFree = false },
-        //        new Product { Id = 2, Name = "Veggie pizza", Price=15.00M, Size=ProductSize.Small, IsGlutenFree = true }
-        //    };
-        //}
-
-        
-
-
         public IRestaurantRepository _restaurantRepository;
 
         public ProductService(IRestaurantRepository restaurantRepository)
@@ -38,7 +26,6 @@ namespace PSI_Food_waste.Services
 
             //Products = ReadFile();
         }
-
         private List<Product> ReadFile()
         {
             string initialData = (Directory.GetCurrentDirectory() + "\\text.json");
@@ -54,9 +41,9 @@ namespace PSI_Food_waste.Services
             Products = products;
         }
 
-        public Product Get(int id) => Products.FirstOrDefault(p => p.PrId == id);
+        public Product Get(Guid id) => Products.FirstOrDefault(p => p.PrId == id);
 
-        public async Task<List<Product>> GetList(int id)                           
+        public async Task<List<Product>> GetList(Guid id)                           
         {
             IEnumerable<Product> query = await Task.Run(() => QueryRestaurantProducts(id));
 
@@ -70,15 +57,15 @@ namespace PSI_Food_waste.Services
             }
             return IdProducts;
            // IdProducts.Clear();
-           //foreach(Product prod in Products ?? new List<Product>())
+          // foreach(Product prod in Products ?? new List<Product>())
            // {
-           //     if(prod.RestId == id)
-           //         IdProducts.Add(prod);
+             //   if(prod.RestId == id)
+              //      IdProducts.Add(prod);
            // }
            // return IdProducts;
         }
 
-        private IEnumerable<Product> QueryRestaurantProducts(int id)
+        private IEnumerable<Product> QueryRestaurantProducts(Guid id)
         {
             IEnumerable<Product> query = from Product product in Products          
                                          where product.RestId == id
@@ -91,19 +78,19 @@ namespace PSI_Food_waste.Services
         {
             IdProducts.Add(product);
         }
-        public void Add(Product product)
+        public void Add(Product product, Guid id)
         {
             if (Products == null)
             {
                 Products = new List<Product>();
             }
-            product.RestId = _restaurantRepository.GetID();
-            product.PrId = nextId++;
+            product.RestId = id;
+            product.PrId = Guid.NewGuid();
             Products.Add(product);
             
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var product = Get(id);
             if (product is null)

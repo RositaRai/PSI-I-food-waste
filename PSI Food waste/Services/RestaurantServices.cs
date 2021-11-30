@@ -11,25 +11,25 @@ namespace PSI_Food_waste.Services
 {
     public class RestaurantServices : IRestaurantRepository
     {
+        public Guid CurrentId { get; set; }
         List<Restaurant> Restaurants { get; }
-
-        public int nextID = 2;
 
         public RestaurantServices()
         {
+            CurrentId = Guid.Empty;
             Restaurants = new List<Restaurant>()
             {
-                new Restaurant { Title = "Chilli pica", City = "Kaunas",Adress = "Kauno g. 15", Id = 1, WorkerID = 1 },
-                new Restaurant {Title = "Charlie pica", City = "Vilnius", Adress = "Vilniaus g. ", Id = 2, WorkerID = 2 }
+                new Restaurant { Title = "Chilli pica", City = "Kaunas",Adress = "Kauno g. 15", Id = Guid.NewGuid(), WorkerID = 1 },
+                new Restaurant {Title = "Charlie pica", City = "Vilnius", Adress = "Vilniaus g. ", Id = Guid.NewGuid(), WorkerID = 2 }
             };
         }
         public List<Restaurant> GetAll() => Restaurants;
-        public Restaurant Get(int id) => Restaurants.FirstOrDefault(p => p.Id  == id);
+        public Restaurant Get(Guid id) => Restaurants.FirstOrDefault(p => p.Id  == id);
 
         public void Add(Restaurant Restaurant)
         {
  
-            Restaurant.Id = ++nextID;
+            Restaurant.Id = Guid.NewGuid();
             Restaurants.Add(Restaurant);
 
         }
@@ -41,9 +41,10 @@ namespace PSI_Food_waste.Services
 
             Restaurants[index] = Restaurant;
         }
-        public int GetID()
+        public Guid GetID(Restaurant restaurant)
         {
-            return nextID;
+            var rest = Restaurants.FirstOrDefault(p => p.Id == restaurant.Id);
+            return rest.Id;
         }
     }
     public static class RestaurantServicesExtension

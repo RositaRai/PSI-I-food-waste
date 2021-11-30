@@ -20,15 +20,12 @@ namespace PSI_Food_waste.Pages.Forms
         public Product NewProduct { get; set; }
 
         public List<Product> products;
-
         public RegisteredUser<RegisterForm> RegisteredUsers {  get; set; }
-
         public Restaurant currentRestaurant {  get; set; }
-
         [BindProperty]
         public static string Msg { get; set; } = "";
 
-        public static int Id {  get; set; }
+        public Guid Id {  get; set; }
 
         public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  //TODO: fix error
 
@@ -65,8 +62,8 @@ namespace PSI_Food_waste.Pages.Forms
         public async Task OnGetAsync()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            products = await _productRepository.GetList(Id);
-            currentRestaurant = _restaurantRepository.Get(Id);
+            products = await _productRepository.GetList(_restaurantRepository.CurrentId);
+            currentRestaurant = _restaurantRepository.Get(_restaurantRepository.CurrentId);
             try
             {
                 _productRepository.SortProducts();
@@ -78,7 +75,7 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPost()
         {
-            currentRestaurant = _restaurantRepository.Get(Id);
+            currentRestaurant = _restaurantRepository.Get(_restaurantRepository.CurrentId);
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
@@ -88,26 +85,22 @@ namespace PSI_Food_waste.Pages.Forms
                 return Page();
             }
             _notificationEvent.RaiseEvent(this,NewProduct.Name, _notyf,0);
-            _productRepository.Add(NewProduct);
+            _productRepository.Add(NewProduct, currentRestaurant.Id);
             DiscountPrice.Invoke(NewProduct);
             RegisteredUsers = _registerRepository.GetAll();
-            //Task[] tasks = new Task[RegisteredUsers.Length()];
             for (int i = 0; i < RegisteredUsers.Length(); i++)
             {
                 if (RegisteredUsers[i].SubscribedRestaurants.Contains(currentRestaurant))
                 { 
                     string s = string.Format("A new product has been added to {0}!", currentRestaurant.Title);
-                    //tasks[i] = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
-                    Task t1; //= new(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
-                    //t1.RunSynchronously();
+                    Task t1;
                     t1 = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
                     t1.Wait();
                 }
             }
-            //Task.WaitAll();
             return RedirectToAction("Get");
         }
-        public IActionResult OnPostDelete(int id)
+        public IActionResult OnPostDelete(Guid id)
         {     
             if (HttpContext.Session.GetString("username") == null)
             {
