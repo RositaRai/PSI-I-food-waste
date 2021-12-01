@@ -11,7 +11,7 @@ namespace PSI_Food_waste.Models
     public interface IProductRepository
     {
         public Task<List<Product>> GetList(int id);
-        public void SortProducts();
+        //public void SortProducts();
 
         public Task AddAsync(Product product, int restId);
 

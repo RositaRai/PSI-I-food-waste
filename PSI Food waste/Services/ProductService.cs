@@ -71,6 +71,7 @@ namespace PSI_Food_waste.Services
                     IdProducts.Add(rez);
                 }
             }
+            IdProducts.Sort();
             return IdProducts;
            // IdProducts.Clear();
            //foreach(Product prod in Products ?? new List<Product>())
@@ -132,13 +133,13 @@ namespace PSI_Food_waste.Services
         {
             product.DiscountedPrice = product.Price * (1 - (double)product.Discount/ 100);
         }
-        public void SortProducts()
-        {
-            if(!Products.Any())
-            {
-               throw new ProductListNotFoundException("list is empty");
-            }
-            Products.Sort();
-        }
+        //public void SortProducts()
+        //{
+        //    if(!Products.Any())
+        //    {
+        //       throw new ProductListNotFoundException("list is empty");
+        //    }
+        //    Products.Sort();
+        //}
     }
 }

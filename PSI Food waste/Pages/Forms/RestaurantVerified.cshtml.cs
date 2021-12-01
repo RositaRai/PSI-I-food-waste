@@ -69,7 +69,7 @@ namespace PSI_Food_waste.Pages.Forms
             currentRestaurant = _restaurantRepository.Get(Id);
             try
             {
-                _productRepository.SortProducts();
+               // _productRepository.SortProducts();
             }
             catch(ProductListNotFoundException)
             {
