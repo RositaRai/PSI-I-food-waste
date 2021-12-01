@@ -9,6 +9,7 @@ using PSI_Food_waste.Services;
 
 namespace PSI_Food_waste.Services
 {
+
     public class RestaurantServices : IRestaurantRepository
     {
         public Guid CurrentId { get; set; }
