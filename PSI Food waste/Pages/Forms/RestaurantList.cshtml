@@ -42,7 +42,15 @@
             </td>
             @if (ViewData["User"] != null)
             {
+                @*bool isSubed = false;
+                @foreach (var data in @Model._registerRepository.CurrentUser.SubscribedRestaurants)
+                {
+                    if (@restaurant.Id.Equals(data.Id))
+                        isSubed = true;
+                    
+                }*@
                 if (@Model._registerRepository.CurrentUser.SubscribedRestaurants.Contains(restaurant))
+                //if (isSubed) 
                 {
                     //TODO: no longer works, no clue
                     <td>You are subscribed to this restaurant</td>
@@ -76,3 +84,21 @@
         }
     </tr>
 </table>
+
+
+@*<h4>Test</h4>
+@foreach (var restaurant in Model.restaurants)
+            {
+                <form>
+                    <p>@restaurant.Title</p>
+                    <p>@Model._registerRepository.CurrentUser.SubscribedRestaurants.Contains(restaurant)</p>
+                </form>
+                <h2>inside for</h2>
+                <form>
+                    @foreach (var data in @Model._registerRepository.CurrentUser.SubscribedRestaurants)
+                    {
+                        <p>restaurant object @restaurant.Equals(data);</p>
+                        <p>restaurant id @restaurant.Id.Equals(data.Id)</p>
+                    }
+                </form>
+            }*@
