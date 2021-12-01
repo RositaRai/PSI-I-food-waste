@@ -14,7 +14,7 @@ namespace PSI_Food_waste.Services
     {
         List<Restaurant> Restaurants { get; }
 
-        public static int nextID = 2;
+        //public static int nextID = 2;
 
         private readonly ProductContext _context;
 
@@ -36,7 +36,7 @@ namespace PSI_Food_waste.Services
 
             await _context.Restaurants.AddAsync(restaurant);
             await _context.SaveChangesAsync();
-            ++nextID;
+           // ++nextID;
             //Restaurant.Id = ++nextID;
             //Restaurants.Add(Restaurant);
 
@@ -49,10 +49,10 @@ namespace PSI_Food_waste.Services
 
             Restaurants[index] = Restaurant;
         }
-        public int GetID()
-        {
-            return nextID;
-        }
+        //public int GetID()
+        //{
+        //    return nextID;
+        //}
     }
     public static class RestaurantServicesExtension
     {

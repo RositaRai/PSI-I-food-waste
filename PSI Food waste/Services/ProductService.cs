@@ -16,7 +16,7 @@ namespace PSI_Food_waste.Services
     {
         List<Product> Products { get; set; }
         List<Product> IdProducts = new List<Product>();
-        static int nextId = 7;
+        //static int nextId = 7;
 
         //static ProductService()
         //{
@@ -105,7 +105,7 @@ namespace PSI_Food_waste.Services
             product.RestId = restId;
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
-            ++nextId;
+            //++nextId;
             //product.PrID = nextId++;
             //Products.Add(product);
             
