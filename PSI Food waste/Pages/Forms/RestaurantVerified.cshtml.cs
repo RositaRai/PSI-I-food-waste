@@ -30,7 +30,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         public static int Id {  get; set; }
 
-        public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  //TODO: fix error
+        public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  
 
         public IRegistrationEventNotifier _eventNotifier;
 
@@ -88,8 +88,9 @@ namespace PSI_Food_waste.Pages.Forms
                 return Page();
             }
             _notificationEvent.RaiseEvent(this,NewProduct.Name, _notyf,0);
-            await _productRepository.AddAsync(NewProduct, Id);
+            
             DiscountPrice.Invoke(NewProduct);
+            await _productRepository.AddAsync(NewProduct, Id);
             RegisteredUsers = _registerRepository.GetAll();
             //Task[] tasks = new Task[RegisteredUsers.Length()];
             for (int i = 0; i < RegisteredUsers.Length(); i++)
