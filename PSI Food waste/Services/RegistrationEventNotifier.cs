@@ -9,6 +9,7 @@ using PSI_Food_waste;
 using PSI_Food_waste.Pages.Forms;
 using System.Net.Mail;
 using System.Net;
+using PSI_Food_waste.Models;
 
 namespace PSI_Food_waste.Services
 {

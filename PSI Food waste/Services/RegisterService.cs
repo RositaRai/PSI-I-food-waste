@@ -16,7 +16,6 @@ namespace PSI_Food_waste.Services
 
         public RegisterForm CurrentUser { get; set; }
 
-
         //for testing only
         //private readonly ProductContext _context;
 
