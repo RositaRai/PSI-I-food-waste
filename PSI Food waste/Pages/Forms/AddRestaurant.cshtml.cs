@@ -39,7 +39,7 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
-            await _restaurantRepository.Add(NewRestaurant);
+            await _restaurantRepository.AddAsync(NewRestaurant);
             _registerRepository.CurrentUser.CreatedRestaurants.Add(NewRestaurant);
             //RestaurantVerifiedModel.Id = _restaurantRepository.GetID();
             RestaurantVerifiedModel.Id = NewRestaurant.Id;

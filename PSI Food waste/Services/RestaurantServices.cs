@@ -31,7 +31,7 @@ namespace PSI_Food_waste.Services
         public List<Restaurant> GetAll() => Restaurants;
         public Restaurant Get(int id) => Restaurants.FirstOrDefault(p => p.Id  == id);
 
-        public async Task Add(Restaurant restaurant)
+        public async Task AddAsync(Restaurant restaurant)
         {
 
             await _context.Restaurants.AddAsync(restaurant);
