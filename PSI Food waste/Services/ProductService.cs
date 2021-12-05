@@ -114,11 +114,13 @@ namespace PSI_Food_waste.Services
 
         public void Delete(int id)
         {
-            var product = Get(id);
+            var product = _context.Products.Find(id);
             if (product is null)
                 return;
 
-            Products.Remove(product);
+            //Products.Remove(product);
+            _context.Products.Remove(product);
+            _context.SaveChanges();
         }
         public void Update(Product product)
         {
