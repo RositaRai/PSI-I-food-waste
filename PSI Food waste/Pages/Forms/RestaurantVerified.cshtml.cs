@@ -25,7 +25,7 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public static string Msg { get; set; } = "";
 
-        public Guid Id {  get; set; }
+        public static Guid ID {  get; set; }
 
         public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  //TODO: fix error
 
@@ -61,9 +61,10 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public async Task OnGetAsync()
         {
+        
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            products = await _productRepository.GetList(_restaurantRepository.CurrentId);
-            currentRestaurant = _restaurantRepository.Get(_restaurantRepository.CurrentId);
+            products = await _productRepository.GetList(ID);
+            currentRestaurant = _restaurantRepository.Get(ID);
             try
             {
                 _productRepository.SortProducts();
@@ -75,7 +76,7 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPost()
         {
-            currentRestaurant = _restaurantRepository.Get(_restaurantRepository.CurrentId);
+            currentRestaurant = _restaurantRepository.Get(ID);
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");

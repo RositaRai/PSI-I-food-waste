@@ -11,7 +11,7 @@ namespace PSI_Food_waste.Models
 {
     public interface IRestaurantRepository
     {
-        Guid CurrentId {  get; set; }
+        //Guid CurrentId {  get; set; }
         public void Add(Restaurant Restaurant);
         public List<Restaurant> GetAll();
         public Restaurant Get(Guid id);

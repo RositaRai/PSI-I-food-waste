@@ -12,7 +12,7 @@ namespace PSI_Food_waste.Services
 
     public class RestaurantServices : IRestaurantRepository
     {
-        public Guid CurrentId { get; set; }
+        //public Guid CurrentId { get; set; }
         List<Restaurant> Restaurants { get; }
 
         public RestaurantServices()
