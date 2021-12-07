@@ -31,7 +31,7 @@ namespace PSI_Food_waste
 
         public IConfiguration Configuration { get; }
 
-        public ILifetimeScope AutoFacContainter {  get; private set; }
+        public ILifetimeScope AutoFacContainter { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,25 +42,39 @@ namespace PSI_Food_waste
 
             services.AddRazorPages();
             services.AddSession();
-            services.AddSingleton<IProductRepository, ProductService>();
-            services.AddSingleton<IRestaurantRepository, RestaurantServices>();
+            //services.AddSingleton<IProductRepository, ProductService>();
+            //services.AddSingleton<IRestaurantRepository, RestaurantServices>();
             services.AddSingleton<IRegisterRepository, RegisterService>();
             services.AddSingleton<IRegistrationEventNotifier, RegistrationEventNotifier>();
             services.AddTransient<INotificationEvent, NotificationEvent>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
             //services.AddSingleton(x => Log.Logger);
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            };
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            //builder.RegisterType<ProductService>().As<IProductRepository>()
-            //.EnableInterfaceInterceptors()
-            //InterceptedBy(typeof(LogInterceptor))
-            // .InstancePerDependency();
+            builder.RegisterType<ProductService>().As<IProductRepository>()
+            .EnableInterfaceInterceptors()
+             .InterceptedBy(typeof(LogInterceptor))
+             //.InstancePerLifetimeScope();
+             //.InstancePerDependency();
+             //.InstancePerMatchingLifetimeScope();
+             .SingleInstance();
 
-           // builder.RegisterType<RestaurantServices>().As<IRestaurantRepository>()
-            //  .EnableInterfaceInterceptors()
-            //  .InterceptedBy(typeof(LogInterceptor))
-            //  .InstancePerDependency();
+
+
+            builder.RegisterType<RestaurantServices>().As<IRestaurantRepository>()
+              .EnableInterfaceInterceptors()
+              .InterceptedBy(typeof(LogInterceptor))
+              //.InstancePerLifetimeScope();
+              //.InstancePerDependency();
+              //.InstancePerMatchingLifetimeScope();
+              .SingleInstance();
 
             builder.Register(x => Log.Logger).SingleInstance();
             builder.RegisterType<LogInterceptor>().SingleInstance();

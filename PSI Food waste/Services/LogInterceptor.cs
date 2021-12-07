@@ -15,7 +15,7 @@ namespace PSI_Food_waste.Services
             {
                 invocation.Proceed();
                 Log.Logger.Information($"Method {invocation.Method.Name} called with parameters: {JsonConvert.SerializeObject(invocation.Arguments)}" +
-    $"returned this response: { JsonConvert.SerializeObject(invocation.ReturnValue)}");
+                $"returned this response: { JsonConvert.SerializeObject(invocation.ReturnValue)}");
             }
             catch (Exception ex)
             {

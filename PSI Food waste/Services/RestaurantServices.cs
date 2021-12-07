@@ -17,7 +17,7 @@ namespace PSI_Food_waste.Services
 
         public RestaurantServices()
         {
-            CurrentId = Guid.Empty;
+            //CurrentId = Guid.Empty;
             Restaurants = new List<Restaurant>()
             {
                 new Restaurant { Title = "Chilli pica", City = "Kaunas",Adress = "Kauno g. 15", Id = Guid.NewGuid(), WorkerID = 1 },
