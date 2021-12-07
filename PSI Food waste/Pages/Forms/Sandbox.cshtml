@@ -1,101 +1,193 @@
-﻿@page
+﻿@page "{id}"
 @model PSI_Food_waste.Pages.Forms.Sandbox
 @{
 }
 
-<h4>exception handling</h4>
-@*<p>@Model.StringList.Length()</p>*@
-<p>@Model.ListLen</p>
+<p>@Model.list.Count()</p>
+<p>page select: @Model.CurrPage</p>
 
-<form method="post" asp-page-handler="Increase">
-    <button class="btn btn-primary">Increase</button>
-</form>
-
-<p>@Model.ErrMsg</p>
-
-
-<h4>async / await</h4>
-
-<p>@Model.Msg1</p>
-<p>@Model.Msg2</p>
-
-<form method="post" asp-page-handler="Select1">
-    <button class="btn btn-primary">Select 1</button>
-</form>
-<form method="post" asp-page-handler="Select2">
-    <button class="btn btn-primary">Select 2</button>
-</form>
-<form method="post" asp-page-handler="Select3">
-    <button class="btn btn-primary">Select 3</button>
-</form>
-
-<h3>@Model.RegisteredUsers.Length()</h3>
-<table class="table mt-5">
-    @for(int i = 0;i < Model.RegisteredUsers.Length(); i++)
-    {
-    <tr>
-        <td>@Model.RegisteredUsers[i].Email</td>
-        @foreach(var data in Model.RegisteredUsers[i].SubscribedRestaurants)
-            {
-                <td>@data.Title</td>
-            }
-        </tr>
-    }
-</table>
-
-@{
-    <h4>is lazy initialized</h4>
-    <p>@Model._registerRepository.GetUsersObject().IsValueCreated</p>
-}
-
-
-@{ 
-//var query =
-//    Model.restaurants.GroupJoin(Model.products,
-//                                restaurant => restaurant,
-//                                product => product.RestId,
-//                                (restaurant, productCollection) =>
-//                                     new
-//                                     {
-//                                         RestaurantName = restaurant.Title,
-//                                         Pets = productCollection.Select(product =>  product.RestId)
-//                                     });
-//foreach (var obj in query)
-//    {
-
-//    }
-    @*<h4>group join</h4>
-
-    var query = from restaurant in Model.restaurants
-                join product in Model.products on restaurant.Id equals product.RestId into productCollection
-                select new { RestaurantName = restaurant.Title, Products = productCollection };
-
-    foreach (var v in query)
-    {
-                <p>@v.RestaurantName</p>
-        foreach (Models.Product product in v.Products)
+<form style="
+        width:1200px;"
+      method="post" class="card p-3">
+    <div>
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th schope="col">Number</th>
+                    <th schope="col">empty</th>
+                </tr>
+            </thead>
+            @foreach(var item in Model.list.Skip(
+                (Model.CurrPage - 1) * 3)
+                .Take(3))
+             {
+                 <tr>
+                    <td>@item</td>
+                    <td>number</td>
+                 </tr>
+              }
+        </table>
+    </div>
+    <div class="text-left">
+        <label>Pages</label>
+        @for (int i = 0; i < Model.CalculatePages(Model.list.Count()); ++i)
         {
-                    <p>---@product.Name</p>
+            if (i + 1 == Model.CurrPage)
+            {
+                <button method="post" asp-page-handler="SelectPage" asp-route-id="@(i+1)" style="
+                width:35px;
+                height:35px;
+                background-color:darkslategray;
+                "
+                        class="btn btn-primary align-items-md-center">
+                    @(i+1)
+                </button>
+            }
+            else
+            {
+                <button method="post" asp-page-handler="SelectPage" asp-route-id="@(i+1)" style="
+                width:35px;
+                height:35px;
+                "
+                        class="btn btn-primary align-items-md-center">
+                    @(i+1)
+                </button>
+            }
+
         }
-    }*@
 
-    <h4>indexed demo</h4>
+    </div>
 
-    var demoCollection = new Models.IndexDemo<string>();
+</form>
+    <h4>LINQ: group</h4>
 
-    demoCollection[0] = "hello";
-    demoCollection[1] = ", ";
-    demoCollection[2] = "world";
-
-    for (int i = 0; i < 4; ++i)
-    {
-        <label>@demoCollection[i]</label>
+    @{
+        var productsByRestaurant = Model.products.GroupBy(p => p.RestId);
+        foreach (var productGroup in productsByRestaurant)
+        {
+            <h6>Restaurant @productGroup.Key: @productGroup.Count() products</h6>
+            foreach (var product in productGroup)
+            {
+                <p>@product.Name @product.RestId</p>
+            }
+        }
     }
 
-    <h4>struct demo</h4>
+    <h4>LINQ: join</h4>
 
-    List<Models.StructDemo> users = new List<Models.StructDemo>()
-    {
+    @{
+        var productsWithRestaurant = Model.products.Join(Model.restaurants,
+                                                        p => p.RestId,
+                                                        r => r.Id,
+                                                        (p, r) => new { p.Name, r.Title });
+
+
+    }
+
+    <table>
+        @foreach (var product in productsWithRestaurant)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Title</td>
+            </tr>
+        }
+    </table>
+
+
+    <h4>exception handling</h4>
+    @*<p>@Model.StringList.Length()</p>*@
+    <p>@Model.ListLen</p>
+
+    <form method="post" asp-page-handler="Increase">
+        <button class="btn btn-primary">Increase</button>
+    </form>
+
+    <p>@Model.ErrMsg</p>
+
+
+    <h4>async / await</h4>
+
+    <p>@Model.Msg1</p>
+    <p>@Model.Msg2</p>
+
+    <form method="post" asp-page-handler="Select1">
+        <button class="btn btn-primary">Select 1</button>
+    </form>
+    <form method="post" asp-page-handler="Select2">
+        <button class="btn btn-primary">Select 2</button>
+    </form>
+    <form method="post" asp-page-handler="Select3">
+        <button class="btn btn-primary">Select 3</button>
+    </form>
+
+    <h3>@Model.RegisteredUsers.Length()</h3>
+    <table class="table mt-5">
+        @for (int i = 0; i < Model.RegisteredUsers.Length(); i++)
+        {
+            <tr>
+                <td>@Model.RegisteredUsers[i].Email</td>
+                @foreach (var data in Model.RegisteredUsers[i].SubscribedRestaurants)
+                {
+                    <td>@data.Title</td>
+                }
+            </tr>
+        }
+    </table>
+
+    @{
+        <h4>is lazy initialized</h4>
+        <p>@Model._registerRepository.GetUsersObject().IsValueCreated</p>
+    }
+
+
+    @{
+        //var query =
+        //    Model.restaurants.GroupJoin(Model.products,
+        //                                restaurant => restaurant,
+        //                                product => product.RestId,
+        //                                (restaurant, productCollection) =>
+        //                                     new
+        //                                     {
+        //                                         RestaurantName = restaurant.Title,
+        //                                         Pets = productCollection.Select(product =>  product.RestId)
+        //                                     });
+        //foreach (var obj in query)
+        //    {
+
+        //    }
+        @*<h4>group join</h4>
+
+            var query = from restaurant in Model.restaurants
+                        join product in Model.products on restaurant.Id equals product.RestId into productCollection
+                        select new { RestaurantName = restaurant.Title, Products = productCollection };
+
+            foreach (var v in query)
+            {
+                        <p>@v.RestaurantName</p>
+                foreach (Models.Product product in v.Products)
+                {
+                            <p>---@product.Name</p>
+                }
+            }*@
+
+        <h4>indexed demo</h4>
+
+        var demoCollection = new Models.IndexDemo<string>();
+
+        demoCollection[0] = "hello";
+        demoCollection[1] = ", ";
+        demoCollection[2] = "world";
+
+        for (int i = 0; i < 4; ++i)
+        {
+            <label>@demoCollection[i]</label>
+        }
+
+        <h4>struct demo</h4>
+
+        List<Models.StructDemo> users = new List<Models.StructDemo>()
+{
         new Models.StructDemo("User"),
         new Models.StructDemo("User", "2"),
         new Models.StructDemo("User", "3", 10),
@@ -104,56 +196,56 @@
         new Models.StructDemo(lname: "6", age: 10, name: "User")
     };
 
-    foreach (var user in users)
-    {
-                <p>@user.ToString()</p>
+        foreach (var user in users)
+        {
+            <p>@user.ToString()</p>
+        }
+
+        <h4>type conversion demo</h4>
+        double _double = 2.5;
+        int _int = (int)_double;
+        <p>@_double</p>
+
+        var first = 32769;
+        short second = (short)first;
+        <p>@second</p>
+
+        long _long = first;
+        <p>@_long</p>
+
+        var list = new List<int> { 1, 2, 3, 4, 5 };
+        var doubleList = new List<double> { 1.2, 2.4, 3.5, 4.4, 5.4 };
+        @*foreach (var item in list)
+            {
+                        <p>@item</p>
+            }*@
+
+        int TotalSum(List<double> list)
+        {
+            int sum = 0;
+            foreach (var item in list)
+            {
+                sum += (int)item;
+            }
+            return sum;
+        }
+
+        <p>@TotalSum(doubleList)</p>
+
+
+
+
+
+        double price = 10;
+        int discount = 25;
+
+        double NewPrice(double price, int discount)
+        {
+            return price * (1 - (double)discount / 100);
+        }
+
+        <p>@NewPrice(price, discount)</p>
+
+
+        <p>@((int)(2.4 * 2))</p>
     }
-
-    <h4>type conversion demo</h4>
-    double _double = 2.5;
-    int _int = (int)_double;
-    <p>@_double</p>
-
-    var first = 32769;
-    short second = (short)first;
-    <p>@second</p>
-
-    long _long = first;
-    <p>@_long</p>
-
-    var list = new List<int> { 1, 2, 3, 4, 5 };
-    var doubleList = new List<double> { 1.2, 2.4, 3.5, 4.4, 5.4 };
-    @*foreach (var item in list)
-    {
-                <p>@item</p>
-    }*@
-
-int TotalSum(List<double> list)
-{
-    int sum = 0;
-    foreach (var item in list)
-    {
-        sum += (int)item;
-    }
-    return sum;
-}
-
-    <p>@TotalSum(doubleList)</p>
-
-
-
-
-
-    double price = 10;
-    int discount = 25;
-
-    double NewPrice(double price, int discount)
-    {
-        return price * (1 - (double)discount / 100);
-    }
-
-    <p>@NewPrice(price, discount)</p>
-
-
-    <p>@((int)(2.4 * 2))</p>
-}
