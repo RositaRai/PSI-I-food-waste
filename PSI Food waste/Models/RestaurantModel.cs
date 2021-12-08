@@ -15,7 +15,7 @@ namespace PSI_Food_waste.Models
         public string Title { get; set; }
         public string City { get; set; }
         public string Adress { get; set; }
-
+        public string PictureUrl { get; set; }
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
