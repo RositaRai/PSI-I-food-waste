@@ -57,9 +57,9 @@ namespace PSI_Food_waste.Services
             Products = products;
         }
 
-        public Product Get(int id) => Products.FirstOrDefault(p => p.PrID == id);
+        public Product Get(Guid id) => Products.FirstOrDefault(p => p.PrID == id);
 
-        public async Task<List<Product>> GetList(int id)                           
+        public async Task<List<Product>> GetList(Guid id)                           
         {
             IEnumerable<Product> query = await Task.Run(() => QueryRestaurantProducts(id));
 
@@ -82,7 +82,7 @@ namespace PSI_Food_waste.Services
            // return IdProducts;
         }
 
-        private IEnumerable<Product> QueryRestaurantProducts(int id)
+        private IEnumerable<Product> QueryRestaurantProducts(Guid id)
         {
             IEnumerable<Product> query = from Product product in Products          
                                          where product.RestId == id
@@ -97,7 +97,7 @@ namespace PSI_Food_waste.Services
         }
 
         //TODO: fix product adding to DB
-        public async Task AddAsync(Product product, int restId)
+        public async Task AddAsync(Product product, Guid restId)
         {
             if (Products == null)
             {
@@ -112,7 +112,7 @@ namespace PSI_Food_waste.Services
             
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var product = _context.Products.Find(id);
             if (product is null)

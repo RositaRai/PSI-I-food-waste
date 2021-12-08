@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PSI_Food_waste.Models;
 using PSI_Food_waste.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace PSI_Food_waste.Pages.Forms
     {
         public List<Product> products { get; set; }
         public Restaurant restaurant {  get; set; }
-        public static int IdTest { get; set; }
+        public static Guid IdTest { get; set; }
         [BindProperty]
         public string searchCriteria { get; set; }
 

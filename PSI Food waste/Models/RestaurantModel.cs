@@ -10,7 +10,7 @@ namespace PSI_Food_waste.Models
 {
     public class Restaurant
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Title { get; set; }
         public string City { get; set; }

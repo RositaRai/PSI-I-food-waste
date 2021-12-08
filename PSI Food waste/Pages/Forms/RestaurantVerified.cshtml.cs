@@ -28,7 +28,7 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public static string Msg { get; set; } = "";
 
-        public static int Id {  get; set; }
+        public static Guid Id {  get; set; }
 
         public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  
 
@@ -110,7 +110,7 @@ namespace PSI_Food_waste.Pages.Forms
             //Task.WaitAll();
             return RedirectToAction("Get");
         }
-        public IActionResult OnPostDelete(int id)
+        public IActionResult OnPostDelete(Guid id)
         {     
             if (HttpContext.Session.GetString("username") == null)
             {

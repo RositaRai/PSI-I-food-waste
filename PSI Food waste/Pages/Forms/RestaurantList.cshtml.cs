@@ -62,12 +62,12 @@ namespace PSI_Food_waste.Pages.Forms
                 restaurants = restaurants.Where((restaurants, SearchByCity) => restaurants.City.Equals(SearchByCity), SearchByCity);
             }
         }
-        public IActionResult OnPostSelect(int id)
+        public IActionResult OnPostSelect(Guid id)
         {
             RestaurantProductsModel.IdTest = id;
             return RedirectToPage("/Forms/RestaurantProducts");
         }
-        public IActionResult OnPostSubscribe(int id)
+        public IActionResult OnPostSubscribe(Guid id)
         {
             if (_registerRepository.CurrentUser.Username != null)
             {
