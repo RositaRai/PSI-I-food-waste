@@ -17,7 +17,7 @@
     @*<h1 class="display-4">Welcome to @Model.City!</h1>*@
     <h1 class="display-4">Welcome @Model.Username!</h1>
     <h1 class="display-4">Choose who you are</h1>
-    <form>
+    <form method="post" asp-page-handler="Person">
         <button style="
         width:250px;
         height:50px;
@@ -25,7 +25,7 @@
         background-color: cadetblue;
         border: 3px solid black;
         font: bold 30px calibri;"
-                class="btn btn-primary align-items-md-center" asp-page="/Forms/AddLocation">
+                class="btn btn-primary align-items-md-center">
             PERSON
         </button>
     </form>
