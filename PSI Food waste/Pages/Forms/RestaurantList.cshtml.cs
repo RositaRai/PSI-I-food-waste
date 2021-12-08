@@ -17,7 +17,7 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public string SearchByCity { get; set; }
 
-        public static string UserLocation { get; set; }
+        public string UserLocation { get; set; }
 
         [BindProperty]
         public string msg { get; set; }
@@ -34,10 +34,10 @@ namespace PSI_Food_waste.Pages.Forms
             _restaurantRepository = restaurantRepository;
             _registerRepository = registerRepository;
         }
-        public void OnGet()
+        public void OnGet(string City)
         {
                 ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            SearchByCity = UserLocation;
+            SearchByCity = City;
             restaurants = _restaurantRepository.GetAll();
 
             if (SearchByCity == "None")
@@ -64,8 +64,8 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPostSelect(Guid id)
         {
-            RestaurantProductsModel.IdTest = id;
-            return RedirectToPage("/Forms/RestaurantProducts");
+            //RestaurantProductsModel.IdTest = id;
+            return RedirectToPage("/Forms/RestaurantProducts", new { ID = id });
         }
         public IActionResult OnPostSubscribe(Guid id)
         {
