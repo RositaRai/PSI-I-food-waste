@@ -25,7 +25,8 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public static string Msg { get; set; } = "";
 
-        public static Guid ID {  get; set; }
+        [BindProperty(SupportsGet = true)]
+        public Guid ID {  get; set; }
 
         public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  //TODO: fix error
 
@@ -59,9 +60,9 @@ namespace PSI_Food_waste.Pages.Forms
                 return "Gluten Free";
             return "Not Gluten Free";
         }
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(Guid id)
         {
-        
+            ID = id;
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             products = await _productRepository.GetList(ID);
             currentRestaurant = _restaurantRepository.Get(ID);
@@ -110,7 +111,7 @@ namespace PSI_Food_waste.Pages.Forms
             Product DelProduct = _productRepository.Get(id);
             _notificationEvent.RaiseEvent(this, DelProduct.Name, _notyf, 1);
             _productRepository.Delete(id);
-            return RedirectToAction("Get");
+            return Page();//RedirectToAction("Get");
         }
     }
     public class ProductArgs : EventArgs
