@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PSI_Food_waste.Data;
 using PSI_Food_waste.Models;
 
 namespace PSI_Food_waste.Services
@@ -15,12 +16,15 @@ namespace PSI_Food_waste.Services
 
         public RegisterForm CurrentUser { get; set; }
 
+        //for testing only
+        //private readonly ProductContext _context;
+
         public RegisterService()
         {
             Users = new Lazy<RegisteredUser<RegisterForm>>();
             //FillList();
             //Users = new RegisteredUser<RegisterForm>();
-            //Users.Add(new RegisterForm(new List<Restaurant>(), "abc@gmail.com", "test", "test", 1));
+            //Users.Value.Add(new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), "admin", "admin", "admin", 0));
         }
 
         //private void FillList()

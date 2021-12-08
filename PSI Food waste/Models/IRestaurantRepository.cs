@@ -10,9 +10,9 @@ namespace PSI_Food_waste.Models
 {
     public interface IRestaurantRepository
     {
-        public void Add(Restaurant Restaurant);
+        public Task AddAsync(Restaurant restaurant);
         public List<Restaurant> GetAll();
         public Restaurant Get(int id);
-        public int GetID();
+        //public int GetID();
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PSI_Food_waste.Services;
+using PSI_Food_waste.Data;
 
 namespace PSI_Food_waste.Services
 {
@@ -13,24 +14,31 @@ namespace PSI_Food_waste.Services
     {
         List<Restaurant> Restaurants { get; }
 
-        public int nextID = 2;
+        //public static int nextID = 2;
 
-        public RestaurantServices()
+        private readonly ProductContext _context;
+
+        public RestaurantServices(ProductContext context)
         {
-            Restaurants = new List<Restaurant>()
-            {
-                new Restaurant { Title = "Chilli pica", City = "Kaunas",Adress = "Kauno g. 15", Id = 1, WorkerID = 1 },
-                new Restaurant {Title = "Charlie pica", City = "Vilnius", Adress = "Vilniaus g. ", Id = 2, WorkerID = 2 }
-            };
+            _context = context;
+            Restaurants = _context.Restaurants.ToList();
+            //Restaurants = new List<Restaurant>()
+            //{
+            //    new Restaurant { Title = "Chilli pica", City = "Kaunas",Adress = "Kauno g. 15", Id = 1},
+            //    new Restaurant {Title = "Charlie pica", City = "Vilnius", Adress = "Vilniaus g. ", Id = 2}
+            //};
         }
         public List<Restaurant> GetAll() => Restaurants;
         public Restaurant Get(int id) => Restaurants.FirstOrDefault(p => p.Id  == id);
 
-        public void Add(Restaurant Restaurant)
+        public async Task AddAsync(Restaurant restaurant)
         {
- 
-            Restaurant.Id = ++nextID;
-            Restaurants.Add(Restaurant);
+
+            await _context.Restaurants.AddAsync(restaurant);
+            await _context.SaveChangesAsync();
+           // ++nextID;
+            //Restaurant.Id = ++nextID;
+            //Restaurants.Add(Restaurant);
 
         }
         public void Update(Restaurant Restaurant)
@@ -41,10 +49,10 @@ namespace PSI_Food_waste.Services
 
             Restaurants[index] = Restaurant;
         }
-        public int GetID()
-        {
-            return nextID;
-        }
+        //public int GetID()
+        //{
+        //    return nextID;
+        //}
     }
     public static class RestaurantServicesExtension
     {
