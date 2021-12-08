@@ -64,8 +64,8 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPostSelect(Guid id)
         {
-            RestaurantProductsModel.IdTest = id;
-            return RedirectToPage("/Forms/RestaurantProducts");
+            // RestaurantProductsModel.IdTest = id;
+            return RedirectToPage("/Forms/RestaurantProducts", new { ID = id});
         }
         public IActionResult OnPostSubscribe(Guid id)
         {

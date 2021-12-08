@@ -77,7 +77,7 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public IActionResult OnPost(Guid id)
         {
-            currentRestaurant = _restaurantRepository.Get(ID);
+            currentRestaurant = _restaurantRepository.Get(id);
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
@@ -102,16 +102,16 @@ namespace PSI_Food_waste.Pages.Forms
             }
             return RedirectToAction("Get");
         }
-        public IActionResult OnPostDelete(Guid id)
-        {     
+        public IActionResult OnPostDelete(Product newproduct)
+        {
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
             }
-            Product DelProduct = _productRepository.Get(id);
+            Product DelProduct = _productRepository.Get(newproduct.PrId);
             _notificationEvent.RaiseEvent(this, DelProduct.Name, _notyf, 1);
-            _productRepository.Delete(id);
-            return Page();//RedirectToAction("Get");
+            _productRepository.Delete(newproduct.PrId);
+            return RedirectToAction("Get");
         }
     }
     public class ProductArgs : EventArgs

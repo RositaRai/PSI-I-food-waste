@@ -27,8 +27,7 @@
         <input asp-for="NewProduct.Discount" class="mr-5" />
         <label asp-for="NewProduct.IsGlutenFree">Gluten Free</label>
         <input type="checkbox" asp-for="NewProduct.IsGlutenFree" class="mr-5">
-        <input asp-for="NewProduct.Discount" class="mr-5" />
-        <button class="btn btn-primary">Add</button
+        <button class="btn btn-primary">Add</button>
     </div>
 </form>
 <h3 style="color:green">@RestaurantVerifiedModel.Msg</h3>
@@ -53,7 +52,7 @@
             <td>@product.Size</td>
             <td>@Model.GlutenFreeText(product)</td>
             <td>
-                <form method="post" asp-page-handler="Delete" asp-route-id="@product.PrId">
+                <form method="post" asp-page-handler="Delete" asp-route-prid="@product.PrId">
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </td>
