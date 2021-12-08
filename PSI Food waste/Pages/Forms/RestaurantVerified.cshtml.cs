@@ -62,10 +62,10 @@ namespace PSI_Food_waste.Pages.Forms
         }
         public async Task OnGetAsync(Guid id)
         {
-            ID = id;
+            //ID = id;
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            products = await _productRepository.GetList(ID);
-            currentRestaurant = _restaurantRepository.Get(ID);
+            products = await _productRepository.GetList(id);
+            currentRestaurant = _restaurantRepository.Get(id);
             try
             {
                 _productRepository.SortProducts();
@@ -75,7 +75,7 @@ namespace PSI_Food_waste.Pages.Forms
 
             }
         }
-        public IActionResult OnPost()
+        public IActionResult OnPost(Guid id)
         {
             currentRestaurant = _restaurantRepository.Get(ID);
             if (HttpContext.Session.GetString("username") == null)
