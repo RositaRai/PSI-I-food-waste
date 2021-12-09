@@ -136,8 +136,12 @@
     }
 </table>*@
 @*<table>
-        <tr>
-            @if (ViewData["User"] != null)
+    <tr>
+        @if (ViewData["User"] != null)
+        {
+            <td>@Model._registerRepository.CurrentUser.Email</td>
+            <td>@Model._registerRepository.CurrentUser.Username</td>
+            @foreach (var data in @Model._registerRepository.CurrentUser.SubscribedRestaurants)
             {
                 <td>@Model._registerRepository.CurrentUser.Email</td>
                 <td>@Model._registerRepository.CurrentUser.Username</td>

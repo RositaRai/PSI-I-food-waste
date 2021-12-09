@@ -39,8 +39,10 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
+            
             if(NewRestaurant.PictureUrl == null)
                 NewRestaurant.PictureUrl = "https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg";
+
             await _restaurantRepository.AddAsync(NewRestaurant);
             _registerRepository.CurrentUser.CreatedRestaurants.Add(NewRestaurant);
             //RestaurantVerifiedModel.Id = _restaurantRepository.GetID();
