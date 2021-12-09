@@ -27,10 +27,6 @@ namespace PSI_Food_waste.Services
         //        new Product { Id = 2, Name = "Veggie pizza", Price=15.00M, Size=ProductSize.Small, IsGlutenFree = true }
         //    };
         //}
-
-        
-
-
         public IRestaurantRepository _restaurantRepository;
         private readonly ProductContext _context;
 
@@ -42,6 +38,11 @@ namespace PSI_Food_waste.Services
             //Products = ReadFile();
         }
 
+        public async Task<List<Product>> GetPaginatedResult(List<Product> items, int currentPage, int pageSize = 10)
+        {
+            var data = items;
+            return data.OrderBy(p => p.PrID).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+        }
         private List<Product> ReadFile()
         {
             string initialData = (Directory.GetCurrentDirectory() + "\\text.json");
