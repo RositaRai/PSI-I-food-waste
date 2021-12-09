@@ -32,6 +32,8 @@ namespace PSI_Food_waste.Pages.Forms
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             restaurant = _restaurantRepository.Get(id : ID);
             products = await _productRepository.GetList(id : ID);
+            Data = await _productRepository.GetPaginatedResult(products, CurrentPage, PageSize);
+            Count = products.Count;
         }
         public async Task OnPostAsync(Guid ID)
         {
@@ -41,6 +43,8 @@ namespace PSI_Food_waste.Pages.Forms
             restaurant = _restaurantRepository.Get(id: ID);
             //products = ProductService.GetList(id: IdTest);
             products = await _productRepository.GetList(id: ID);
+            Data = await _productRepository.GetPaginatedResult(products, CurrentPage, PageSize);
+            Count = products.Count;
         }
         public string GlutenFreeText(Product product) 
         {
