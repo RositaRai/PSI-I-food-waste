@@ -12,7 +12,8 @@ namespace PSI_Food_waste.Models
     {
         public Task AddAsync(Restaurant restaurant);
         public List<Restaurant> GetAll();
-        public Restaurant Get(int id);
+        public Restaurant Get(Guid id);
+        public Guid GetID(Restaurant restaurant);
         //public int GetID();
     }
 }

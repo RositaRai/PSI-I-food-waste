@@ -29,7 +29,7 @@ namespace PSI_Food_waste.Services
             //};
         }
         public List<Restaurant> GetAll() => Restaurants;
-        public Restaurant Get(int id) => Restaurants.FirstOrDefault(p => p.Id  == id);
+        public Restaurant Get(Guid id) => Restaurants.FirstOrDefault(p => p.Id  == id);
 
         public async Task AddAsync(Restaurant restaurant)
         {
@@ -49,10 +49,11 @@ namespace PSI_Food_waste.Services
 
             Restaurants[index] = Restaurant;
         }
-        //public int GetID()
-        //{
-        //    return nextID;
-        //}
+        public Guid GetID(Restaurant restaurant)
+        {
+            var rest = Restaurants.FirstOrDefault(p => p.Id == restaurant.Id);
+            return rest.Id;
+        }
     }
     public static class RestaurantServicesExtension
     {

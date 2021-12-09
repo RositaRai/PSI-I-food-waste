@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{ID?}"
 @using PSI_Food_waste.Models
 @model PSI_Food_waste.Pages.Forms.RestaurantVerifiedModel
 @{
@@ -48,7 +48,7 @@
             <td>@product.Size</td>
             <td>@Model.GlutenFreeText(product)</td>
             <td>
-                <form method="post" asp-page-handler="Delete" asp-route-id="@product.PrID">
+                <form method="post" asp-page-handler="Delete" asp-route-prid="@product.PrID">
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </td>

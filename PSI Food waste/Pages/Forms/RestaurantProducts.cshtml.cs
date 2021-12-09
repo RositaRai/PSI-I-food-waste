@@ -23,7 +23,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         public List<Product> products { get; set; }
         public Restaurant restaurant {  get; set; }
-        public static int IdTest { get; set; }
+        public Guid IdTest { get; set; }
         [BindProperty]
         public string searchCriteria { get; set; }
 
@@ -37,7 +37,7 @@ namespace PSI_Food_waste.Pages.Forms
             _restaurantRepository = restaurantRepository;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(Guid ID)
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             restaurant = _restaurantRepository.Get(id : ID);
@@ -45,7 +45,7 @@ namespace PSI_Food_waste.Pages.Forms
             Data = await _productRepository.GetPaginatedResult(products, CurrentPage, PageSize);
             Count = products.Count;
         }
-        public async Task OnPostAsync()
+        public async Task OnPostAsync(Guid ID)
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //return RedirectToPage("/Forms/RestaurantProducts", new {searchCriteria = this.searchCriteria});
