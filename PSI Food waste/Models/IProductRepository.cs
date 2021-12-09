@@ -14,6 +14,7 @@ namespace PSI_Food_waste.Models
         public Task<List<Product>> GetList(Guid id);
         //public void SortProducts();
 
+        Task<List<Product>> GetPaginatedResult(List<Product> items, int currentPage, int pageSize = 10);
         public Task AddAsync(Product product, Guid restId);
 
         public void Delete(Guid Guid);
