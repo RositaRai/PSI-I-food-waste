@@ -40,8 +40,8 @@ namespace PSI_Food_waste.Pages.Forms
         public async Task OnGetAsync()
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            restaurant = _restaurantRepository.Get(id: ID);
-            products = await _productRepository.GetList(id: ID);
+            restaurant = _restaurantRepository.Get(id : ID);
+            products = await _productRepository.GetList(id : ID);
             Data = await _productRepository.GetPaginatedResult(products, CurrentPage, PageSize);
             Count = products.Count;
         }
