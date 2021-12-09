@@ -65,7 +65,7 @@ namespace PSI_Food_waste.Pages.Forms
                 }
             }
 
-            return RedirectToPage("./RestaurantVerified");
+            return RedirectToPage("./RestaurantVerified", "Get", new { ID = Product.RestId });
         }
 
         private bool ProductExists(Guid id)
