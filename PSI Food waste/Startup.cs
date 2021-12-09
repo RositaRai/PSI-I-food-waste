@@ -15,6 +15,10 @@ using PSI_Food_waste.Models;
 using AspNetCoreHero.ToastNotification;
 using Microsoft.EntityFrameworkCore;
 using PSI_Food_waste.Data;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Serilog;
+using Autofac.Extras.DynamicProxy;
 
 namespace PSI_Food_waste
 {
@@ -28,13 +32,19 @@ namespace PSI_Food_waste
 
         public IConfiguration Configuration { get; }
 
+        public ILifetimeScope AutoFacContainter { get; private set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Log.Logger = new LoggerConfiguration()
+               .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
+               .CreateLogger();
+
             services.AddRazorPages();
             services.AddSession();
-            services.AddTransient<IProductRepository, ProductService>();
-            services.AddTransient<IRestaurantRepository, RestaurantServices>();
+            //services.AddTransient<IProductRepository, ProductService>();
+            //services.AddTransient<IRestaurantRepository, RestaurantServices>();
             services.AddSingleton<IRegisterRepository, RegisterService>();
             services.AddSingleton<IRegistrationEventNotifier, RegistrationEventNotifier>();
             services.AddTransient<INotificationEvent, NotificationEvent>();
@@ -43,6 +53,36 @@ namespace PSI_Food_waste
             services.AddDbContext<ProductContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ProductContext")));
 
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            };
+
+
+        }
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<ProductService>().As<IProductRepository>()
+            .EnableInterfaceInterceptors()
+             .InterceptedBy(typeof(LogInterceptor))
+             //.InstancePerLifetimeScope();
+             .InstancePerDependency();
+             //.InstancePerMatchingLifetimeScope();
+             //.SingleInstance();
+
+
+
+            builder.RegisterType<RestaurantServices>().As<IRestaurantRepository>()
+              .EnableInterfaceInterceptors()
+              .InterceptedBy(typeof(LogInterceptor))
+              //.InstancePerLifetimeScope();
+              .InstancePerDependency();
+              //.InstancePerMatchingLifetimeScope();
+              //.SingleInstance();
+
+            builder.Register(x => Log.Logger).SingleInstance();
+            builder.RegisterType<LogInterceptor>().SingleInstance();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,12 +99,16 @@ namespace PSI_Food_waste
                 app.UseHsts();
             }
 
+            this.AutoFacContainter = app.ApplicationServices.GetAutofacRoot();
+
             app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseMiddleware<ErrorLoggerMiddleware>();
 
             app.UseAuthorization();
 

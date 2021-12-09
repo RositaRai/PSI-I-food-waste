@@ -28,7 +28,7 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public static string Msg { get; set; } = "";
 
-        public static int Id {  get; set; }
+        public Guid ID {  get; set; }
 
         public Action<Product> DiscountPrice; //= _productRepository.NewPrice;  
 
@@ -62,11 +62,11 @@ namespace PSI_Food_waste.Pages.Forms
                 return "Gluten Free";
             return "Not Gluten Free";
         }
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(Guid id)
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            products = await _productRepository.GetList(Id);
-            currentRestaurant = _restaurantRepository.Get(Id);
+            products = await _productRepository.GetList(id);
+            currentRestaurant = _restaurantRepository.Get(id);
             try
             {
                // _productRepository.SortProducts();
@@ -76,9 +76,9 @@ namespace PSI_Food_waste.Pages.Forms
 
             }
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(Guid id)
         {
-            currentRestaurant = _restaurantRepository.Get(Id);
+            currentRestaurant = _restaurantRepository.Get(id);
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
@@ -91,34 +91,30 @@ namespace PSI_Food_waste.Pages.Forms
             
             DiscountPrice.Invoke(NewProduct);
             
-            await _productRepository.AddAsync(NewProduct, Id);
+            await _productRepository.AddAsync(NewProduct, id);
 
             RegisteredUsers = _registerRepository.GetAll();
-            //Task[] tasks = new Task[RegisteredUsers.Length()];
             for (int i = 0; i < RegisteredUsers.Length(); i++)
             {
                 if (RegisteredUsers[i].SubscribedRestaurants.Contains(currentRestaurant))
                 { 
                     string s = string.Format("A new product has been added to {0}!", currentRestaurant.Title);
-                    //tasks[i] = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
-                    Task t1; //= new(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
-                    //t1.RunSynchronously();
+                    Task t1;
                     t1 = Task.Run(() => _eventNotifier.RaiseEvent(this, new EmailNotificationArgs(RegisteredUsers[i].Email, s)));
                     t1.Wait();
                 }
             }
-            //Task.WaitAll();
             return RedirectToAction("Get");
         }
-        public IActionResult OnPostDelete(int id)
+        public IActionResult OnPostDelete(Product newproduct)
         {     
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToPage("/Forms/LoginScreen");
             }
-            Product DelProduct = _productRepository.Get(id);
+            Product DelProduct = _productRepository.Get(newproduct.PrID);
             _notificationEvent.RaiseEvent(this, DelProduct.Name, _notyf, 1);
-            _productRepository.Delete(id);
+            _productRepository.Delete(newproduct.PrID);
             return RedirectToAction("Get");
         }
 

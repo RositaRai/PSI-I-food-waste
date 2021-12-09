@@ -30,10 +30,10 @@ namespace PSI_Food_waste.Pages.Forms
         {
 
         }
-        public IActionResult OnPostSelect(int id)
+        public IActionResult OnPostSelect(Guid id)
         {
-            RestaurantVerifiedModel.Id = id;
-            return RedirectToPage("/Forms/RestaurantVerified");
+            //RestaurantVerifiedModel.Id = id;
+            return RedirectToPage("/Forms/RestaurantVerified", new { ID = id });
         }
     }
 }

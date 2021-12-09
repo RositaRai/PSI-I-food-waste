@@ -46,8 +46,11 @@ namespace PSI_Food_waste.Pages.Forms
             await _restaurantRepository.AddAsync(NewRestaurant);
             _registerRepository.CurrentUser.CreatedRestaurants.Add(NewRestaurant);
             //RestaurantVerifiedModel.Id = _restaurantRepository.GetID();
-            RestaurantVerifiedModel.Id = NewRestaurant.Id;
-            return RedirectToPage("/Forms/RestaurantVerified");
+            //RestaurantVerifiedModel.Id = NewRestaurant.Id;
+            Guid _id;
+            _id = NewRestaurant.Id;
+            //_restaurantRepository.GetID(NewRestaurant);
+            return RedirectToPage("/Forms/RestaurantVerified", new { ID = _id });
         }
     }
 }
