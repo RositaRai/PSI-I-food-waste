@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using PSI_Food_waste.Models;
 using Newtonsoft.Json;
 using PSI_Food_waste.Data;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PSI_Food_waste.Services
 {
@@ -38,7 +39,6 @@ namespace PSI_Food_waste.Services
             _restaurantRepository = restaurantRepository;
             _context = context;
             Products = _context.Products.ToList();
-
             //Products = ReadFile();
         }
 
