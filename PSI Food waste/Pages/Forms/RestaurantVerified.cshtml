@@ -53,7 +53,7 @@
                         <a asp-page="./EditProduct" asp-route-id="@product.PrID" class="btn btn-primary">Edit</a>
                     </div>
                     <div class="btn-sm">
-                        <form class="align-content-end" method="post" asp-page-handler="Delete" asp-route-id="@product.PrID">
+                        <form class="align-content-end" method="post" asp-page-handler="Delete" asp-route-prid="@product.PrID">
                             <button class="btn btn-danger">Delete</button>
                         </form>
                     </div>
