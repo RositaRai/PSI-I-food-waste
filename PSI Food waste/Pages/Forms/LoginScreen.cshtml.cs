@@ -41,6 +41,7 @@ namespace PSI_Food_waste.Pages.Forms
         {
             //for testing
             _registerRepository.AddToList(new RegisterForm(_context.Restaurants.ToList(), _context.Restaurants.ToList(), "admin", "admin", "admin", 0));
+            _registerRepository.AddToList(new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), "email@name.com", "name", "name", 0));
 
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //RegUsers = RegisterService.GetAll();

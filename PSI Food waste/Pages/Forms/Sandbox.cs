@@ -33,12 +33,13 @@ namespace PSI_Food_waste.Pages.Forms
             _registerRepository = registerRepository;
         }
 
-        public void OnGet()
+        public void OnGet(int id = 1)
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             restaurants = _restaurantRepository.GetAll();
             products =  _productRepository.GetAll();
             RegisteredUsers = _registerRepository.GetAll();
+            CurrPage = id;
         }
 
         [BindProperty]
@@ -115,5 +116,49 @@ namespace PSI_Food_waste.Pages.Forms
                 ErrMsg = ex.Message;
             }
         }
+
+
+
+        public int CalculatePages (int n)
+        {
+
+            int ps = 3;
+            if (n < ps)
+                return 1;
+            if (n % ps == 0)
+                return n / ps;
+            else
+                return n / ps + 1;
+        }
+        [BindProperty]
+        public int ProductsPerPage { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int CurrPage { get; set; }
+
+        public List<int> list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+
+        public void OnPostSetPages10()
+        {
+            ProductsPerPage = 3;
+        }
+        public void OnPostSetPages25()
+        {
+            ProductsPerPage = 5;
+        }
+
+        public IActionResult OnPostSelectPage(int id)
+        {
+
+            //return RedirectToPage($"/Forms/Sandbox/{id}");
+            return RedirectToAction("Get");
+        }
+
+        public List<int> ToShow = new List<int>();
+
+        //public void OnGet(int id)
+        //{
+        //    CurrPage = id;
+        //}
+
     }
 }

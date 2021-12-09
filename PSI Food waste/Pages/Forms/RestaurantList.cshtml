@@ -18,7 +18,80 @@
     <button style="height:30px;" class="btn btn-primary">Filter</button>
 </form>
 
-<table class="table mt-5">
+@{
+    var productsWithRestaurant = Model.products.Join(Model.restaurants,
+                                                    p => p.RestId,
+                                                    r => r.Id,
+                                                    (p, r) => new { p.Name, r.Title, r.Id, r.PictureUrl, p.DiscountedPrice, p.Price, p.Discount});
+
+    var productsByRestaurant = productsWithRestaurant.GroupBy(p => new { p.Title, p.PictureUrl, p.Id});
+}
+
+<div class="card-columns">
+    @foreach (var productGroup in productsByRestaurant)
+    {
+        <div class="card">
+            @*<button class="btn-primary">View</button>
+                <button class="btn-primary">Subscribe</button>*@
+            <div class="card-img" style="        background-image: url('@productGroup.Key.PictureUrl');
+            height: 330px;
+            vertical-align: bottom;
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: cover; /* Resize the background image to cover the entire container */
+            opacity: .8;
+             ">
+            </div>
+            <div class="card-body">
+                <h4>@productGroup.Key.Title</h4>
+                @*<form>
+                        <label class="col-sm-8 align-items-sm-start" style="font-size:170%;">@productGroup.Key.Title</label>
+                        <button class="btn-primary" style="height: 30px; width:70px">View</button>
+                    </form>*@
+                @*<h6>@productGroup.Key.Title: @productGroup.Count() products</h6>*@
+                @foreach (var product in productGroup.Take(2))
+                {   <p></p>
+                    <label class="col-sm-7">@product.Name</label>
+                    <label style="color:red;">-@product.Discount%</label>
+                }
+
+                <div class="card-deck">
+                @*<label class="col-sm-9" style="color:black; font-size:140%;">@productGroup.Key.Title</label>*@
+                <form method="post" asp-page-handler="Select" asp-route-id="@productGroup.Key.Id">
+                    <button class="btn btn-primary">View</button>
+                </form>
+                @if (ViewData["User"] != null)
+                    {
+                        bool isSubed = false;
+                        @foreach (var data in @Model._registerRepository.CurrentUser.SubscribedRestaurants)
+                        {
+                            if (productGroup.Key.Id.Equals(data.Id))
+                                isSubed = true;
+                    
+                        }
+                        if (isSubed)
+                        {
+                            <p>Subscribed</p>
+                        }
+                        else
+                        {
+                            <form method="post" asp-page-handler="Subscribe" asp-route-id="@productGroup.Key.Id">
+                                <button class="btn btn-primary">Subscribe</button>
+                            </form>
+                        }
+                    }
+                    else
+                    {
+                        <p>Login to subscribe</p>
+                    }
+            </div>
+            </div>
+            
+        </div>
+    }
+</div>
+
+@*<table class="table mt-5">
     <thead>
         <tr>
             <th scope="col">City</th>
@@ -61,7 +134,7 @@
             }
         </tr>
     }
-</table>
+</table>*@
 @*<table>
     <tr>
         @if (ViewData["User"] != null)
@@ -70,9 +143,13 @@
             <td>@Model._registerRepository.CurrentUser.Username</td>
             @foreach (var data in @Model._registerRepository.CurrentUser.SubscribedRestaurants)
             {
-                <td>@data.Title </td>
+                <td>@Model._registerRepository.CurrentUser.Email</td>
+                <td>@Model._registerRepository.CurrentUser.Username</td>
+                @foreach (var data in @Model._registerRepository.CurrentUser.SubscribedRestaurants)
+                {
+                    <td>@data.Title </td>
+                }
             }
-        }
-    </tr>
-</table>*@
+        </tr>
+    </table>*@
 

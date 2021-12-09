@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using PSI_Food_waste.Models;
+using PSI_Food_waste.Pages.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +43,12 @@ namespace PSI_Food_waste.Pages
             HttpContext.Session.Remove( key : "username");
             return RedirectToPage("/Index");
 
+        }
+
+
+        public IActionResult OnPostPerson()
+        {
+            return RedirectToPage("/Forms/RestaurantList", new LocationModel { City = "None" });
         }
     }
 }

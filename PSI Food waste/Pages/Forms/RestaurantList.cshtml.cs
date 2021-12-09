@@ -13,6 +13,7 @@ namespace PSI_Food_waste.Pages.Forms
     public class RestaurantListModel : PageModel
     {
         public List<Restaurant> restaurants { get; set; }
+        public List<Product> products { get; set; }
 
         [BindProperty]
         public string SearchByCity { get; set; }
@@ -28,17 +29,21 @@ namespace PSI_Food_waste.Pages.Forms
         public IRestaurantRepository _restaurantRepository;
 
         public IRegisterRepository _registerRepository;
+        public IProductRepository _productRepository;
 
-        public RestaurantListModel(IRestaurantRepository restaurantRepository, IRegisterRepository registerRepository)
+        public RestaurantListModel(IRestaurantRepository restaurantRepository, IRegisterRepository registerRepository, IProductRepository productRepository)
         {
             _restaurantRepository = restaurantRepository;
             _registerRepository = registerRepository;
+            _productRepository = productRepository;
         }
+
         public void OnGet(string City)
         {
                 ViewData["User"] = HttpContext.Session.GetString(key: "username");
             SearchByCity = City;
             restaurants = _restaurantRepository.GetAll();
+            products = _productRepository.GetAll();
 
             if (SearchByCity == "None")
             {
@@ -49,8 +54,9 @@ namespace PSI_Food_waste.Pages.Forms
                 restaurants = restaurants.Where((restaurants, SearchByCity) => restaurants.City.Equals(SearchByCity), SearchByCity);
             }
         }
-        public void OnPostFilter()
+        public void OnPostFilter(LocationModel loc)
         {
+            products = _productRepository.GetAll();
             restaurants = _restaurantRepository.GetAll();
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             if (SearchByCity == "None")
@@ -76,7 +82,7 @@ namespace PSI_Food_waste.Pages.Forms
                 if (!_registerRepository.CurrentUser.SubscribedRestaurants.Contains(restaurant))
                 {
                     _registerRepository.CurrentUser.SubscribedRestaurants.Add(restaurant);
-                    return RedirectToAction("OnPostFilter");
+                    return RedirectToAction("Get", new LocationModel { City = SearchByCity });
                 }
                 else
                     return RedirectToAction("OnPostFilter");

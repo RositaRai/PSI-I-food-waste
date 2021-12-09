@@ -117,6 +117,11 @@ namespace PSI_Food_waste.Pages.Forms
             _productRepository.Delete(newproduct.PrID);
             return RedirectToAction("Get");
         }
+
+        public IActionResult OnPostEdit(int id)
+        {
+            return RedirectToPage("/Forms/EditProduct", "Get", id);
+        }
     }
     public class ProductArgs : EventArgs
     {
