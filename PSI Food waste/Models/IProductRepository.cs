@@ -10,7 +10,6 @@ namespace PSI_Food_waste.Models
 {
     public interface IProductRepository
     {
-
         public Task<List<Product>> GetList(Guid id);
         //public void SortProducts();
         Task<List<Product>> GetPaginatedResult(List<Product> items, int currentPage, int pageSize = 10);
