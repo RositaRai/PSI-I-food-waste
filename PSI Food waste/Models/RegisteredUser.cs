@@ -30,6 +30,18 @@ namespace PSI_Food_waste.Models
         {
             return nextIndex;
         }
+
+        public bool Contains(RegisterForm user)
+        {
+            if (user.Equals(null))
+                return false;
+            for(int i = 0; i < nextIndex; ++i)
+            {
+                if (user.Equals(array[i]))
+                    return true;
+            }
+            return false;
+        }
     }
 
     public struct RegisterForm
