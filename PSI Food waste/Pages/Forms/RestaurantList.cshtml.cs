@@ -45,7 +45,7 @@ namespace PSI_Food_waste.Pages.Forms
             restaurants = _restaurantRepository.GetAll();
             products = _productRepository.GetAll();
 
-            if (SearchByCity == "None")
+            if (SearchByCity is null || SearchByCity.Equals("None"))
             {
 
             }
