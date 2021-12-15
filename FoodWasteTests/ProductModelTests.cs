@@ -42,11 +42,11 @@ namespace FoodWasteTests
             //Arrange
             var product1 = new Product { PrID = Guid.NewGuid(), RestId = Guid.NewGuid(), Name = "product1", Size = ProductSize.Small, IsGlutenFree = false, Price = 10, DiscountedPrice = 5, Discount = 50 };
             var product2 = new Product { PrID = Guid.NewGuid(), RestId = Guid.NewGuid(), Name = "product2", Size = ProductSize.Small, IsGlutenFree = false, Price = 10, DiscountedPrice = 10, Discount = 50 };
-            int expected = -1;
+            int expected = 0;
             //Act
             int actual = product1.CompareTo(product2);
             //Assert
-            Assert.Equal(expected, actual);
+            Assert.NotEqual(expected, actual);
         }
     }
 }
