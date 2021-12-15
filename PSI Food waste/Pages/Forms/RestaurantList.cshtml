@@ -55,11 +55,14 @@
                     <label style="color:red;">-@product.Discount%</label>
                 }
 
-                <div class="card-deck">
+                <div class="btn-group">
                 @*<label class="col-sm-9" style="color:black; font-size:140%;">@productGroup.Key.Title</label>*@
-                <form method="post" asp-page-handler="Select" asp-route-id="@productGroup.Key.Id">
-                    <button class="btn btn-primary">View</button>
-                </form>
+                <div class="btn-sm">
+                    <form method="post" asp-page-handler="Select" asp-route-id="@productGroup.Key.Id">
+                        <button class="btn btn-primary">View</button>
+                    </form>
+                </div>
+                
                 @if (ViewData["User"] != null)
                     {
                         bool isSubed = false;
@@ -75,9 +78,12 @@
                         }
                         else
                         {
-                            <form method="post" asp-page-handler="Subscribe" asp-route-id="@productGroup.Key.Id">
-                                <button class="btn btn-primary">Subscribe</button>
-                            </form>
+                            <div class="btn-sm">
+                                <form method="post" asp-page-handler="Subscribe" asp-route-id="@productGroup.Key.Id">
+                                    <button class="btn btn-primary">Subscribe</button>
+                                </form>
+                            </div>
+                            
                         }
                     }
                     else
