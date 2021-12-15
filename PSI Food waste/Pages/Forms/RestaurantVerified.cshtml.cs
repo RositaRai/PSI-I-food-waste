@@ -44,6 +44,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         public IRegisterRepository _registerRepository;
 
+        public double total;
 
         public RestaurantVerifiedModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository, INotificationEvent notificationEvent, IRegisterRepository registerRepository, IRegistrationEventNotifier eventNotifier, INotyfService notyf)
         {
@@ -75,6 +76,7 @@ namespace PSI_Food_waste.Pages.Forms
             {
 
             }
+            total = products.Aggregate((double)0, (a, b) => a + b.DiscountedPrice);
         }
         public async Task<IActionResult> OnPostAsync(Guid id)
         {

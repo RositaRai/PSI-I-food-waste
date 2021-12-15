@@ -97,7 +97,6 @@ namespace PSI_Food_waste.Services
             IdProducts.Add(product);
         }
 
-        //TODO: fix product adding to DB
         public async Task AddAsync(Product product, Guid restId)
         {
             if (Products == null)
@@ -123,15 +122,15 @@ namespace PSI_Food_waste.Services
             _context.Products.Remove(product);
             _context.SaveChanges();
         }
-        public void Update(Product product)
-        {
-            var index = Products.FindIndex(p => p.PrID == product.PrID);
-            if (index == -1)
-                return;
+        //public void Update(Product product)
+        //{
+        //    var index = Products.FindIndex(p => p.PrID == product.PrID);
+        //    if (index == -1)
+        //        return;
 
-            Products[index] = product;
+        //    Products[index] = product;
 
-        }
+        //}
         public void NewPrice(Product product)
         {
             product.DiscountedPrice = product.Price * (1 - (double)product.Discount/ 100);

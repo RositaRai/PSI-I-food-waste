@@ -46,7 +46,7 @@ namespace PSI_Food_waste.Pages.Forms
                 return Page();
             }
 
-            Product.DiscountedPrice = Product.Price * Product.Discount / 100;
+            Product.DiscountedPrice = Product.Price * (100 - Product.Discount) / 100;
             _context.Attach(Product).State = EntityState.Modified;
 
             try
