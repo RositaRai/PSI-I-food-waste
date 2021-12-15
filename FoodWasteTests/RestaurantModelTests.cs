@@ -78,7 +78,7 @@ namespace FoodWasteTests
             //Arrange
             var rest1 = new Restaurant { Id = Guid.NewGuid(), Adress = "s", City = "Vilnius", PictureUrl = "empty", Title = "rest1" };
             var rest2 = new Restaurant { Id = Guid.NewGuid(), Adress = "s", City = "Vilnius", PictureUrl = "empty", Title = "rest2" };
-            int expected = 1;
+            int expected = -1;
             //Act
             int actual = rest1.CompareTo(rest2);
             //Assert
