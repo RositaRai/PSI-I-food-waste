@@ -22,6 +22,7 @@
          <button class="btn btn-info" asp-page="/Forms/ShoppingCart">Shopping cart</button>
         </form>
     }
+    @Model.orderProducts.Count()
     &nbsp;
     <ul class="pagination">
         @for (var i = 1; i <= Model.TotalPages; i++)
@@ -81,12 +82,15 @@
                         <td>@($"{(rez.Discount/100d):P0}")</td>
                         <td>@Model.GlutenFreeText(rez)</td>
                         <td>quantity</td>
+                        <td>@Model.orderProducts.Count()</td>
 
                         @if (ViewData["User"] != null)
                         {
                             <td>
                              <div class="btn-sm">
-                                    <form method="post" asp-page-handler="AddToCart" asp-route-id="@rez.PrID" >
+                             
+                                    <button class="btn btn-primary" type="submit"  onclick="()=>Log(@rez.PrID)">@rez.PrID</button>
+                                    <form method="post" asp-page-handler="AddToCart" asp-route-productId="@rez.PrID" asp-route-restId="@Model.restaurant.Id" >
                                         <button class="btn btn-primary">Add to cart</button>
                                     </form>
                                 </div>
@@ -128,12 +132,14 @@
                     <td>@product.Size</td>
                     <td>@Model.GlutenFreeText(product)</td>
                     <td>quantity</td>
+                    <td>@Model.orderProducts.Count()</td>
 
                     @if (ViewData["User"] != null)
                     {
                         <td>
+                             <button type="submit" onclick="()=>Log(@product.PrID)">@product.PrID</button>
                          <div class="btn-sm">
-                                <form method="post" asp-page-handler="Subscribe">
+                                <form method="post"  asp-page-handler="AddToCart" asp-route-productId="@product.PrID" asp-route-restId="@Model.restaurant.Id" >
                                     <button class="btn btn-primary">Add to cart</button>
                                 </form>
                             </div>

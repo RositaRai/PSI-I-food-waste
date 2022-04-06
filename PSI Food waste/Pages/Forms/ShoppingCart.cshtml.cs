@@ -5,6 +5,7 @@ using PSI_Food_waste.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PSI_Food_waste.Pages.Forms
 {
@@ -24,7 +25,7 @@ namespace PSI_Food_waste.Pages.Forms
         public bool ShowPrevious => CurrentPage > 1;
         public bool ShowNext => CurrentPage < TotalPages;
 
-        public List<OrderProduct> orderProducts = new List<OrderProduct>();
+        public List<OrderProduct> orderProducts     { get; set; }   
 
 
         public List<Product> products { get; set; }
@@ -43,22 +44,10 @@ namespace PSI_Food_waste.Pages.Forms
             _restaurantRepository = restaurantRepository;
         }
 
-        public Task OnGetAsync(List<OrderProduct> list)
+        public Task OnGetAsync(string json)
         {
-            if(list != null)
-            {
-                foreach(var product in list)
-                {
-                    orderProducts.Add(product);
-                }
-                //orderProducts = list;
-                ViewData["orders"] = orderProducts;
-            }
-            else
-            {
-                Console.WriteLine("niekoo nebuvo");
-            }
-
+            orderProducts = JsonConvert.DeserializeObject<List<OrderProduct>>(json);
+            ViewData["orders"] = orderProducts;
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             Count = orderProducts.Count;
             return Task.CompletedTask;

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using PSI_Food_waste.Models;
 using PSI_Food_waste.Services;
 using System;
@@ -20,7 +21,7 @@ namespace PSI_Food_waste.Pages.Forms
         public bool ShowPrevious => CurrentPage > 1;
         public bool ShowNext => CurrentPage < TotalPages;
 
-        public List<OrderProduct> orderProducts { get; set; }
+        public List<OrderProduct> orderProducts = new List<OrderProduct>(); 
 
 
         public List<Product> products { get; set; }
@@ -65,20 +66,45 @@ namespace PSI_Food_waste.Pages.Forms
             return "Not Gluten Free";
         }
 
-        public IActionResult OnPostAddToCart(Guid id)
+        public IActionResult OnPostAddToCart(Guid productId, Guid restId)
         {
+            Product product = _productRepository.Get(productId);
+
             OrderProduct orderProduct = new OrderProduct();
-            orderProduct.Product = _productRepository.Get(id: id);
+            orderProduct.Product = product;
             orderProduct.Quantity = 1;
 
             orderProducts.Add(orderProduct);
-            return null;
+            var json = JsonConvert.SerializeObject(orderProducts);
+            ViewData["listas"] = orderProducts;
+            return RedirectToPage("/Forms/ShoppingCart", new { json = json });
+
+            return RedirectToAction("OnPostSelect", orderProducts);
         }
 
         public IActionResult OnPostSelect(List<OrderProduct> list)
         {
             //RestaurantProductsModel.IdTest = id;
-            return RedirectToPage("/Forms/ShoppingCart", new { list = orderProducts });
+            var json = JsonConvert.SerializeObject(orderProducts);  
+            ViewData["listas"] = orderProducts;
+            return RedirectToPage("/Forms/ShoppingCart", json);
+        }
+
+        protected void passvalue(object sender, EventArgs e)
+        {
+            var btn = (object)(sender);
+            //String testval = btn.CommandArgument; //Returns 456
+        }
+
+        void Log(Guid id)
+        {
+            Product product = _productRepository.Get(id);
+
+            OrderProduct orderProduct = new OrderProduct();
+            orderProduct.Product = product;
+            orderProduct.Quantity = 1;
+
+            orderProducts.Add(orderProduct);
         }
     }
 }

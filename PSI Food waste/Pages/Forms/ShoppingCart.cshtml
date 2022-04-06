@@ -1,4 +1,5 @@
 ﻿@page "{ID?}"
+@using PSI_Food_waste.Models
 @using PSI_Food_waste.Pages.Forms
 @model PSI_Food_waste.Pages.Forms.RestaurantProductsModel
 @{
@@ -25,6 +26,7 @@
         }
     </ul>
 </div>
+@Model.orderProducts.Count
 <table class="table mt-5">
     <thead>
         <tr>
@@ -48,8 +50,9 @@
             </tr>
         }*@
     @{
-        
-            foreach (var product in Model.orderProducts)
+        if(ViewData["orders"] != null)
+        {
+             foreach (var product in ViewData["orders"] as List<OrderProduct>)
             {
                 <tr>
                     <td>@product.Product.Name</td>
@@ -62,6 +65,15 @@
                     
                 </tr>
             }
+        }
+        else
+        {
+            <tr>
+            <td> nieko</td>
+            </tr>
+        }
+
+           
         }
 </table>
 <div style="width:100px; margin:1 auto;">
