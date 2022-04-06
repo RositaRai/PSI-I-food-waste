@@ -19,6 +19,8 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public string Msg { get; set; }
 
+        public List<OrderProduct> orderProducts { get; set; }
+
         public List<User> users = new List<User>
         {
             new User {Email = "admin" , Username = "admin", Password = "admin"},
@@ -44,6 +46,7 @@ namespace PSI_Food_waste.Pages.Forms
             _registerRepository.AddToList(new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), "email@name.com", "name", "name", 0));
 
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
+            ViewData["ShoppingCart"] = orderProducts;
             //RegUsers = RegisterService.GetAll();
             Msg = "";
         }

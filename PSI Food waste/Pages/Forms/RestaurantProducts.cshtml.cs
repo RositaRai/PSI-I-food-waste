@@ -20,6 +20,8 @@ namespace PSI_Food_waste.Pages.Forms
         public bool ShowPrevious => CurrentPage > 1;
         public bool ShowNext => CurrentPage < TotalPages;
 
+        public List<OrderProduct> orderProducts { get; set; }
+
 
         public List<Product> products { get; set; }
         public Restaurant restaurant {  get; set; }
@@ -61,6 +63,22 @@ namespace PSI_Food_waste.Pages.Forms
             if (product.IsGlutenFree)
                 return "Gluten Free";
             return "Not Gluten Free";
+        }
+
+        public IActionResult OnPostAddToCart(Guid id)
+        {
+            OrderProduct orderProduct = new OrderProduct();
+            orderProduct.Product = _productRepository.Get(id: id);
+            orderProduct.Quantity = 1;
+
+            orderProducts.Add(orderProduct);
+            return null;
+        }
+
+        public IActionResult OnPostSelect(List<OrderProduct> list)
+        {
+            //RestaurantProductsModel.IdTest = id;
+            return RedirectToPage("/Forms/ShoppingCart", new { list = orderProducts });
         }
     }
 }

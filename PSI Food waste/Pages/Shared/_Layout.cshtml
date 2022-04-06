@@ -54,20 +54,32 @@
                 @{
                     if (ViewData["User"] != null)
                     {
-                        <h6 class="col-sm-1">@ViewData["User"]</h6>
+                        <div class="row">
+                        <form>
+                            <button class="btn btn-info" asp-page="/Forms/LogoutScreen">@ViewData["User"]</button>
+                        </form>
+                        
+                        &nbsp;
+                        @* <h6 class="text-center">@ViewData["User"]</h6>*@
+                        
+                        &nbsp;
                         <form>
                             <button class="btn btn-danger" asp-page="/Forms/LogoutScreen">Logout</button>
                         </form>
+                        </div>
                     }
 
                     else
                     {
-                        <form class="col-sm-1">
+                        <div class="row">
+                        <form >
                             <button class="btn btn-primary" asp-page="/Forms/LoginScreen">Login</button>
                         </form>
+                        &nbsp;
                         <form>
                             <button class="btn btn-primary" asp-page="/Forms/RegisterScreen">Register</button>
                         </form>
+                        </div>
                     }
                 }
             </div>

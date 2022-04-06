@@ -27,7 +27,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         [BindProperty]
         [Required]
-        public string Name { get; set; }
+        public string Username { get; set; }
         [BindProperty]
         [Required]
         public string Pass { get; set; }
@@ -79,7 +79,7 @@ namespace PSI_Food_waste.Pages.Forms
                     return Page();
                 }
             }
-            if (Name == null || !regex.IsMatch(Name))
+            if (Username == null || !regex.IsMatch(Username))
             { 
                 ErrorMsg = "Username must contain from 3 to 20 characters with no special characters";
                 return Page();
@@ -91,7 +91,7 @@ namespace PSI_Food_waste.Pages.Forms
             }
             else
             {
-                RegisteredUser = new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
+                RegisteredUser = new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), Email, Username, pass: Pass, favNum: Num);
                 try
                 {
                     _registerRepository.AddToList(RegisteredUser);

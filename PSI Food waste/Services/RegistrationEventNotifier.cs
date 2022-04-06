@@ -37,7 +37,7 @@ namespace PSI_Food_waste.Services
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential("foodwasteinc1@gmail.com", "PSI2021ABC");
             smtp.EnableSsl = true;
-            await smtp.SendMailAsync(message);
+            //await smtp.SendMailAsync(message);
         }
     }
 }
