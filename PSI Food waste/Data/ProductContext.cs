@@ -12,6 +12,7 @@ namespace PSI_Food_waste.Data
         public ProductContext (DbContextOptions<ProductContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Product> Products { get; set; }

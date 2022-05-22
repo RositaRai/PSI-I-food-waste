@@ -50,8 +50,10 @@ namespace PSI_Food_waste
             services.AddTransient<INotificationEvent, NotificationEvent>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
-            services.AddDbContext<ProductContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ProductContext")));
+            //services.AddDbContext<ProductContext>(options =>
+            //       options.UseSqlServer(Configuration.GetConnectionString("ProductContext")));
+
+            services.AddDbContext<ProductContext>(o => o.UseSqlite("Data source = ProductContext.db"));
 
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
             {

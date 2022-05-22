@@ -1,0 +1,78 @@
+2022-05-22 12:55:42.166 +03:00 [INF] Method GetAll called with parameters: []returned this response: [
+  {
+    "Id": "1416d5c9-200b-4b6f-aa9c-576ff8e9a7ad",
+    "Title": "Cili pica",
+    "City": "Kaunas",
+    "Adress": "Kauno g. 15",
+    "PictureUrl": "https://imageproxy.wolt.com/venue/5c88ebd41df13b000a63805e/1273afe269cd3ae5d49b04d813a1f4e8"
+  },
+  {
+    "Id": "788da136-58da-4c87-93ae-82477fbbf66d",
+    "Title": "Burger street ",
+    "City": "Vilnius",
+    "Adress": "Vilniaus g. ",
+    "PictureUrl": "https://imageproxy.wolt.com/venue/60a1f821c6df001844f76fed/10a81d36-b6cd-11eb-858e-ce279a5c61e0_men.jpeg"
+  }
+]
+2022-05-22 12:55:42.271 +03:00 [INF] Method GetAll called with parameters: []returned this response: [
+  {
+    "PrID": "f480ec68-2e12-460c-8046-a8d6ab927921",
+    "RestId": "1416d5c9-200b-4b6f-aa9c-576ff8e9a7ad",
+    "Name": "Margarita",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": "bcb56fad-7159-471f-be43-1c6fcf6cd39d",
+    "RestId": "1416d5c9-200b-4b6f-aa9c-576ff8e9a7ad",
+    "Name": "Italiska",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": "5bc32e99-a236-4f27-af4d-1b5badb39407",
+    "RestId": "1416d5c9-200b-4b6f-aa9c-576ff8e9a7ad",
+    "Name": "Havaju",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": "55164820-1f90-4cb4-b980-1739669cef29",
+    "RestId": "788da136-58da-4c87-93ae-82477fbbf66d",
+    "Name": "Burger",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": "e546c0dc-236c-4313-859a-9a1a4b253634",
+    "RestId": "788da136-58da-4c87-93ae-82477fbbf66d",
+    "Name": "Fries",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": "40e03a67-f04f-4712-b8d9-cb7e487f3988",
+    "RestId": "788da136-58da-4c87-93ae-82477fbbf66d",
+    "Name": "Big burger",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  }
+]
