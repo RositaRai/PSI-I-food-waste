@@ -14,7 +14,7 @@ namespace PSI_Food_waste.Pages.Forms
     public class LoginScreenModel : PageModel
     {
         [BindProperty]
-        public User NewUser { get; set; }
+        public Supplier NewUser { get; set; }
 
         [BindProperty]
         public string Msg { get; set; }
@@ -24,24 +24,26 @@ namespace PSI_Food_waste.Pages.Forms
             new User {Email = "admin" , Username = "admin", Password = "admin"},
             new User {Email = "abc" , Username = "abc", Password = "123"}
         };
-        public RegisteredUser<RegisterForm> RegUsers { get; set; }
+        //public RegisteredUser<RegisterForm> RegUsers { get; set; }
 
-        public static RegisterForm CurrentUser { get; set; }
+        public List<Supplier> suppliers { get; set; }
+        public static Supplier CurrentUser { get; set; }
+        //public static RegisterForm CurrentUser { get; set; }
 
-        public IRegisterRepository _registerRepository;
+        public ISupplierRepository supplierRepository;
         private readonly ProductContext _context;
 
-        public LoginScreenModel(IRegisterRepository registerRepository, ProductContext context)
+        public LoginScreenModel(ISupplierRepository registerRepository, ProductContext context)
         {
-            _registerRepository = registerRepository;
+            supplierRepository = registerRepository;
             _context = context;
         }
 
         public void OnGet()
         {
             //for testing
-            _registerRepository.AddToList(new RegisterForm(_context.Restaurants.ToList(), _context.Restaurants.ToList(), "admin", "admin", "admin", 0));
-            _registerRepository.AddToList(new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), "email@name.com", "name", "name", 0));
+            //_registerRepository.AddToList(new RegisterForm(_context.Restaurants.ToList(), _context.Restaurants.ToList(), "admin", "admin", "admin", 0));
+            //_registerRepository.AddToList(new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), "email@name.com", "name", "name", 0));
 
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //RegUsers = RegisterService.GetAll();
@@ -55,18 +57,18 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return Page();
             }
-            RegUsers = _registerRepository.GetAll();
+            suppliers = supplierRepository.GetAll();
             flag = false;
 
-            for (int i = 0; i < RegUsers.Length(); i++)
+            for (int i = 0; i < suppliers.Count(); i++)
             {
-                if (NewUser.Email.Equals(RegUsers[i].Email))
+                if (NewUser.Email.Equals(suppliers[i].Email))
                 { 
-                    if (NewUser.Password.Equals(RegUsers[i].Password))
+                    if (NewUser.Password.Equals(suppliers[i].Password))
                     {
-                        CurrentUser = _registerRepository.GetUserData(RegUsers[i].Email);
-                        _registerRepository.CurrentUser = _registerRepository.GetUserData(RegUsers[i].Email);
-                        HttpContext.Session.SetString("username", RegUsers[i].Username);
+                        CurrentUser = supplierRepository.GetOne(NewUser.SupplierId);
+                        supplierRepository.CurrentUser = supplierRepository.GetOne(NewUser.SupplierId);
+                        HttpContext.Session.SetString("username", suppliers[i].Username);
                         return RedirectToPage("/Index");
                     }
                 }

@@ -21,7 +21,7 @@ namespace PSI_Food_waste.Pages.Forms
         [BindProperty]
         public Product Product { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+       /* public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
@@ -68,9 +68,9 @@ namespace PSI_Food_waste.Pages.Forms
             return RedirectToPage("./RestaurantVerified", "Get", new { ID = Product.RestId });
         }
 
-        private bool ProductExists(Guid id)
+        private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.PrID == id);
-        }
+        }*/
     }
 }

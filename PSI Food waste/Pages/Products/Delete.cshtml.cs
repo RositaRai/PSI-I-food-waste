@@ -22,7 +22,7 @@ namespace PSI_Food_waste.Pages.Products
         [BindProperty]
         public Product Product { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        /*public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
@@ -54,6 +54,6 @@ namespace PSI_Food_waste.Pages.Products
             }
 
             return RedirectToPage("./Index");
-        }
+        }*/
     }
 }

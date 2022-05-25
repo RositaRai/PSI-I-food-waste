@@ -10,18 +10,12 @@ namespace PSI_Food_waste.Models
 {
     public interface IProductRepository
     {
-        public Task<List<Product>> GetList(Guid id);
-        //public void SortProducts();
-        Task<List<Product>> GetPaginatedResult(List<Product> items, int currentPage, int pageSize = 10);
-        public Task AddAsync(Product product, Guid restId);
-
-        public void Delete(Guid Guid);
-
+        public void AddToList(Product product);
+        public Product GetOne(int id, int supId);
+        public List<Product> GetBySupplier(int SupplierId);
+        public void Update(Product product);
+        public void Delete(Product product);
         public List<Product> GetAll();
-
-        public void SetAll(List<Product> products);
-
-        public Product Get(Guid id);
 
         public void NewPrice(Product product);
     }

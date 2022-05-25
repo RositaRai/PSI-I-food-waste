@@ -19,6 +19,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Serilog;
 using Autofac.Extras.DynamicProxy;
+using PSI_Food_waste.Services.DbServices;
+using PSI_Food_waste.Models.IRepositories;
 
 namespace PSI_Food_waste
 {
@@ -45,7 +47,7 @@ namespace PSI_Food_waste
             services.AddSession();
             //services.AddTransient<IProductRepository, ProductService>();
             //services.AddTransient<IRestaurantRepository, RestaurantServices>();
-            services.AddSingleton<IRegisterRepository, RegisterService>();
+           // services.AddSingleton<IRegisterRepository, RegisterService>();
             services.AddSingleton<IRegistrationEventNotifier, RegistrationEventNotifier>();
             services.AddTransient<INotificationEvent, NotificationEvent>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
@@ -70,18 +72,28 @@ namespace PSI_Food_waste
              .InterceptedBy(typeof(LogInterceptor))
              //.InstancePerLifetimeScope();
              .InstancePerDependency();
-             //.InstancePerMatchingLifetimeScope();
-             //.SingleInstance();
+            //.InstancePerMatchingLifetimeScope();
+            //.SingleInstance();
 
+            builder.RegisterType<CustomerService>().As<ICustomerRepository>()
+            .EnableInterfaceInterceptors()
+             .InterceptedBy(typeof(LogInterceptor))
+             //.InstancePerLifetimeScope();
+             .InstancePerDependency();
 
+            builder.RegisterType<SupplierService>().As<ISupplierRepository>()
+           .EnableInterfaceInterceptors()
+            .InterceptedBy(typeof(LogInterceptor))
+            //.InstancePerLifetimeScope();
+            .InstancePerDependency();
 
-            builder.RegisterType<RestaurantServices>().As<IRestaurantRepository>()
+            /*builder.RegisterType<RestaurantServices>().As<IRestaurantRepository>()
               .EnableInterfaceInterceptors()
               .InterceptedBy(typeof(LogInterceptor))
               //.InstancePerLifetimeScope();
               .InstancePerDependency();
               //.InstancePerMatchingLifetimeScope();
-              //.SingleInstance();
+              //.SingleInstance();*/
 
             builder.Register(x => Log.Logger).SingleInstance();
             builder.RegisterType<LogInterceptor>().SingleInstance();

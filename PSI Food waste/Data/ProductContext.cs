@@ -16,7 +16,10 @@ namespace PSI_Food_waste.Data
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<Restaurant> Restaurants { get; set; }
+        //public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

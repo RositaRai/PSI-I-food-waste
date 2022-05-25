@@ -20,7 +20,7 @@
 
 @{
     var productsWithRestaurant = Model.products.Join(Model.restaurants,
-                                                    p => p.RestId,
+                                                    p => p.SupplierId,
                                                     r => r.Id,
                                                     (p, r) => new { p.Name, r.Title, r.Id, r.PictureUrl, p.DiscountedPrice, p.Price, p.Discount});
 
@@ -66,12 +66,7 @@
                 @if (ViewData["User"] != null)
                     {
                         bool isSubed = false;
-                        @foreach (var data in @Model._registerRepository.CurrentUser.SubscribedRestaurants)
-                        {
-                            if (productGroup.Key.Id.Equals(data.Id))
-                                isSubed = true;
-                    
-                        }
+                        
                         if (isSubed)
                         {
                             <p>Subscribed</p>

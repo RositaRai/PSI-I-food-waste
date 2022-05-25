@@ -12,8 +12,8 @@ namespace PSI_Food_waste.Models
     public class Product : IComparable
     {
         [Key]
-        public Guid PrID { get; set; }
-        public Guid RestId {  get; set; }
+        public int ProductId { get; set; }
+        public int SupplierId {  get; set; }
         
 
         [Required]

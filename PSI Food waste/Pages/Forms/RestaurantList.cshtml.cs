@@ -28,10 +28,10 @@ namespace PSI_Food_waste.Pages.Forms
 
         public IRestaurantRepository _restaurantRepository;
 
-        public IRegisterRepository _registerRepository;
+        public ISupplierRepository _registerRepository;
         public IProductRepository _productRepository;
 
-        public RestaurantListModel(IRestaurantRepository restaurantRepository, IRegisterRepository registerRepository, IProductRepository productRepository)
+        public RestaurantListModel(IRestaurantRepository restaurantRepository, ISupplierRepository registerRepository, IProductRepository productRepository)
         {
             _restaurantRepository = restaurantRepository;
             _registerRepository = registerRepository;
@@ -45,35 +45,35 @@ namespace PSI_Food_waste.Pages.Forms
             restaurants = _restaurantRepository.GetAll();
             products = _productRepository.GetAll();
 
-            if (SearchByCity is null || SearchByCity.Equals("None"))
+           /* if (SearchByCity is null || SearchByCity.Equals("None"))
             {
 
             }
             else
             {
                 restaurants = restaurants.Where((restaurants, SearchByCity) => restaurants.City.Equals(SearchByCity), SearchByCity);
-            }
+            }*/
         }
         public void OnPostFilter(LocationModel loc)
         {
             products = _productRepository.GetAll();
             restaurants = _restaurantRepository.GetAll();
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
-            if (SearchByCity == "None")
+            /*if (SearchByCity == "None")
             {
 
             }
             else
             {
                 restaurants = restaurants.Where((restaurants, SearchByCity) => restaurants.City.Equals(SearchByCity), SearchByCity);
-            }
+            }*/
         }
         public IActionResult OnPostSelect(Guid id)
         {
             //RestaurantProductsModel.IdTest = id;
             return RedirectToPage("/Forms/RestaurantProducts", new { ID = id });
         }
-        public IActionResult OnPostSubscribe(Guid id)
+       /* public IActionResult OnPostSubscribe(int id)
         {
             if (_registerRepository.CurrentUser.Username != null)
             {
@@ -91,6 +91,6 @@ namespace PSI_Food_waste.Pages.Forms
             {
                 return RedirectToAction("OnPostFilter");
             }
-        }
+        }*/
     }
 }

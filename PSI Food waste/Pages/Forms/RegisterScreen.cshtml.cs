@@ -17,9 +17,9 @@ namespace PSI_Food_waste.Pages.Forms
     public class RegisterScreenModel : PageModel
     {
         public  IRegistrationEventNotifier _eventNotifier;
-        public RegisteredUser<RegisterForm> RegisteredUsers { get; set; }/* = new RegisteredUser<RegisterForm>();*/
+        //public RegisteredUser<RegisterForm> RegisteredUsers { get; set; }/* = new RegisteredUser<RegisterForm>();*/
 
-        public RegisterForm RegisteredUser { get; set; }
+        //public RegisterForm RegisteredUser { get; set; }
 
         [BindProperty]
         [Required]
@@ -38,12 +38,14 @@ namespace PSI_Food_waste.Pages.Forms
         public string Msg { get; set; }
         public string ErrorMsg { get; set; }
 
-        public IRegisterRepository _registerRepository;
+        public ISupplierRepository supplierRepository;
 
-        public RegisterScreenModel(IRegistrationEventNotifier eventNotifier, IRegisterRepository registerRepository)
+        public List<Supplier> Suppliers { get; set; }
+
+        public RegisterScreenModel(IRegistrationEventNotifier eventNotifier, ISupplierRepository registerRepository)
         {
             _eventNotifier = eventNotifier;
-			_registerRepository = registerRepository;
+            supplierRepository = registerRepository;
         }
 		
         public void OnGet()
@@ -65,20 +67,22 @@ namespace PSI_Food_waste.Pages.Forms
             // password validation
             Regex regex2 = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[\@$!%*#?&])[A-Za-z\d\@$!%*#?&]{8,}$");
 
-            RegisteredUsers = _registerRepository.GetAll();
+            Suppliers = supplierRepository.GetAll();
             if (Email == null || !regex3.IsMatch(Email))
             {
                 ErrorMsg = "Incorrect Email";
                 return Page();
             }
-            for (int i = 0; i < RegisteredUsers.Length(); i++)
+
+            for (int i = 0; i < Suppliers.Count(); i++)
             {
-                if (Email.Equals(RegisteredUsers[i].Email))
+                if (Email.Equals(Suppliers[i].Email))
                 {
                     ErrorMsg = "This email already exists";
                     return Page();
                 }
             }
+
             if (Name == null || !regex.IsMatch(Name))
             { 
                 ErrorMsg = "Username must contain from 3 to 20 characters with no special characters";
@@ -91,12 +95,19 @@ namespace PSI_Food_waste.Pages.Forms
             }
             else
             {
-                RegisteredUser = new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
+                var newSup = new Supplier()
+                {
+                    Email = Email,
+                    Username = Name,
+                    Password = Pass
+                };
+
+                //RegisteredUser = new RegisterForm(new List<Restaurant>(), new List<Restaurant>(), Email, Name, pass: Pass, favNum: Num);
                 try
                 {
-                    _registerRepository.AddToList(RegisteredUser);
+                    supplierRepository.AddToList(newSup);
                 }
-                catch (IndexOutOfRangeException ex)
+                catch (Exception ex)
                 {
                     ErrorMsg = ex.Message;
                     return Page();

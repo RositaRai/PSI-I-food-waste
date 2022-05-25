@@ -23,7 +23,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         public List<Product> products { get; set; }
         public Restaurant restaurant {  get; set; }
-        public Guid IdTest { get; set; }
+        public int IdTest { get; set; }
         [BindProperty]
         public string searchCriteria { get; set; }
 
@@ -31,13 +31,13 @@ namespace PSI_Food_waste.Pages.Forms
 
         public IProductRepository _productRepository;
 
-        public RestaurantProductsModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
+        /*public RestaurantProductsModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository)
         {
             _productRepository = productRepository;
             _restaurantRepository = restaurantRepository;
         }
 
-        public async Task OnGetAsync(Guid ID)
+        public async Task OnGetAsync(int ID)
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             restaurant = _restaurantRepository.Get(id : ID);
@@ -45,7 +45,7 @@ namespace PSI_Food_waste.Pages.Forms
             Data = await _productRepository.GetPaginatedResult(products, CurrentPage, PageSize);
             Count = products.Count;
         }
-        public async Task OnPostAsync(Guid ID)
+        public async Task OnPostAsync(int ID)
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             //return RedirectToPage("/Forms/RestaurantProducts", new {searchCriteria = this.searchCriteria});
@@ -61,6 +61,6 @@ namespace PSI_Food_waste.Pages.Forms
             if (product.IsGlutenFree)
                 return "Gluten Free";
             return "Not Gluten Free";
-        }
+        }*/
     }
 }

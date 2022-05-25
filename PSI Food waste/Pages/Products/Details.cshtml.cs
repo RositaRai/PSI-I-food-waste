@@ -12,7 +12,7 @@ namespace PSI_Food_waste.Pages.Products
 {
     public class DetailsModel : PageModel
     {
-        private readonly PSI_Food_waste.Data.ProductContext _context;
+       private readonly PSI_Food_waste.Data.ProductContext _context;
 
         public DetailsModel(PSI_Food_waste.Data.ProductContext context)
         {
@@ -21,7 +21,7 @@ namespace PSI_Food_waste.Pages.Products
 
         public Product Product { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+       /* public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
@@ -35,6 +35,6 @@ namespace PSI_Food_waste.Pages.Products
                 return NotFound();
             }
             return Page();
-        }
+        }*/
     }
 }

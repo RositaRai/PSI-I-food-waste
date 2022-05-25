@@ -10,9 +10,9 @@ namespace PSI_Food_waste.Pages.Forms
 {
     public class CreatedRestaurantsModel : PageModel
     {
-        public IRegisterRepository _registerRepository;
+        public ISupplierRepository _registerRepository;
 
-        public CreatedRestaurantsModel(IRegisterRepository registerRepository)
+       /* public CreatedRestaurantsModel(IRegisterRepository registerRepository)
             {
             _registerRepository = registerRepository;
         }
@@ -34,6 +34,6 @@ namespace PSI_Food_waste.Pages.Forms
         {
             //RestaurantVerifiedModel.Id = id;
             return RedirectToPage("/Forms/RestaurantVerified", new { ID = id });
-        }
+        }*/
     }
 }

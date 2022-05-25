@@ -13,10 +13,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Product.RestId)
+            @Html.DisplayNameFor(model => model.Product.SupplierId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Product.RestId)
+            @Html.DisplayFor(model => model.Product.SupplierId)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Product.Name)
@@ -57,7 +57,7 @@
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="Product.PrID" />
+        <input type="hidden" asp-for="Product.ProductId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

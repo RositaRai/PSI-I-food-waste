@@ -1,0 +1,147 @@
+2022-05-25 21:33:49.691 +03:00 [INF] Method GetAll called with parameters: []returned this response: [
+  {
+    "Id": 1,
+    "Title": "Cili pica",
+    "City": "Kaunas",
+    "Adress": "Kauno g. 15",
+    "PictureUrl": "https://imageproxy.wolt.com/venue/5c88ebd41df13b000a63805e/1273afe269cd3ae5d49b04d813a1f4e8"
+  },
+  {
+    "Id": 2,
+    "Title": "Burger street ",
+    "City": "Vilnius",
+    "Adress": "Vilniaus g. ",
+    "PictureUrl": "https://imageproxy.wolt.com/venue/60a1f821c6df001844f76fed/10a81d36-b6cd-11eb-858e-ce279a5c61e0_men.jpeg"
+  }
+]
+2022-05-25 21:33:49.713 +03:00 [INF] Method GetAll called with parameters: []returned this response: [
+  {
+    "PrID": 1,
+    "RestId": 0,
+    "Name": "Margarita",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": 2,
+    "RestId": 0,
+    "Name": "Italiska",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": 3,
+    "RestId": 0,
+    "Name": "Havaju",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": 4,
+    "RestId": 0,
+    "Name": "Burger",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": 5,
+    "RestId": 0,
+    "Name": "Fries",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  },
+  {
+    "PrID": 6,
+    "RestId": 0,
+    "Name": "Big burger",
+    "Size": 0,
+    "IsGlutenFree": false,
+    "Price": 10.0,
+    "DiscountedPrice": 5.0,
+    "Discount": 50
+  }
+]
+2022-05-25 23:18:22.125 +03:00 [INF] Method GetAll called with parameters: []returned this response: []
+2022-05-25 23:18:33.155 +03:00 [INF] Method GetAll called with parameters: []returned this response: []
+2022-05-25 23:18:43.050 +03:00 [INF] Method GetAll called with parameters: []returned this response: []
+2022-05-25 23:18:43.151 +03:00 [INF] Method AddToList called with parameters: [
+  {
+    "SupplierId": 1,
+    "Title": null,
+    "City": null,
+    "Address": null,
+    "Username": "ponas",
+    "Password": "Ponas?123",
+    "Email": "ponas@gmail.com",
+    "PictureUrl": null
+  }
+]returned this response: null
+2022-05-25 23:18:59.394 +03:00 [INF] Method GetAll called with parameters: []returned this response: [
+  {
+    "SupplierId": 1,
+    "Title": null,
+    "City": null,
+    "Address": null,
+    "Username": "ponas",
+    "Password": "Ponas?123",
+    "Email": "ponas@gmail.com",
+    "PictureUrl": null
+  }
+]
+2022-05-25 23:18:59.422 +03:00 [INF] Method GetOne called with parameters: [
+  0
+]returned this response: null
+2022-05-25 23:18:59.425 +03:00 [INF] Method GetOne called with parameters: [
+  0
+]returned this response: null
+2022-05-25 23:18:59.425 +03:00 [INF] Method set_CurrentUser called with parameters: [
+  null
+]returned this response: null
+2022-05-25 23:20:23.398 +03:00 [INF] Method GetAll called with parameters: []returned this response: [
+  {
+    "SupplierId": 1,
+    "Title": null,
+    "City": null,
+    "Address": null,
+    "Username": "ponas",
+    "Password": "Ponas?123",
+    "Email": "ponas@gmail.com",
+    "PictureUrl": null
+  }
+]
+2022-05-25 23:20:31.274 +03:00 [INF] Method GetAll called with parameters: []returned this response: [
+  {
+    "SupplierId": 1,
+    "Title": null,
+    "City": null,
+    "Address": null,
+    "Username": "ponas",
+    "Password": "Ponas?123",
+    "Email": "ponas@gmail.com",
+    "PictureUrl": null
+  }
+]
+2022-05-25 23:20:31.303 +03:00 [INF] Method GetOne called with parameters: [
+  0
+]returned this response: null
+2022-05-25 23:20:31.306 +03:00 [INF] Method GetOne called with parameters: [
+  0
+]returned this response: null
+2022-05-25 23:20:31.306 +03:00 [INF] Method set_CurrentUser called with parameters: [
+  null
+]returned this response: null

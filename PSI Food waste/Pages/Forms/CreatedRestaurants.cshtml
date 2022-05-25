@@ -16,17 +16,5 @@
             <th scope="col">Options</th>
         </tr>
     </thead
-     @foreach (var restaurant in Model._registerRepository.CurrentUser.CreatedRestaurants)
-     {
-        <tr>
-            <td>@restaurant.Title</td>
-            <td>@restaurant.City</td>
-            <td>@restaurant.Adress</td>
-            <td>
-                <form method="post" asp-page-handler="Select" asp-route-id="@restaurant.Id">
-                    <button class="btn btn-primary">Select</button>
-                </form>
-            </td
-        </tr>
-     }
+   
 </table>

@@ -10,6 +10,7 @@ using PSI_Food_waste.Services;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using PSI_Food_waste.Models.IRepositories;
 
 namespace PSI_Food_waste.Pages.Forms
 {
@@ -21,7 +22,7 @@ namespace PSI_Food_waste.Pages.Forms
 
         public List<Product> products;
 
-        public RegisteredUser<RegisterForm> RegisteredUsers {  get; set; }
+       // public RegisteredUser<RegisterForm> RegisteredUsers {  get; set; }
 
         public Restaurant currentRestaurant {  get; set; }
 
@@ -42,10 +43,10 @@ namespace PSI_Food_waste.Pages.Forms
 
         public INotificationEvent _notificationEvent;
 
-        public IRegisterRepository _registerRepository;
+        public ICustomerRepository _registerRepository;
 
         public double total;
-
+        /*
         public RestaurantVerifiedModel(IProductRepository productRepository, IRestaurantRepository restaurantRepository, INotificationEvent notificationEvent, IRegisterRepository registerRepository, IRegistrationEventNotifier eventNotifier, INotyfService notyf)
         {
             _productRepository = productRepository;
@@ -63,7 +64,7 @@ namespace PSI_Food_waste.Pages.Forms
                 return "Gluten Free";
             return "Not Gluten Free";
         }
-        public async Task OnGetAsync(Guid id)
+        public async Task OnGetAsync(int id)
         {
             ViewData["User"] = HttpContext.Session.GetString(key: "username");
             products = await _productRepository.GetList(id);
@@ -78,7 +79,7 @@ namespace PSI_Food_waste.Pages.Forms
             }
             total = products.Aggregate((double)0, (a, b) => a + b.DiscountedPrice);
         }
-        public async Task<IActionResult> OnPostAsync(Guid id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             currentRestaurant = _restaurantRepository.Get(id);
             if (HttpContext.Session.GetString("username") == null)
@@ -124,6 +125,7 @@ namespace PSI_Food_waste.Pages.Forms
         {
             return RedirectToPage("/Forms/EditProduct", "Get", id);
         }
+        */
     }
     public class ProductArgs : EventArgs
     {
